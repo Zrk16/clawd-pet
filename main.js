@@ -1,7 +1,9 @@
 const { app, BrowserWindow, ipcMain, screen, desktopCapturer } = require('electron');
+app.commandLine.appendSwitch('enable-speech-dispatcher');
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
+const { MsEdgeTTS, OUTPUT_FORMAT } = require('msedge-tts');
 
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), 'utf8'));
 
@@ -462,6 +464,73 @@ ipcMain.handle('summarize-memory', async (_, { messages, existingFacts }) => {
     req.write(body);
     req.end();
   });
+});
+
+// Edge TTS — Rocky voice synthesis
+let edgeTts = null;
+async function getEdgeTTS() {
+  if (!edgeTts) {
+    edgeTts = new MsEdgeTTS();
+    await edgeTts.setMetadata('en-US-GuyNeural', OUTPUT_FORMAT.AUDIO_24KHZ_96KBITRATE_MONO_MP3);
+  }
+  return edgeTts;
+}
+
+ipcMain.handle('synthesize-speech', async (_, text) => {
+  try {
+    const tts = await getEdgeTTS();
+    const { audioStream } = await tts.toStream(text);
+    const chunks = [];
+    await new Promise((resolve, reject) => {
+      audioStream.on('data', chunk => chunks.push(chunk));
+      audioStream.on('end', resolve);
+      audioStream.on('error', reject);
+    });
+    return Buffer.concat(chunks).toString('base64');
+  } catch (err) {
+    console.error('[tts] fail:', err.message);
+    edgeTts = null;
+    return null;
+  }
+});
+
+// Whisper STT via @xenova/transformers
+let whisperPipeline = null;
+let whisperLoading = false;
+
+async function getWhisper() {
+  if (whisperPipeline) return whisperPipeline;
+  if (whisperLoading) {
+    while (whisperLoading) await new Promise(r => setTimeout(r, 100));
+    return whisperPipeline;
+  }
+  whisperLoading = true;
+  try {
+    const { pipeline } = await import('@xenova/transformers');
+    win.webContents.send('stt-status', 'loading');
+    whisperPipeline = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny.en');
+    whisperLoading = false;
+    win.webContents.send('stt-status', 'ready');
+    return whisperPipeline;
+  } catch (err) {
+    whisperLoading = false;
+    console.error('[whisper] load fail:', err.message);
+    win.webContents.send('stt-status', 'error');
+    return null;
+  }
+}
+
+ipcMain.handle('stt-transcribe', async (_, buffer) => {
+  try {
+    const transcriber = await getWhisper();
+    if (!transcriber) return '';
+    const float32 = new Float32Array(buffer.buffer, buffer.byteOffset, buffer.byteLength / 4);
+    const result = await transcriber(float32, { sampling_rate: 16000 });
+    return result.text.trim();
+  } catch (err) {
+    console.error('[stt] fail:', err.message);
+    return '';
+  }
 });
 
 ipcMain.on('restart', () => {

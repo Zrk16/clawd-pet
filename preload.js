@@ -22,4 +22,7 @@ contextBridge.exposeInMainWorld('clawd', {
   captureScreen: () => ipcRenderer.invoke('capture-screen'),
   visionChat: (question, imageDataUrl) => ipcRenderer.invoke('vision-chat', { question, imageDataUrl }),
   proactive: (context, memory) => ipcRenderer.invoke('proactive', { context, memory }),
+  synthesizeSpeech: (text) => ipcRenderer.invoke('synthesize-speech', text),
+  sttTranscribe: (ab) => ipcRenderer.invoke('stt-transcribe', Buffer.from(ab)),
+  onSttStatus: (cb) => ipcRenderer.on('stt-status', (_, s) => cb(s)),
 });

@@ -26,34 +26,39 @@ async function initMemory() {
 
 initMemory();
 
-// ── TTS (Web Speech API) ──
+// ── TTS (edge-tts + Web Audio harmonics — Rocky polyphonic voice) ──
 let ttsMuted = false;
-let ttsVoice = null;
+let audioCtx = null;
+let activeSources = [];
 
-function pickVoice() {
-  const voices = speechSynthesis.getVoices();
-  if (voices.length === 0) return null;
-  // Prefer Microsoft male English voices for alien-Rocky vibe
-  const prefer = voices.find(v => /david|guy|mark/i.test(v.name) && /en/i.test(v.lang))
-              || voices.find(v => v.lang.startsWith('en') && /male/i.test(v.name))
-              || voices.find(v => v.lang.startsWith('en'));
-  return prefer || voices[0];
+function getAudioCtx() {
+  if (!audioCtx || audioCtx.state === 'closed') audioCtx = new AudioContext();
+  return audioCtx;
 }
 
-speechSynthesis.addEventListener('voiceschanged', () => {
-  ttsVoice = pickVoice();
-});
-ttsVoice = pickVoice();
+function stopCurrentSpeech() {
+  activeSources.forEach(s => { try { s.stop(); } catch {} });
+  activeSources = [];
+}
 
-function speak(text) {
+async function speak(text) {
   if (ttsMuted || !text) return;
-  speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  if (ttsVoice) utter.voice = ttsVoice;
-  utter.pitch = 0.6;   // low — alien
-  utter.rate = 0.95;   // slightly slow
-  utter.volume = 1;
-  speechSynthesis.speak(utter);
+  stopCurrentSpeech();
+  try {
+    const b64 = await window.clawd.synthesizeSpeech(text);
+    if (!b64) return;
+    const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    const ctx = getAudioCtx();
+    if (ctx.state === 'suspended') await ctx.resume();
+    const audioBuf = await ctx.decodeAudioData(bytes.buffer.slice(0));
+    const src = ctx.createBufferSource();
+    src.buffer = audioBuf;
+    src.connect(ctx.destination);
+    src.start();
+    activeSources.push(src);
+  } catch (err) {
+    console.error('[speak] fail:', err.message);
+  }
 }
 
 async function initTtsState() {
@@ -77,7 +82,7 @@ function updateTtsBtn() {
 
 ttsBtn.addEventListener('click', () => {
   ttsMuted = !ttsMuted;
-  if (ttsMuted) speechSynthesis.cancel();
+  if (ttsMuted) stopCurrentSpeech();
   updateTtsBtn();
   saveAllSettings();
 });
@@ -107,99 +112,70 @@ document.getElementById('copy-btn').addEventListener('click', () => {
   });
 });
 
-// ── STT (Web Speech Recognition) ──
-// Two modes: command (single utterance → fill input + send) and wake (continuous → trigger on "clawd")
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-let recognition = null;
-let srMode = 'idle'; // 'idle' | 'command' | 'wake'
-let wakeEnabled = false;
+// ── STT (Whisper via @xenova/transformers — offline, no Google) ──
+let srMode = 'idle';
+let micStream = null;
+let micAudioCtx = null;
+let micProcessor = null;
+let audioChunks = [];
 
-function buildRecognition() {
-  if (!SR) return null;
-  const r = new SR();
-  r.lang = 'en-US';
-  r.maxAlternatives = 1;
-  return r;
-}
+window.clawd.onSttStatus((status) => {
+  if (status === 'loading') input.value = 'Loading voice model (first time ~150MB)...';
+  else if (status === 'error') input.value = 'Voice model failed to load.';
+  else if (status === 'ready') input.value = '';
+});
 
-function startCommand() {
-  if (!SR) return;
-  if (srMode === 'wake') stopRecognition();
-  recognition = buildRecognition();
-  recognition.continuous = false;
-  recognition.interimResults = false;
+async function startCommand() {
   srMode = 'command';
+  audioChunks = [];
   micBtn.classList.add('listening');
-  recognition.onresult = (e) => {
-    const transcript = e.results[0][0].transcript.trim();
-    if (transcript) {
-      input.value = transcript;
-      sendMessage();
-    }
-  };
-  recognition.onerror = () => endCommand();
-  recognition.onend = () => endCommand();
-  speechSynthesis.cancel();
-  try { recognition.start(); } catch { endCommand(); }
-}
-
-function endCommand() {
-  micBtn.classList.remove('listening');
-  srMode = 'idle';
-  recognition = null;
-  if (wakeEnabled) setTimeout(startWake, 400);
-}
-
-function startWake() {
-  if (!SR || !wakeEnabled || srMode !== 'idle' || chatOpen) return;
-  recognition = buildRecognition();
-  recognition.continuous = true;
-  recognition.interimResults = true;
-  srMode = 'wake';
-  recognition.onresult = (e) => {
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      const t = e.results[i][0].transcript.toLowerCase();
-      if (/\b(clawd|claude|cloud)\b/.test(t)) {
-        stopRecognition();
-        if (!chatOpen) pet.click(); // open chat
-        setTimeout(startCommand, 600);
-        return;
-      }
-    }
-  };
-  recognition.onerror = (ev) => {
-    if (ev.error === 'no-speech' || ev.error === 'audio-capture') return; // benign
-    console.warn('wake SR err:', ev.error);
-  };
-  recognition.onend = () => {
+  stopCurrentSpeech();
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1 }, video: false });
+    micAudioCtx = new AudioContext({ sampleRate: 16000 });
+    const source = micAudioCtx.createMediaStreamSource(micStream);
+    micProcessor = micAudioCtx.createScriptProcessor(4096, 1, 1);
+    micProcessor.onaudioprocess = (e) => {
+      audioChunks.push(new Float32Array(e.inputBuffer.getChannelData(0)));
+    };
+    source.connect(micProcessor);
+    micProcessor.connect(micAudioCtx.destination);
+  } catch (err) {
+    console.error('[mic] fail:', err.message);
     srMode = 'idle';
-    recognition = null;
-    if (wakeEnabled && !chatOpen) setTimeout(startWake, 800);
-  };
-  try { recognition.start(); } catch { srMode = 'idle'; recognition = null; }
+    micBtn.classList.remove('listening');
+  }
 }
 
-function stopRecognition() {
-  if (recognition) {
-    try { recognition.abort(); } catch {}
-    recognition = null;
-  }
+async function stopCommandAndSend() {
   srMode = 'idle';
   micBtn.classList.remove('listening');
-}
+  if (micProcessor) { micProcessor.disconnect(); micProcessor = null; }
+  if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
+  if (micAudioCtx) { await micAudioCtx.close(); micAudioCtx = null; }
 
-if (!SR) micBtn.style.display = 'none';
+  const total = audioChunks.reduce((n, c) => n + c.length, 0);
+  if (total === 0) return;
+
+  const merged = new Float32Array(total);
+  let off = 0;
+  for (const c of audioChunks) { merged.set(c, off); off += c.length; }
+  audioChunks = [];
+
+  input.value = 'transcribing...';
+  micBtn.disabled = true;
+  const text = await window.clawd.sttTranscribe(merged.buffer);
+  micBtn.disabled = false;
+  if (text) { input.value = text; sendMessage(); }
+  else input.value = '';
+}
 
 micBtn.addEventListener('click', () => {
-  if (srMode === 'command') stopRecognition();
+  if (srMode === 'command') stopCommandAndSend();
   else startCommand();
 });
 
-function setWakeEnabled(on) {
-  wakeEnabled = on;
-  if (on) startWake();
-  else stopRecognition();
-}
+function setWakeEnabled() {} // wake word disabled — relied on Web Speech API
 
 // ── App name → mood map (for screen awareness reactions) ──
 const APP_MOODS = {
