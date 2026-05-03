@@ -9,24 +9,42 @@ const ttsBtn = document.getElementById('tts-btn');
 const micBtn = document.getElementById('mic-btn');
 
 let history = [];
-let memoryFacts = [];
+let memoryCats = { preferences: [], patterns: [], projects: [], personal: [], actions: [] };
 let chatOpen = false;
-let speechMode = 'rocky'; // 'rocky' | 'smart'
+let speechMode = 'rocky';
 let idleTimer = null;
 let idleCycleTimer = null;
-let idleIndex = 0;
 let currentContext = null;
 let messagesSinceLastSummarize = 0;
 const SUMMARIZE_EVERY = 10;
+let wakeEnabled = false;
+
 
 async function initMemory() {
   history = await window.clawd.loadHistory();
-  memoryFacts = await window.clawd.loadMemory();
+  const raw = await window.clawd.loadMemory();
+  // Handle both legacy array and new categorized format
+  if (Array.isArray(raw)) {
+    memoryCats = { preferences: [], patterns: [], projects: [], personal: raw, actions: [] };
+  } else {
+    memoryCats = { preferences: [], patterns: [], projects: [], personal: [], actions: [], ...raw };
+  }
 }
 
 initMemory();
 
-// ── TTS (edge-tts + Web Audio harmonics — Rocky polyphonic voice) ──
+// ── First open of day ──
+async function checkFirstOpen() {
+  try {
+    const { isFirstToday } = await window.clawd.checkFirstOpen();
+    if (isFirstToday) {
+      setTimeout(() => showBubble('new day. Clawd wake. human here, question? good good.'), 5000);
+    }
+  } catch {}
+}
+checkFirstOpen();
+
+// ── TTS ──
 let ttsMuted = false;
 let audioCtx = null;
 let activeSources = [];
@@ -65,9 +83,6 @@ async function initTtsState() {
   const settings = await window.clawd.loadSettings();
   ttsMuted = !!settings.ttsMuted;
   updateTtsBtn();
-  if (settings.wakeWordEnabled) {
-    setTimeout(() => setWakeEnabled(true), 1500);
-  }
 }
 
 function saveAllSettings() {
@@ -89,7 +104,7 @@ ttsBtn.addEventListener('click', () => {
 
 initTtsState();
 
-// ── Mode toggle (/rocky | /smart) ──
+// ── Mode toggle ──
 const modeBtn = document.getElementById('mode-btn');
 
 function setMode(m) {
@@ -102,7 +117,7 @@ modeBtn.addEventListener('click', () => setMode(speechMode === 'rocky' ? 'smart'
 
 // ── Copy last response ──
 document.getElementById('copy-btn').addEventListener('click', () => {
-  const msgs = document.querySelectorAll('.msg.clawd');
+  const msgs = document.querySelectorAll('.msg-text');
   if (!msgs.length) return;
   const last = msgs[msgs.length - 1].innerText;
   navigator.clipboard.writeText(last).then(() => {
@@ -112,7 +127,7 @@ document.getElementById('copy-btn').addEventListener('click', () => {
   });
 });
 
-// ── STT (Whisper via @xenova/transformers — offline, no Google) ──
+// ── STT (Whisper) ──
 let srMode = 'idle';
 let micStream = null;
 let micAudioCtx = null;
@@ -148,6 +163,7 @@ async function startCommand() {
 }
 
 async function stopCommandAndSend() {
+  if (srMode !== 'command') return;
   srMode = 'idle';
   micBtn.classList.remove('listening');
   if (micProcessor) { micProcessor.disconnect(); micProcessor = null; }
@@ -175,9 +191,32 @@ micBtn.addEventListener('click', () => {
   else startCommand();
 });
 
-function setWakeEnabled() {} // wake word disabled — relied on Web Speech API
+// ── Global hotkey handler ──
+window.clawd.onHotkeyAction((action) => {
+  if (action === 'open') {
+    // keydown fires — will resolve to tap or hold, do nothing yet
+  } else if (action === 'tap') {
+    // Short press: toggle chat
+    if (chatOpen) closeChat();
+    else { openChat(); setTimeout(() => input.focus(), 100); }
+  } else if (action === 'hold-start') {
+    if (!chatOpen) {
+      openChat();
+      setTimeout(() => startCommand(), 350);
+    } else {
+      startCommand();
+    }
+  } else if (action === 'hold-end') {
+    stopCommandAndSend();
+  }
+});
 
-// ── App name → mood map (for screen awareness reactions) ──
+// ── Same-app 20min proactive notify ──
+window.clawd.onSameAppNotify((ctx) => {
+  if (!chatOpen && !bubbleVisible) fireProactive();
+});
+
+// ── App name → mood map ──
 const APP_MOODS = {
   'Code.exe': 'coding',
   'devenv.exe': 'coding',
@@ -196,7 +235,6 @@ let lastContextRemarkAt = 0;
 
 window.clawd.onContextChange((ctx) => {
   currentContext = ctx;
-  // Only react visually if chat closed and not sleeping
   if (!chatOpen && petImg.src && !petImg.src.includes('sleeping')) {
     const mood = APP_MOODS[ctx.app];
     if (mood) {
@@ -204,7 +242,6 @@ window.clawd.onContextChange((ctx) => {
       resetSleepTimer();
     }
   }
-  // 25% chance to remark on app switch, throttled to 1 per 90s
   const now = Date.now();
   if (!chatOpen && !bubbleVisible && now - lastContextRemarkAt > 90000 && Math.random() < 0.25) {
     lastContextRemarkAt = now;
@@ -250,7 +287,6 @@ const MOODS = {
   sleeping: ['sleeping-soundly.svg'],
 };
 
-// ── Keyword → mood override (scans Clawd's reply) ──
 const KEYWORD_MOODS = [
   { mood: 'error',   words: ['error', 'fail', 'broke', 'wrong', 'sorry', 'not work', 'cannot'] },
   { mood: 'excited', words: ['interesting', 'cool', 'neat', 'wow', 'amazing', 'great', 'excellent'] },
@@ -265,7 +301,6 @@ function pickSvg(mood) {
 
 function setSvg(mood) {
   const src = pickSvg(mood);
-  // Skip bounce if SVG didn't change — avoids visual jump on chat toggle
   if (petImg.src.endsWith(src)) return;
   petImg.classList.remove('bounce-in', 'swapping');
   void petImg.offsetWidth;
@@ -299,21 +334,19 @@ const bubble = document.getElementById('bubble');
 let bubbleVisible = false;
 let bubbleHideTimer = null;
 let proactiveTimer = null;
-const PROACTIVE_MIN_MS = 3 * 60 * 1000;   // 3min minimum gap
-const PROACTIVE_MAX_MS = 8 * 60 * 1000;   // 8min max gap
+let confirmResolve = null;
+const PROACTIVE_MIN_MS = 3 * 60 * 1000;
+const PROACTIVE_MAX_MS = 8 * 60 * 1000;
 
 function showBubble(text) {
   if (!text || chatOpen) return;
   bubble.textContent = text;
   bubbleVisible = true;
-  // Stop walking while bubble shows
   stopWalking();
-  // Resize window to accommodate bubble
   window.clawd.toggleBubble(true);
   requestAnimationFrame(() => {
     requestAnimationFrame(() => bubble.classList.remove('hidden'));
   });
-  // Speak it too if TTS on
   speak(text);
   clearTimeout(bubbleHideTimer);
   bubbleHideTimer = setTimeout(hideBubble, 8000);
@@ -322,6 +355,7 @@ function showBubble(text) {
 function hideBubble() {
   if (!bubbleVisible) return;
   bubbleVisible = false;
+  if (confirmResolve) { confirmResolve(false); confirmResolve = null; }
   bubble.classList.add('hidden');
   clearTimeout(bubbleHideTimer);
   setTimeout(() => {
@@ -332,17 +366,19 @@ function hideBubble() {
   }, 320);
 }
 
-bubble.addEventListener('click', () => {
+bubble.addEventListener('click', (e) => {
+  // Don't close if clicking confirm buttons
+  if (e.target.classList.contains('confirm-btn')) return;
   hideBubble();
-  pet.click(); // open chat
+  if (!confirmResolve) pet.click();
 });
 
 async function fireProactive() {
   if (chatOpen || bubbleVisible || !currentContext) return;
   try {
-    const remark = await window.clawd.proactive(currentContext, memoryFacts);
+    const remark = await window.clawd.proactive(currentContext, memoryCats);
     if (remark) showBubble(remark);
-  } catch { /* swallow */ }
+  } catch {}
 }
 
 function startProactiveLoop() {
@@ -354,11 +390,35 @@ function startProactiveLoop() {
   }, gap);
 }
 
+// ── Tool confirm bubble ──
+function confirmTool(tool, args, isDangerous = false) {
+  return new Promise((resolve) => {
+    if (bubbleVisible) hideBubble();
+    confirmResolve = resolve;
+    const msg = isDangerous
+      ? `Clawd run ${tool}: ${JSON.stringify(args)}. dangerous. do, question?`
+      : `Clawd do ${tool}. ok, question?`;
+    bubble.innerHTML = `<div>${msg}</div><div style="margin-top:6px;display:flex;gap:8px"><button class="confirm-btn" id="cb-yes">yes.</button><button class="confirm-btn" id="cb-no">no.</button></div>`;
+    bubbleVisible = true;
+    window.clawd.toggleBubble(true);
+    requestAnimationFrame(() => requestAnimationFrame(() => bubble.classList.remove('hidden')));
+
+    document.getElementById('cb-yes').onclick = () => {
+      hideBubble();
+      if (confirmResolve) { confirmResolve(true); confirmResolve = null; }
+    };
+    document.getElementById('cb-no').onclick = () => {
+      hideBubble();
+      if (confirmResolve) { confirmResolve(false); confirmResolve = null; }
+    };
+  });
+}
+
 // ── Idle walk ──
 let walkTimer = null;
 let homeX = null;
 let homeY = null;
-const WALK_RADIUS = 150; // stay within 150px of home
+const WALK_RADIUS = 150;
 
 async function startWalking() {
   if (walkTimer) return;
@@ -368,16 +428,14 @@ async function startWalking() {
     const pos = await window.clawd.getWindowPos();
     const { x, y, screenMinX, screenMaxX } = pos;
 
-    // Set home on first walk — lock both X and Y so walk stays side-to-side at fixed height
     if (homeX === null) { homeX = x; homeY = y; }
 
-    // Walk radius around home position, clamped to screen
     const homeLeft = Math.max(screenMinX, homeX - WALK_RADIUS);
     const homeRight = Math.min(screenMaxX, homeX + WALK_RADIUS);
     const targetX = homeLeft + Math.random() * (homeRight - homeLeft);
 
     const duration = 2500 + Math.random() * 2500;
-    window.clawd.walkTo(targetX, homeY, duration); // lock Y to home — no vertical drift
+    window.clawd.walkTo(targetX, homeY, duration);
     walkTimer = setTimeout(tick, duration + 1500 + Math.random() * 4000);
   };
   walkTimer = setTimeout(tick, 5000);
@@ -386,7 +444,7 @@ async function startWalking() {
 function stopWalking() {
   clearTimeout(walkTimer);
   walkTimer = null;
-  window.clawd.cancelWalk(); // kill any in-flight interpolation in main process
+  window.clawd.cancelWalk();
 }
 
 function resetWalkHome() {
@@ -444,47 +502,49 @@ document.addEventListener('mouseup', () => {
   dragging = false;
   justDragged = true;
   pet.style.cursor = '';
-  resetWalkHome(); // user moved pet → new home
-  // Suppress next click event (fires after mouseup)
+  resetWalkHome();
   setTimeout(() => { justDragged = false; }, 50);
 });
 
-// ── Toggle chat ──
+// ── Chat open/close helpers ──
+function openChat() {
+  if (chatOpen) return;
+  chatOpen = true;
+  window.clawd.sendChatOpen(true);
+  resetSleepTimer();
+  stopWalking();
+  hideBubble();
+  window.clawd.toggleChat(true);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      chatPanel.classList.remove('hidden');
+      input.focus();
+    });
+  });
+  if (history.length === 0) setSvg('greeting');
+  else setSvg('idle');
+  stopIdleCycle();
+}
+
+function closeChat() {
+  if (!chatOpen) return;
+  chatOpen = false;
+  window.clawd.sendChatOpen(false);
+  chatPanel.classList.add('hidden');
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.clawd.toggleChat(false);
+    });
+  });
+  startIdleCycle();
+  startWalking();
+}
+
+// ── Toggle chat (click pet) ──
 pet.addEventListener('click', (e) => {
   if (e.ctrlKey || justDragged) return;
-  chatOpen = !chatOpen;
-  resetSleepTimer();
-
-  if (chatOpen) {
-    stopWalking();
-    hideBubble();
-    if (srMode === 'wake') stopRecognition();
-    // Resize window first, reveal chat after window is ready
-    window.clawd.toggleChat(true);
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        chatPanel.classList.remove('hidden');
-        input.focus();
-      });
-    });
-    if (history.length === 0) {
-      setSvg('greeting');
-    } else {
-      setSvg('idle');
-    }
-    stopIdleCycle();
-  } else {
-    // Hide chat first, shrink window after fade
-    chatPanel.classList.add('hidden');
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        window.clawd.toggleChat(false);
-      });
-    });
-    startIdleCycle();
-    startWalking();
-    if (wakeEnabled) setTimeout(startWake, 800);
-  }
+  if (chatOpen) closeChat();
+  else openChat();
 });
 
 // ── Send message ──
@@ -501,7 +561,6 @@ async function sendMessage() {
   const text = input.value.trim();
   if (!text) return;
 
-  // Debug command — show raw window data
   if (text === '/ctx') {
     input.value = '';
     const data = await window.clawd.debugContext();
@@ -509,7 +568,6 @@ async function sendMessage() {
     return;
   }
 
-  // Exit command
   if (text === '/exit' || text === '/quit') {
     input.value = '';
     appendMessage('clawd', 'Clawd sleep. bye bye.');
@@ -517,7 +575,6 @@ async function sendMessage() {
     return;
   }
 
-  // Restart command
   if (text === '/restart') {
     input.value = '';
     appendMessage('clawd', 'Clawd reboot. brain reset.');
@@ -525,7 +582,6 @@ async function sendMessage() {
     return;
   }
 
-  // Mode toggle
   if (text === '/smart') {
     input.value = '';
     setMode('smart');
@@ -540,18 +596,12 @@ async function sendMessage() {
     return;
   }
 
-  // Wake word toggle
   if (text === '/wake') {
     input.value = '';
-    setWakeEnabled(!wakeEnabled);
-    saveAllSettings();
-    appendMessage('clawd', wakeEnabled
-      ? 'Clawd ear open. say "Clawd" to wake.'
-      : 'Clawd ear close. quiet now.');
+    appendMessage('clawd', 'wake word not available. use mic button, question?');
     return;
   }
 
-  // Vision command — /see [optional question]
   if (text === '/see' || text.startsWith('/see ')) {
     input.value = '';
     const question = text.length > 5 ? text.slice(5).trim() : 'what you see, question?';
@@ -583,30 +633,63 @@ async function sendMessage() {
 
   input.value = '';
   appendMessage('user', text);
-  history.push({ role: 'user', content: text });
-
   setSvg('thinking');
   sendBtn.disabled = true;
   resetSleepTimer();
 
   try {
-    const reply = await window.clawd.chat(history, currentContext, memoryFacts, speechMode);
-    history.push({ role: 'assistant', content: reply });
-    window.clawd.saveHistory(history);
+    // Intent detection first — fast call. If tool found, skip chat reply.
+    const intentResult = await window.clawd.detectIntent(text);
 
-    messagesSinceLastSummarize += 2; // user + assistant
-    if (messagesSinceLastSummarize >= SUMMARIZE_EVERY) {
-      messagesSinceLastSummarize = 0;
-      // summarize in background — don't await, don't block chat
-      window.clawd.summarizeMemory(history.slice(-30), memoryFacts).then(facts => {
-        memoryFacts = facts;
-        window.clawd.saveMemory(facts);
-      });
+    if (intentResult && intentResult.tool) {
+      // Tool path: execute, show bubble result, no chat reply (command not conversation)
+      const { tool, args, risk } = intentResult;
+      let toolResult = null;
+
+      try {
+        if (risk === 'safe') {
+          toolResult = await window.clawd.executeTool(tool, args);
+        } else {
+          const confirmed = await confirmTool(tool, args, risk === 'dangerous');
+          if (confirmed) toolResult = await window.clawd.executeTool(tool, args);
+        }
+      } catch (toolErr) {
+        toolResult = `tool fail: ${toolErr}`;
+      }
+
+      setSvg(toolResult && !toolResult.startsWith('tool fail') ? 'happy' : 'error');
+
+      if (toolResult) {
+        if (!memoryCats.actions) memoryCats.actions = [];
+        memoryCats.actions.push(`${tool}(${JSON.stringify(args)}): ${toolResult}`);
+        if (memoryCats.actions.length > 10) memoryCats.actions = memoryCats.actions.slice(-10);
+        window.clawd.saveMemory(memoryCats);
+        // Show in chat if open, bubble if closed
+        if (chatOpen) appendMessage('clawd', toolResult);
+        else showBubble(toolResult);
+      }
+
+      // Don't add to history — command not conversation
+    } else {
+      // Chat path: no tool, normal reply
+      history.push({ role: 'user', content: text });
+      const reply = await window.clawd.chat(history, currentContext, memoryCats, speechMode);
+
+      history.push({ role: 'assistant', content: reply });
+      window.clawd.saveHistory(history);
+
+      messagesSinceLastSummarize += 2;
+      if (messagesSinceLastSummarize >= SUMMARIZE_EVERY) {
+        messagesSinceLastSummarize = 0;
+        window.clawd.summarizeMemory(history.slice(-30), memoryCats).then(cats => {
+          memoryCats = cats;
+          window.clawd.saveMemory(cats);
+        });
+      }
+
+      setSvg(detectMood(reply));
+      appendMessage('clawd', reply);
     }
-
-    const mood = detectMood(reply);
-    setSvg(mood);
-    appendMessage('clawd', reply);
   } catch (err) {
     setSvg('error');
     const msg = (err && err.message) || String(err) || 'unknown';
@@ -634,7 +717,6 @@ function appendMessage(role, text) {
     messagesEl.appendChild(div);
     messagesEl.scrollTop = messagesEl.scrollHeight;
 
-    // Speak the message in parallel with typewriter
     speak(text);
 
     let i = 0;
@@ -662,4 +744,4 @@ function appendMessage(role, text) {
 startIdleCycle();
 resetSleepTimer();
 setTimeout(startWalking, 8000);
-setTimeout(startProactiveLoop, 60000); // first proactive after 1min
+setTimeout(startProactiveLoop, 60000);

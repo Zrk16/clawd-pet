@@ -59,6 +59,22 @@ body {
   transform: rotate(45deg);
 }
 
+/* ── Tool confirm buttons ── */
+.confirm-btn {
+  background: rgba(255, 122, 61, 0.15);
+  border: 1px solid rgba(255, 122, 61, 0.5);
+  color: #ff7a3d;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 2px 10px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s;
+}
+.confirm-btn:hover {
+  background: rgba(255, 122, 61, 0.3);
+}
+
 /* ── Pet ── */
 #pet-container {
   position: relative;

@@ -11,8 +11,8 @@ contextBridge.exposeInMainWorld('clawd', {
   loadHistory: () => ipcRenderer.invoke('load-history'),
   saveHistory: (history) => ipcRenderer.send('save-history', history),
   loadMemory: () => ipcRenderer.invoke('load-memory'),
-  saveMemory: (facts) => ipcRenderer.send('save-memory', facts),
-  summarizeMemory: (messages, existingFacts) => ipcRenderer.invoke('summarize-memory', { messages, existingFacts }),
+  saveMemory: (data) => ipcRenderer.send('save-memory', data),
+  summarizeMemory: (messages, existingMemory) => ipcRenderer.invoke('summarize-memory', { messages, existingMemory }),
   moveWindow: (x, y) => ipcRenderer.send('move-window', { x, y }),
   getWindowPos: () => ipcRenderer.invoke('get-window-pos'),
   loadSettings: () => ipcRenderer.invoke('load-settings'),
@@ -25,4 +25,14 @@ contextBridge.exposeInMainWorld('clawd', {
   synthesizeSpeech: (text) => ipcRenderer.invoke('synthesize-speech', text),
   sttTranscribe: (ab) => ipcRenderer.invoke('stt-transcribe', Buffer.from(ab)),
   onSttStatus: (cb) => ipcRenderer.on('stt-status', (_, s) => cb(s)),
+  // Mark 10: tool system
+  detectIntent: (message) => ipcRenderer.invoke('detect-intent', message),
+  executeTool: (tool, args) => ipcRenderer.invoke('execute-tool', { tool, args }),
+  // Mark 10: hotkey
+  onHotkeyAction: (cb) => ipcRenderer.on('hotkey-action', (_, action) => cb(action)),
+  sendChatOpen: (open) => ipcRenderer.send('chat-open', open),
+  // Mark 10: first open of day
+  checkFirstOpen: () => ipcRenderer.invoke('check-first-open'),
+  // Mark 10: same-app notify
+  onSameAppNotify: (cb) => ipcRenderer.on('same-app-notify', (_, ctx) => cb(ctx)),
 });
