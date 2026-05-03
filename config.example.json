@@ -1,0 +1,5 @@
+{
+  "apiKey": "YOUR_NVIDIA_NIM_API_KEY",
+  "model": "meta/llama-3.2-11b-vision-instruct",
+  "visionModel": "meta/llama-3.2-11b-vision-instruct"
+}

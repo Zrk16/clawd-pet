@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+  <title>Clawd</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <div id="pet-container">
+      <div id="bubble" class="hidden"></div>
+      <div id="pet" title="Click to chat">
+        <img id="pet-img" src="assets/artboard-24cla.svg" alt="Clawd" draggable="false" />
+      </div>
+    </div>
+
+    <div id="chat-panel" class="hidden">
+      <div id="chat-header">
+        <span class="header-name">◈ CLAWD</span>
+        <div class="header-right">
+          <span class="header-status"><span class="pulse-dot"></span>SIG:LIVE</span>
+          <button id="mode-btn" title="Toggle speech mode">/rocky</button>
+          <button id="copy-btn" title="Copy last response">⎘</button>
+          <button id="tts-btn" title="Toggle voice">♪</button>
+          <button id="restart-btn" title="Restart Clawd">↺</button>
+        </div>
+      </div>
+      <div id="messages"></div>
+      <div id="input-row">
+        <input id="user-input" type="text" placeholder="transmit..." autocomplete="off" spellcheck="false" />
+        <button id="mic-btn" title="Hold to talk">◉</button>
+        <button id="send-btn">TX</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

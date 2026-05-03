@@ -1,0 +1,19 @@
+{
+  "name": "clawd-pet",
+  "version": "1.0.0",
+  "description": "Electron desktop pet powered by NVIDIA NIM. Talks like Rocky from Project Hail Mary.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "Ziyaad",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^41.5.0"
+  },
+  "dependencies": {
+    "get-windows": "^9.3.0"
+  }
+}

@@ -1,0 +1,25 @@
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('clawd', {
+  chat: (messages, context, memory, mode) => ipcRenderer.invoke('chat', { messages, context, memory, mode }),
+  toggleChat: (open) => ipcRenderer.send('toggle-chat', open),
+  toggleBubble: (show) => ipcRenderer.send('toggle-bubble', show),
+  restart: () => ipcRenderer.send('restart'),
+  quit: () => ipcRenderer.send('quit'),
+  onContextChange: (cb) => ipcRenderer.on('context-change', (_, ctx) => cb(ctx)),
+  debugContext: () => ipcRenderer.invoke('debug-context'),
+  loadHistory: () => ipcRenderer.invoke('load-history'),
+  saveHistory: (history) => ipcRenderer.send('save-history', history),
+  loadMemory: () => ipcRenderer.invoke('load-memory'),
+  saveMemory: (facts) => ipcRenderer.send('save-memory', facts),
+  summarizeMemory: (messages, existingFacts) => ipcRenderer.invoke('summarize-memory', { messages, existingFacts }),
+  moveWindow: (x, y) => ipcRenderer.send('move-window', { x, y }),
+  getWindowPos: () => ipcRenderer.invoke('get-window-pos'),
+  loadSettings: () => ipcRenderer.invoke('load-settings'),
+  saveSettings: (s) => ipcRenderer.send('save-settings', s),
+  walkTo: (x, y, duration) => ipcRenderer.send('walk-to', { x, y, duration }),
+  cancelWalk: () => ipcRenderer.send('cancel-walk'),
+  captureScreen: () => ipcRenderer.invoke('capture-screen'),
+  visionChat: (question, imageDataUrl) => ipcRenderer.invoke('vision-chat', { question, imageDataUrl }),
+  proactive: (context, memory) => ipcRenderer.invoke('proactive', { context, memory }),
+});
