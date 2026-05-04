@@ -1,0 +1,28 @@
+/* ── TERMINAL SETTINGS PRESET ── */
+
+.preset-terminal body {
+  background: #0d0d0d !important;
+  color: #00ff00 !important;
+  font-family: "Consolas", monospace !important;
+}
+
+.preset-terminal h1, .preset-terminal h2 {
+  color: #00ff00 !important;
+}
+
+.preset-terminal .setting-row label {
+  color: #00ff00 !important;
+}
+
+.preset-terminal input[type="number"], .preset-terminal select, .preset-terminal #distraction-input {
+  background: #000000 !important;
+  border: 1px solid #00ff00 !important;
+  color: #00ff00 !important;
+  font-family: "Consolas", monospace !important;
+}
+
+.preset-terminal button {
+  background: #003300 !important;
+  color: #00ff00 !important;
+  border: 1px solid #00ff00 !important;
+}

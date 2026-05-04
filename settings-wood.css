@@ -1,0 +1,28 @@
+/* ── WOOD SETTINGS PRESET ── */
+
+.preset-wood body {
+  background: #f5deb3 !important;
+  color: #5c4033 !important;
+  font-family: "Georgia", serif !important;
+}
+
+.preset-wood h1, .preset-wood h2 {
+  color: #8b4513 !important;
+}
+
+.preset-wood .setting-row label {
+  color: #5c4033 !important;
+}
+
+.preset-wood input[type="number"], .preset-wood select, .preset-wood #distraction-input {
+  background: #ffffff !important;
+  border: 2px solid #8b4513 !important;
+  color: #5c4033 !important;
+  font-family: "Georgia", serif !important;
+}
+
+.preset-wood button {
+  background: #8b4513 !important;
+  color: #f5e6d3 !important;
+  border: none !important;
+}

@@ -1,0 +1,52 @@
+/* ── MONOCHROME PRESET ── */
+/* Black and white only — fully independent */
+
+.preset-monochrome #bubble {
+  background: #1a1a1a !important;
+  color: #f0f0f0 !important;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: 1px solid #333333 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  clip-path: none !important;
+}
+
+.preset-monochrome #bubble::after {
+  display: none !important;
+}
+
+.preset-monochrome #chat-panel {
+  background: #2a2a2a !important;
+  border: 1px solid #444444 !important;
+  border-radius: 4px !important;
+}
+
+.preset-monochrome #chat-header {
+  background: #000000 !important;
+  color: #f0f0f0 !important;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.preset-monochrome #messages {
+  background: #1a1a1a !important;
+  color: #e0e0e0 !important;
+}
+
+.preset-monochrome #user-input {
+  background: #1a1a1a !important;
+  border: 1px solid #444444 !important;
+  color: #f0f0f0 !important;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.preset-monochrome #user-input::placeholder {
+  color: #666666 !important;
+}
+
+.preset-monochrome button {
+  background: #f0f0f0 !important;
+  color: #1a1a1a !important;
+  border: none !important;
+}

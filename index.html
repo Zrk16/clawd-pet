@@ -10,6 +10,16 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <script>
+    // Only prevent Ctrl- (zoom out), allow Ctrl+ to zoom in
+    document.addEventListener('keydown', e => {
+      if (e.ctrlKey && (e.key === '-' || e.key === '_')) {
+        e.preventDefault();
+      }
+    });
+    // Reset zoom on load
+    document.documentElement.style.zoom = 'reset';
+  </script>
   <div id="app">
     <div id="pet-container">
       <div id="bubble" class="hidden"></div>

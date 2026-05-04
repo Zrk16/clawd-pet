@@ -1,69 +1,30 @@
 /* ── SUNSET SETTINGS PRESET ── */
-/* Warm orange-pink gradient */
-:root {
-  --sun-bg: #1a0a0f;
-  --sun-text: #ffcc99;
-  --sun-accent: #ff9966;
-  --sun-pink: #ff6699;
-  --sun-orange: #ff9933;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --sun-bg: #fff5f0;
-    --sun-text: #995533;
-    --sun-accent: #ff6633;
-    --sun-pink: #ff3399;
-    --sun-orange: #ff9900;
-  }
-}
 
 .preset-sunset body {
-  background: var(--sun-bg);
-  color: var(--sun-text);
+  background: linear-gradient(180deg, #ff9966 0%, #ff5e62 50%, #9b2335 100%) !important;
+  color: #ffffff !important;
+  font-family: "Georgia", serif !important;
 }
 
-.preset-sunset #header {
-  background: linear-gradient(90deg, var(--sun-pink), var(--sun-orange));
-  border-bottom: none;
+.preset-sunset h1, .preset-sunset h2 {
+  color: #ffffff !important;
 }
 
-.preset-sunset #header h1 {
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+.preset-sunset .setting-row label {
+  color: #ffffff !important;
 }
 
-.preset-sunset .section-title {
-  color: var(--sun-accent);
+.preset-sunset input[type="number"], .preset-sunset select, .preset-sunset #distraction-input {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  font-family: "Georgia", serif !important;
+  border-radius: 20px !important;
 }
 
-.preset-sunset .row label {
-  color: var(--sun-text);
-}
-
-.preset-sunset .toggle-track {
-  background: var(--sun-bg);
-  border: 1px solid var(--sun-accent);
-}
-
-.preset-sunset .toggle-track::after {
-  background: var(--sun-accent);
-}
-
-.preset-sunset input[type="number"],
-.preset-sunset select {
-  background: var(--sun-bg);
-  border: 1px solid var(--sun-accent);
-  color: var(--sun-text);
-}
-
-.preset-sunset #footer {
-  background: var(--sun-bg);
-  border-top: 1px solid var(--sun-accent);
-}
-
-.preset-sunset #save-btn {
-  background: var(--sun-accent);
-  border: none;
-  color: var(--sun-bg);
+.preset-sunset button {
+  background: #ffffff !important;
+  color: #ff6b35 !important;
+  border: none !important;
+  border-radius: 20px !important;
 }

@@ -8,6 +8,13 @@ const { MsEdgeTTS, OUTPUT_FORMAT } = require('msedge-tts');
 
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), 'utf8'));
 
+// ── Pop culture references ──
+const referencesPath = path.join(__dirname, 'references.md');
+const referencesContent = fs.existsSync(referencesPath) ? fs.readFileSync(referencesPath, 'utf8') : '';
+const referencesLine = referencesContent
+  ? `\n\nPOP CULTURE REFERENCES (use naturally, match vibe of conversation):\n${referencesContent}\nUse references when context fits. Stay in Rocky character.`
+  : '';
+
 // ── Emotion TTS prosody map ──
 const MOOD_PROSODY = {
   happy:    { rate: '+15%', pitch: '+3Hz' },
@@ -70,32 +77,6 @@ let chatIsOpen = false;
 let sameAppTimer = null;
 let pollInterval = null;
 let reminders = [];
-let lastClipboardHash = '';
-let batteryWarningShown = false;
-
-// ── Battery monitoring ──
-ipcMain.handle('get-battery', () => {
-  try {
-    const powerMonitor = require('power-monitor');
-    if (powerMonitor.isOnBatteryPower && powerMonitor.isOnBatteryPower()) {
-      return { onBattery: true, low: true };
-    }
-  } catch {}
-  return { onBattery: false, low: false };
-});
-
-// Clipboard monitoring for ambient feature
-ipcMain.handle('get-clipboard-hash', () => {
-  const text = clipboard.readText();
-  const hash = text ? simpleHash(text) : '';
-  return { text: text || '', hash, changed: hash !== lastClipboardHash };
-});
-
-function simpleHash(str) {
-  let h = 0;
-  for (let i = 0; i < str.length; i++) h = ((h << 5) - h) + str.charCodeAt(i) | 0;
-  return h.toString(36);
-}
 
 // ── Persistent storage helpers ──
 function dataDir() {
@@ -315,13 +296,6 @@ function createWindow() {
   });
 
   win.loadFile('index.html');
-
-  const settings = readJSON('settings.json', {});
-  const uiPreset = settings.uiPreset || 'og';
-  win.webContents.once('did-finish-load', () => {
-    win.webContents.send('ui-preset', uiPreset);
-  });
-
   win.show();
   win.setAlwaysOnTop(true, 'screen-saver');
 
@@ -365,13 +339,6 @@ if (!gotLock) {
         if (win && !win.isDestroyed()) win.webContents.send('reminder-fire', r.text);
       }
     }, 60000);
-
-    // Battery check every 5 minutes
-    setInterval(() => {
-      if (win && !win.isDestroyed()) {
-        win.webContents.send('check-battery');
-      }
-    }, 300000);
   });
 }
 
@@ -1046,6 +1013,11 @@ ipcMain.on('quit', () => {
   app.exit(0);
 });
 
+ipcMain.on('set-window-size', (_, { width, height }) => {
+  const [x, y] = win.getPosition();
+  win.setBounds({ x, y, width: Math.round(width), height: Math.round(height) });
+});
+
 // Focus mode polling — tighten to 10s during focus, relax to 30s after
 ipcMain.on('set-focus-poll', (_, fast) => {
   startContextPolling(fast ? 10000 : 30000);
@@ -1116,7 +1088,6 @@ ipcMain.handle('get-full-settings', () => {
     walkEnabled: true,
     focusDuration: 25,
     bubbleFrequency: 'normal',
-    uiPreset: 'og',
     distractionApps: ['YouTube', 'Twitter', 'Reddit', 'Netflix', 'TikTok', 'Instagram', 'Facebook', 'Twitch'],
   });
 });
@@ -1246,7 +1217,7 @@ ipcMain.handle('chat', async (event, payload) => {
     : '';
 
   const systemPrompt = mode === 'smart'
-    ? `You are Clawd, a helpful AI assistant. Respond clearly and naturally. Be concise but complete.${contextLine}${memorySection}${vaultLine}${timeLine}`
+    ? `You are Clawd, a helpful AI assistant. Respond clearly and naturally. Be concise but complete.${contextLine}${memorySection}${vaultLine}${referencesLine}${timeLine}`
     : `${ROCKY_RULES}
 
 Examples:
@@ -1260,7 +1231,7 @@ BAD: "That's really cool!"
 GOOD: "oh. amaze amaze. tell more, question?"
 
 BAD: "I can help you with that."
-GOOD: "Clawd help. [help]."${contextLine}${memorySection}${vaultLine}${timeLine}`;
+GOOD: "Clawd help. [help]."${contextLine}${memorySection}${vaultLine}${referencesLine}${timeLine}`;
 
   const recent = messages.slice(-20);
 

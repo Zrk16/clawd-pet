@@ -1,62 +1,30 @@
 /* ── GRADIENT SETTINGS PRESET ── */
-/* Bold vibrant gradients */
-:root {
-  --grad-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  --grad-text: #ffffff;
-  --grad-accent: #ffd700;
-}
 
 .preset-gradient body {
-  background: var(--grad-bg);
-  color: var(--grad-text);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #ffffff !important;
+  font-family: "Segoe UI", sans-serif !important;
 }
 
-.preset-gradient #header {
-  background: transparent;
-  border-bottom: 1px solid rgba(255,255,255,0.3);
+.preset-gradient h1, .preset-gradient h2 {
+  color: #ffffff !important;
 }
 
-.preset-gradient #header h1 {
-  color: #fff;
+.preset-gradient .setting-row label {
+  color: #ffffff !important;
 }
 
-.preset-gradient .section-title {
-  color: rgba(255,255,255,0.7);
+.preset-gradient input[type="number"], .preset-gradient select, .preset-gradient #distraction-input {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  font-family: "Segoe UI", sans-serif !important;
+  border-radius: 20px !important;
 }
 
-.preset-gradient .row label {
-  color: #fff;
-}
-
-.preset-gradient .toggle-track {
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.3);
-}
-
-.preset-gradient .toggle-track::after {
-  background: #fff;
-}
-
-.preset-gradient input[type="number"],
-.preset-gradient select {
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-}
-
-.preset-gradient .distraction-tag {
-  background: rgba(255,255,255,0.2);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: #fff;
-}
-
-.preset-gradient #footer {
-  background: rgba(0,0,0,0.2);
-  border-top: 1px solid rgba(255,255,255,0.2);
-}
-
-.preset-gradient #save-btn {
-  background: var(--grad-accent);
-  border: none;
-  color: #333;
+.preset-gradient button {
+  background: #ffffff !important;
+  color: #667eea !important;
+  border: none !important;
+  border-radius: 20px !important;
 }

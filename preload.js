@@ -52,4 +52,5 @@ contextBridge.exposeInMainWorld('clawd', {
   getBattery: () => ipcRenderer.invoke('get-battery'),
   getClipboardHash: () => ipcRenderer.invoke('get-clipboard-hash'),
   onCheckBattery: (cb) => ipcRenderer.on('check-battery', () => cb()),
+  setWindowSize: (w, h) => ipcRenderer.send('set-window-size', { width: w, height: h }),
 });

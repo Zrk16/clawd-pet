@@ -1,0 +1,54 @@
+/* ── PASTEL PRESET ── */
+/* Soft pastel colors — fully independent */
+
+.preset-pastel #bubble {
+  background: #fef3c7 !important;
+  color: #78350f !important;
+  font-family: "Comic Sans MS", cursive !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: 2px solid #fcd34d !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 12px rgba(252, 211, 77, 0.3) !important;
+  clip-path: none !important;
+}
+
+.preset-pastel #bubble::after {
+  display: none !important;
+}
+
+.preset-pastel #chat-panel {
+  background: #fdf4ff !important;
+  border: 2px solid #e879f9 !important;
+  border-radius: 20px !important;
+}
+
+.preset-pastel #chat-header {
+  background: #e879f9 !important;
+  color: #ffffff !important;
+  font-family: "Comic Sans MS", cursive !important;
+}
+
+.preset-pastel #messages {
+  background: #fef3c7 !important;
+  color: #78350f !important;
+}
+
+.preset-pastel #user-input {
+  background: #ffffff !important;
+  border: 2px solid #fcd34d !important;
+  color: #78350f !important;
+  font-family: "Comic Sans MS", cursive !important;
+  border-radius: 12px !important;
+}
+
+.preset-pastel #user-input::placeholder {
+  color: #d97706 !important;
+}
+
+.preset-pastel button {
+  background: #fcd34d !important;
+  color: #78350f !important;
+  border: none !important;
+  border-radius: 12px !important;
+}

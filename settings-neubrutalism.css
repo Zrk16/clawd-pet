@@ -1,0 +1,31 @@
+/* ── NEUBRUTALISM SETTINGS PRESET ── */
+
+.preset-neubrutalism body {
+  background: #fee202 !important;
+  color: #000000 !important;
+  font-family: "Arial Black", sans-serif !important;
+}
+
+.preset-neubrutalism h1, .preset-neubrutalism h2 {
+  color: #000000 !important;
+}
+
+.preset-neubrutalism .setting-row label {
+  color: #000000 !important;
+}
+
+.preset-neubrutalism input[type="number"], .preset-neubrutalism select, .preset-neubrutalism #distraction-input {
+  background: #ffffff !important;
+  border: 4px solid #000000 !important;
+  color: #000000 !important;
+  font-family: "Arial", sans-serif !important;
+  border-radius: 0 !important;
+}
+
+.preset-neubrutalism button {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 4px solid #000000 !important;
+  font-family: "Arial Black", sans-serif !important;
+  border-radius: 0 !important;
+}

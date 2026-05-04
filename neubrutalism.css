@@ -1,0 +1,56 @@
+/* ── NEUBRUTALISM PRESET ── */
+/* Bold, raw, high contrast — fully independent */
+
+.preset-neubrutalism #bubble {
+  background: #fffbeb !important;
+  color: #000000 !important;
+  font-family: "Arial Black", sans-serif !important;
+  font-size: 12px !important;
+  padding: 16px 20px !important;
+  border: 4px solid #000000 !important;
+  border-radius: 0 !important;
+  box-shadow: 8px 8px 0px #000000 !important;
+  clip-path: none !important;
+}
+
+.preset-neubrutalism #bubble::after {
+  display: none !important;
+}
+
+.preset-neubrutalism #chat-panel {
+  background: #fee202 !important;
+  border: 4px solid #000000 !important;
+  border-radius: 0 !important;
+}
+
+.preset-neubrutalism #chat-header {
+  background: #ff4d00 !important;
+  color: #000000 !important;
+  font-family: "Arial Black", sans-serif !important;
+  border-bottom: 4px solid #000000 !important;
+}
+
+.preset-neubrutalism #messages {
+  background: #fffbeb !important;
+  color: #000000 !important;
+}
+
+.preset-neubrutalism #user-input {
+  background: #ffffff !important;
+  border: 4px solid #000000 !important;
+  color: #000000 !important;
+  font-family: "Arial", sans-serif !important;
+  border-radius: 0 !important;
+}
+
+.preset-neubrutalism #user-input::placeholder {
+  color: #666666 !important;
+}
+
+.preset-neubrutalism button {
+  background: #000000 !important;
+  color: #ffffff !important;
+  border: 4px solid #000000 !important;
+  font-family: "Arial Black", sans-serif !important;
+  border-radius: 0 !important;
+}

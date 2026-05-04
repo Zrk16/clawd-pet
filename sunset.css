@@ -1,0 +1,54 @@
+/* ── SUNSET PRESET ── */
+/* Warm orange/purple dusk — fully independent */
+
+.preset-sunset #bubble {
+  background: linear-gradient(180deg, #ff6b35 0%, #9b2335 100%) !important;
+  color: #ffffff !important;
+  font-family: "Georgia", serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: none !important;
+  border-radius: 20px !important;
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4) !important;
+  clip-path: none !important;
+}
+
+.preset-sunset #bubble::after {
+  display: none !important;
+}
+
+.preset-sunset #chat-panel {
+  background: linear-gradient(180deg, #ff9966 0%, #ff5e62 50%, #9b2335 100%) !important;
+  border: none !important;
+  border-radius: 20px !important;
+}
+
+.preset-sunset #chat-header {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+  font-family: "Georgia", serif !important;
+}
+
+.preset-sunset #messages {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+}
+
+.preset-sunset #user-input {
+  background: rgba(255, 255, 255, 0.25) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  font-family: "Georgia", serif !important;
+  border-radius: 20px !important;
+}
+
+.preset-sunset #user-input::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.preset-sunset button {
+  background: #ffffff !important;
+  color: #ff6b35 !important;
+  border: none !important;
+  border-radius: 20px !important;
+}

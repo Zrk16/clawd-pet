@@ -1,116 +1,28 @@
 /* ── RETRO SETTINGS PRESET ── */
-/* 8-bit pixel aesthetic */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
-
-:root {
-  --retro-bg: #000000;
-  --retro-text: #33ff33;
-  --retro-border: #33ff33;
-  --retro-accent: #ffff33;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --retro-bg: #111111;
-    --retro-text: #33ff33;
-  }
-}
 
 .preset-retro body {
-  background: var(--retro-bg);
-  color: var(--retro-text);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
+  background: #1a0f2e !important;
+  color: #ff9f43 !important;
+  font-family: "Courier New", monospace !important;
 }
 
-.preset-retro #header {
-  background: var(--retro-bg);
-  border-bottom: 2px solid var(--retro-text);
-  image-rendering: pixelated;
+.preset-retro h1, .preset-retro h2 {
+  color: #ff9f43 !important;
 }
 
-.preset-retro #header h1 {
-  color: var(--retro-text);
-  font-size: 10px;
-  letter-spacing: 0;
+.preset-retro .setting-row label {
+  color: #ff9f43 !important;
 }
 
-.preset-retro #header span {
-  color: var(--retro-accent);
+.preset-retro input[type="number"], .preset-retro select, .preset-retro #distraction-input {
+  background: #1a0f2e !important;
+  border: 2px solid #ff9f43 !important;
+  color: #ff9f43 !important;
+  font-family: "Courier New", monospace !important;
 }
 
-.preset-retro .section-title {
-  color: var(--retro-accent);
-  border-bottom: 1px dashed var(--retro-text);
-  font-size: 7px;
-  letter-spacing: 0;
-}
-
-.preset-retro .row label {
-  color: var(--retro-text);
-  font-size: 8px;
-}
-
-.preset-retro .row .hint {
-  color: var(--retro-text);
-  opacity: 0.7;
-}
-
-.preset-retro .toggle-track {
-  background: var(--retro-bg);
-  border: 2px solid var(--retro-text);
-}
-
-.preset-retro .toggle-track::after {
-  background: var(--retro-text);
-}
-
-.preset-retro input[type="number"],
-.preset-retro select {
-  background: var(--retro-bg);
-  border: 2px solid var(--retro-text);
-  color: var(--retro-text);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-}
-
-.preset-retro .distraction-tag {
-  background: var(--retro-bg);
-  border: 2px solid var(--retro-text);
-  color: var(--retro-text);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 6px;
-}
-
-.preset-retro #distraction-input {
-  background: var(--retro-bg);
-  border: 2px solid var(--retro-text);
-  color: var(--retro-text);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-}
-
-.preset-retro #distraction-add-btn {
-  background: var(--retro-text);
-  border: 2px solid var(--retro-text);
-  color: var(--retro-bg);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 6px;
-}
-
-.preset-retro #footer {
-  background: var(--retro-bg);
-  border-top: 2px solid var(--retro-text);
-}
-
-.preset-retro #save-btn {
-  background: var(--retro-accent);
-  border: 2px solid var(--retro-text);
-  color: var(--retro-bg);
-  font-family: 'Press Start 2P', monospace;
-  font-size: 8px;
-}
-
-.preset-retro #save-status {
-  color: var(--retro-accent);
+.preset-retro button {
+  background: #ff9f43 !important;
+  color: #1a0f2e !important;
+  border: 2px solid #1a0f2e !important;
 }

@@ -1,0 +1,52 @@
+/* ── VAPORWAVE PRESET ── */
+/* Pastel pink/purple, dreamy — fully independent */
+
+.preset-vaporwave #bubble {
+  background: linear-gradient(180deg, #ff71ce 0%, #01cdfe 100%) !important;
+  color: #ffffff !important;
+  font-family: "Arial", sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 20px rgba(255, 113, 206, 0.4) !important;
+  clip-path: none !important;
+}
+
+.preset-vaporwave #bubble::after {
+  display: none !important;
+}
+
+.preset-vaporwave #chat-panel {
+  background: linear-gradient(180deg, #b967ff 0%, #fffb96 100%) !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+
+.preset-vaporwave #chat-header {
+  background: #ff71ce !important;
+  color: #ffffff !important;
+  font-family: "Arial", sans-serif !important;
+}
+
+.preset-vaporwave #messages {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+.preset-vaporwave #user-input {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border: 2px solid #01cdfe !important;
+  color: #ffffff !important;
+  font-family: "Arial", sans-serif !important;
+}
+
+.preset-vaporwave #user-input::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.preset-vaporwave button {
+  background: #01cdfe !important;
+  color: #ffffff !important;
+  border: none !important;
+}

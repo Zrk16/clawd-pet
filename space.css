@@ -1,0 +1,52 @@
+/* ── SPACE PRESET ── */
+/* Deep space, stars — fully independent */
+
+.preset-space #bubble {
+  background: #0f0f23 !important;
+  color: #c9d1d9 !important;
+  font-family: "Segoe UI", sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: 1px solid #30363d !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  clip-path: none !important;
+}
+
+.preset-space #bubble::after {
+  display: none !important;
+}
+
+.preset-space #chat-panel {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  border-radius: 8px !important;
+}
+
+.preset-space #chat-header {
+  background: #21262d !important;
+  color: #c9d1d9 !important;
+  font-family: "Segoe UI", sans-serif !important;
+}
+
+.preset-space #messages {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+}
+
+.preset-space #user-input {
+  background: #0d1117 !important;
+  border: 1px solid #30363d !important;
+  color: #c9d1d9 !important;
+  font-family: "Segoe UI", sans-serif !important;
+}
+
+.preset-space #user-input::placeholder {
+  color: #6e7681 !important;
+}
+
+.preset-space button {
+  background: #238636 !important;
+  color: #ffffff !important;
+  border: none !important;
+}

@@ -1,0 +1,31 @@
+/* ── HOLOGRAPHIC SETTINGS PRESET ── */
+
+.preset-holographic body {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #a18cd1 50%, #fbc2eb 75%, #8fd3f4 100%) !important;
+  background-size: 400% 400% !important;
+  color: #1a1a2e !important;
+  font-family: "Arial", sans-serif !important;
+}
+
+.preset-holographic h1, .preset-holographic h2 {
+  color: #1a1a2e !important;
+}
+
+.preset-holographic .setting-row label {
+  color: #1a1a2e !important;
+}
+
+.preset-holographic input[type="number"], .preset-holographic select, .preset-holographic #distraction-input {
+  background: rgba(255, 255, 255, 0.4) !important;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  color: #1a1a2e !important;
+  font-family: "Arial", sans-serif !important;
+  border-radius: 20px !important;
+}
+
+.preset-holographic button {
+  background: #ffffff !important;
+  color: #a18cd1 !important;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 20px !important;
+}

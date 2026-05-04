@@ -1,0 +1,52 @@
+/* ── FLAT PRESET ── */
+/* Simple flat design — fully independent */
+
+.preset-flat #bubble {
+  background: #3498db !important;
+  color: #ffffff !important;
+  font-family: "Arial", sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: none !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+}
+
+.preset-flat #bubble::after {
+  display: none !important;
+}
+
+.preset-flat #chat-panel {
+  background: #2c3e50 !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+
+.preset-flat #chat-header {
+  background: #2980b9 !important;
+  color: #ffffff !important;
+  font-family: "Arial", sans-serif !important;
+}
+
+.preset-flat #messages {
+  background: #34495e !important;
+  color: #ecf0f1 !important;
+}
+
+.preset-flat #user-input {
+  background: #2c3e50 !important;
+  border: 1px solid #3498db !important;
+  color: #ffffff !important;
+  font-family: "Arial", sans-serif !important;
+}
+
+.preset-flat #user-input::placeholder {
+  color: #95a5a6 !important;
+}
+
+.preset-flat button {
+  background: #3498db !important;
+  color: #ffffff !important;
+  border: none !important;
+}

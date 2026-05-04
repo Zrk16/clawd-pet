@@ -1,0 +1,28 @@
+/* ── SPACE SETTINGS PRESET ── */
+
+.preset-space body {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+  font-family: "Segoe UI", sans-serif !important;
+}
+
+.preset-space h1, .preset-space h2 {
+  color: #c9d1d9 !important;
+}
+
+.preset-space .setting-row label {
+  color: #c9d1d9 !important;
+}
+
+.preset-space input[type="number"], .preset-space select, .preset-space #distraction-input {
+  background: #161b22 !important;
+  border: 1px solid #30363d !important;
+  color: #c9d1d9 !important;
+  font-family: "Segoe UI", sans-serif !important;
+}
+
+.preset-space button {
+  background: #238636 !important;
+  color: #ffffff !important;
+  border: none !important;
+}

@@ -1,77 +1,30 @@
 /* ── PASTEL SETTINGS PRESET ── */
-/* Soft light colors */
-:root {
-  --pas-bg: #fff5f8;
-  --pas-text: #997788;
-  --pas-accent: #ffb6c1;
-  --pas-pink: #ffcee0;
-  --pas-blue: #cce0ff;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --pas-bg: #fff5f8;
-    --pas-text: #997788;
-  }
-}
 
 .preset-pastel body {
-  background: var(--pas-bg);
-  color: var(--pas-text);
-  border-radius: 16px;
+  background: #fdf4ff !important;
+  color: #78350f !important;
+  font-family: "Comic Sans MS", cursive !important;
 }
 
-.preset-pastel #header {
-  background: linear-gradient(90deg, var(--pas-pink), var(--pas-blue));
-  border-bottom: none;
-  border-radius: 16px 16px 0 0;
+.preset-pastel h1, .preset-pastel h2 {
+  color: #9b2335 !important;
 }
 
-.preset-pastel #header h1 {
-  color: #fff;
+.preset-pastel .setting-row label {
+  color: #78350f !important;
 }
 
-.preset-pastel .section-title {
-  color: var(--pas-accent);
+.preset-pastel input[type="number"], .preset-pastel select, .preset-pastel #distraction-input {
+  background: #ffffff !important;
+  border: 2px solid #e879f9 !important;
+  color: #78350f !important;
+  font-family: "Comic Sans MS", cursive !important;
+  border-radius: 12px !important;
 }
 
-.preset-pastel .row label {
-  color: var(--pas-text);
-}
-
-.preset-pastel .toggle-track {
-  background: var(--pas-pink);
-  border: none;
-}
-
-.preset-pastel .toggle-track::after {
-  background: #fff;
-}
-
-.preset-pastel input[type="number"],
-.preset-pastel select {
-  background: #fff;
-  border: 1px solid var(--pas-pink);
-  color: var(--pas-text);
-  border-radius: 8px;
-}
-
-.preset-pastel .distraction-tag {
-  background: var(--pas-pink);
-  border: none;
-  color: var(--pas-text);
-  border-radius: 8px;
-}
-
-.preset-pastel #footer {
-  background: var(--pas-pink);
-  border-top: none;
-  border-radius: 0 0 16px 16px;
-}
-
-.preset-pastel #save-btn {
-  background: #fff;
-  border: none;
-  color: var(--pas-accent);
-  border-radius: 8px;
+.preset-pastel button {
+  background: #e879f9 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
 }

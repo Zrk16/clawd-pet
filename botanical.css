@@ -1,0 +1,53 @@
+/* ── BOTANICAL PRESET ── */
+/* Green plants, nature — fully independent */
+
+.preset-botanical #bubble {
+  background: #f0f7f4 !important;
+  color: #2d5a3d !important;
+  font-family: "Palatino", serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: 2px solid #4a7c59 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.15) !important;
+  clip-path: none !important;
+}
+
+.preset-botanical #bubble::after {
+  display: none !important;
+}
+
+.preset-botanical #chat-panel {
+  background: #e8f0e9 !important;
+  border: 2px solid #4a7c59 !important;
+  border-radius: 12px !important;
+}
+
+.preset-botanical #chat-header {
+  background: #4a7c59 !important;
+  color: #f0f7f4 !important;
+  font-family: "Palatino", serif !important;
+}
+
+.preset-botanical #messages {
+  background: #f5faf5 !important;
+  color: #2d5a3d !important;
+}
+
+.preset-botanical #user-input {
+  background: #ffffff !important;
+  border: 2px solid #4a7c59 !important;
+  color: #2d5a3d !important;
+  font-family: "Palatino", serif !important;
+  border-radius: 8px !important;
+}
+
+.preset-botanical #user-input::placeholder {
+  color: #7a9c7d !important;
+}
+
+.preset-botanical button {
+  background: #4a7c59 !important;
+  color: #f0f7f4 !important;
+  border: none !important;
+}

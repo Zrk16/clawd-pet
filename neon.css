@@ -1,0 +1,52 @@
+/* ── NEON PRESET ── */
+/* Bright neon cyan/pink — fully independent */
+
+.preset-neon #bubble {
+  background: #0a0a0a !important;
+  color: #00ffff !important;
+  font-family: "Verdana", sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: 2px solid #00ffff !important;
+  border-radius: 4px !important;
+  box-shadow: 0 0 20px #00ffff, inset 0 0 10px rgba(0, 255, 255, 0.2) !important;
+  clip-path: none !important;
+}
+
+.preset-neon #bubble::after {
+  display: none !important;
+}
+
+.preset-neon #chat-panel {
+  background: #0a0a0a !important;
+  border: 2px solid #00ffff !important;
+  border-radius: 4px !important;
+}
+
+.preset-neon #chat-header {
+  background: #00ffff !important;
+  color: #0a0a0a !important;
+  font-family: "Verdana", sans-serif !important;
+}
+
+.preset-neon #messages {
+  background: #0a0a0a !important;
+  color: #00ffff !important;
+}
+
+.preset-neon #user-input {
+  background: #0a0a0a !important;
+  border: 2px solid #00ffff !important;
+  color: #00ffff !important;
+  font-family: "Verdana", sans-serif !important;
+}
+
+.preset-neon #user-input::placeholder {
+  color: #008888 !important;
+}
+
+.preset-neon button {
+  background: #00ffff !important;
+  color: #0a0a0a !important;
+  border: none !important;
+}

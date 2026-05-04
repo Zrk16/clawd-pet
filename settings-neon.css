@@ -1,108 +1,28 @@
 /* ── NEON SETTINGS PRESET ── */
-/* Cyberpunk pink/cyan glow */
-:root {
-  --neon-bg: #0a0a0f;
-  --neon-text: #ff00ff;
-  --neon-cyan: #00ffff;
-  --neon-pink: #ff00ff;
-  --neon-border: #ff00ff;
-  --neon-glow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --neon-bg: #1a0a1a;
-    --neon-text: #ff00ff;
-    --neon-cyan: #00cccc;
-    --neon-pink: #ff00ff;
-  }
-}
 
 .preset-neon body {
-  background: var(--neon-bg);
-  color: var(--neon-text);
-  text-shadow: 0 0 5px var(--neon-text);
+  background: #0a0a0a !important;
+  color: #00ffff !important;
+  font-family: "Verdana", sans-serif !important;
 }
 
-.preset-neon #header {
-  background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
-  border-bottom: none;
+.preset-neon h1, .preset-neon h2 {
+  color: #00ffff !important;
 }
 
-.preset-neon #header h1 {
-  color: #fff;
-  text-shadow: 0 0 10px #fff;
+.preset-neon .setting-row label {
+  color: #00ffff !important;
 }
 
-.preset-neon #header span {
-  color: rgba(255,255,255,0.7);
+.preset-neon input[type="number"], .preset-neon select, .preset-neon #distraction-input {
+  background: #0a0a0a !important;
+  border: 2px solid #00ffff !important;
+  color: #00ffff !important;
+  font-family: "Verdana", sans-serif !important;
 }
 
-.preset-neon .section-title {
-  color: var(--neon-cyan);
-  border-bottom: 1px solid var(--neon-pink);
-  text-shadow: 0 0 5px var(--neon-cyan);
-}
-
-.preset-neon .row label {
-  color: var(--neon-cyan);
-  text-shadow: 0 0 5px var(--neon-cyan);
-}
-
-.preset-neon .toggle-track {
-  background: transparent;
-  border: 1px solid var(--neon-pink);
-  box-shadow: var(--neon-glow);
-}
-
-.preset-neon .toggle-track::after {
-  background: var(--neon-pink);
-  box-shadow: 0 0 10px var(--neon-pink);
-}
-
-.preset-neon .toggle input:checked + .toggle-track::after {
-  background: var(--neon-cyan);
-  box-shadow: 0 0 10px var(--neon-cyan);
-}
-
-.preset-neon input[type="number"],
-.preset-neon select {
-  background: transparent;
-  border: 1px solid var(--neon-pink);
-  color: var(--neon-cyan);
-  box-shadow: 0 0 5px var(--neon-pink);
-}
-
-.preset-neon .distraction-tag {
-  background: transparent;
-  border: 1px solid var(--neon-cyan);
-  color: var(--neon-cyan);
-}
-
-.preset-neon #distraction-input {
-  background: transparent;
-  border: 1px solid var(--neon-pink);
-  color: var(--neon-cyan);
-}
-
-.preset-neon #distraction-add-btn {
-  background: transparent;
-  border: 1px solid var(--neon-cyan);
-  color: var(--neon-cyan);
-}
-
-.preset-neon #footer {
-  background: var(--neon-bg);
-  border-top: 1px solid var(--neon-pink);
-}
-
-.preset-neon #save-btn {
-  background: var(--neon-pink);
-  border: none;
-  color: #fff;
-  box-shadow: var(--neon-glow);
-}
-
-.preset-neon #save-status {
-  color: var(--neon-cyan);
+.preset-neon button {
+  background: #00ffff !important;
+  color: #0a0a0a !important;
+  border: none !important;
 }

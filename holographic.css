@@ -1,0 +1,55 @@
+/* ── HOLOGRAPHIC PRESET ── */
+/* Shifting rainbow — fully independent */
+
+.preset-holographic #bubble {
+  background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #a18cd1 50%, #fbc2eb 75%, #8fd3f4 100%) !important;
+  background-size: 400% 400% !important;
+  color: #1a1a2e !important;
+  font-family: "Arial", sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 0 25px rgba(255, 182, 193, 0.5) !important;
+  clip-path: none !important;
+}
+
+.preset-holographic #bubble::after {
+  display: none !important;
+}
+
+.preset-holographic #chat-panel {
+  background: linear-gradient(180deg, #ff9a9e 0%, #fecfef 50%, #a18cd1 100%) !important;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 16px !important;
+}
+
+.preset-holographic #chat-header {
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: #1a1a2e !important;
+  font-family: "Arial", sans-serif !important;
+}
+
+.preset-holographic #messages {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #1a1a2e !important;
+}
+
+.preset-holographic #user-input {
+  background: rgba(255, 255, 255, 0.4) !important;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  color: #1a1a2e !important;
+  font-family: "Arial", sans-serif !important;
+  border-radius: 20px !important;
+}
+
+.preset-holographic #user-input::placeholder {
+  color: #666666 !important;
+}
+
+.preset-holographic button {
+  background: #ffffff !important;
+  color: #a18cd1 !important;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+  border-radius: 20px !important;
+}

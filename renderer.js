@@ -1,4 +1,5 @@
 const pet = document.getElementById('pet');
+document.documentElement.style.zoom = 'reset';
 document.getElementById('restart-btn').addEventListener('click', () => window.clawd.restart());
 const petImg = document.getElementById('pet-img');
 const chatPanel = document.getElementById('chat-panel');
@@ -7,6 +8,30 @@ const input = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const ttsBtn = document.getElementById('tts-btn');
 const micBtn = document.getElementById('mic-btn');
+
+// ── UI Preset system ──
+const PRESETS = ['og', 'crt', 'gameboy', 'vhs', 'dos', 'synthwave', 'midnight', 'grimoire', 'ink', 'paper', 'nordic', 'neon-punk', 'comic-book', 'memphis', 'silkscreen', 'marshmallow', 'liquid-glass', 'minimal', 'neon', 'retro', 'botanical', 'ocean', 'sunset', 'monochrome', 'pastel', 'gradient', 'material', 'flat', 'glass-dark', 'neubrutalism', 'terminal', 'skeleton', 'vaporwave', 'space', 'wood', 'holographic'];
+let currentPresetLink = null;
+
+function applyUiPreset(preset) {
+  document.body.classList.remove(...PRESETS.map(p => 'preset-' + p));
+  document.body.classList.add('preset-' + preset);
+  if (!currentPresetLink) {
+    currentPresetLink = document.createElement('link');
+    currentPresetLink.rel = 'stylesheet';
+    document.head.appendChild(currentPresetLink);
+  }
+  currentPresetLink.href = preset + '.css';
+}
+
+(async () => {
+  const settings = await window.clawd.loadSettings();
+  applyUiPreset(settings.uiPreset || 'og');
+})();
+
+window.clawd.onSettingsUpdated((settings) => {
+  applyUiPreset(settings.uiPreset || 'og');
+});
 
 let history = [];
 let memoryCats = { preferences: [], patterns: [], projects: [], personal: [], actions: [] };
@@ -46,48 +71,6 @@ const focusTimerEl = document.getElementById('focus-timer');
 let distractionApps = ['YouTube', 'Twitter', 'Reddit', 'Netflix', 'TikTok', 'Instagram', 'Facebook', 'Twitch'];
 let lastDistractionAt = 0;
 
-// ── Ambient Intelligence: AFK ──
-let lastActiveTime = Date.now();
-let afkState = 'active'; // active, sitting, sleeping
-let afkSitTimer = null;
-let afkSleepTimer = null;
-
-// ── Ambient Intelligence: Clipboard ──
-let lastClipboardHash = '';
-
-// ── Ambient Intelligence: Meeting ──
-let meetingMode = false;
-
-// ── Ambient Intelligence: Caffeine (late night) ──
-let caffeineNudgeDone = false;
-
-// ── Ambient Intelligence: Thought bubble ──
-let thoughtBubbleTimer = null;
-
-// ── Visual: Time-reactive appearance ──
-let timeOfDayClass = '';
-
-// ── Visual: Particle trail ──
-let particleContainer = null;
-let isWalking = false;
-
-// ── Visual: Weather-reactive ──
-let weatherClass = '';
-
-// ── Ambient Intelligence: Browser title reactions ──
-const TITLE_REACTIONS = {
-  'stackoverflow': "Stack Overflow again. What break this time?",
-  'github': "GitHub. Code happen. good good.",
-  'youtube': "YouTube. Watch or work, question?",
-  'reddit': "Reddit. procrastination strong with this one.",
-  'twitter': "Twitter. doom scroll begin, question?",
-  'netflix': "Netflix. rest time, question?",
-  'discord': "Discord. social time. Clawd wait.",
-  'spotify': "Music play. Clawd like beats.",
-  'notion': "Notion. organize time. Clawd approve.",
-  'slack': "Slack. work chat. respond fast, question?",
-};
-
 
 async function initMemory() {
   history = await window.clawd.loadHistory();
@@ -107,15 +90,8 @@ async function checkFirstOpen() {
   try {
     const { isFirstToday } = await window.clawd.checkFirstOpen();
     if (isFirstToday) {
-      setTimeout(() => {
-        const timeGreeting = getTimeAwareGreeting();
-        const msg = timeGreeting || 'new day. Clawd wake. human here, question? good good.';
-        showBubble(msg);
-        applyTimeOfDayClass();
-      }, 5000);
+      setTimeout(() => showBubble('new day. Clawd wake. human here, question? good good.'), 5000);
     }
-    applyTimeOfDayClass(); // Check on every open, not just first
-    checkCaffeine(); // Check caffeine on startup
   } catch {}
 }
 checkFirstOpen();
@@ -160,39 +136,7 @@ async function initTtsState() {
   ttsMuted = !!settings.ttsMuted;
   updateTtsBtn();
   if (Array.isArray(settings.distractionApps)) distractionApps = settings.distractionApps;
-  if (settings.uiPreset) applyUiPreset(settings.uiPreset);
 }
-
-// ── UI Preset system ──
-let currentPresetLink = null;
-
-function applyUiPreset(preset) {
-  const app = document.getElementById('app');
-  if (!app) return;
-
-  app.classList.remove('preset-og', 'preset-crt', 'preset-gameboy', 'preset-vhs', 'preset-dos', 'preset-synthwave', 'preset-midnight', 'preset-grimoire', 'preset-ink', 'preset-paper', 'preset-nordic', 'preset-neon-punk', 'preset-comic-book', 'preset-memphis', 'preset-silkscreen', 'preset-marshmallow', 'preset-liquid-glass', 'preset-minimal', 'preset-neon', 'preset-retro', 'preset-botanical', 'preset-ocean', 'preset-sunset', 'preset-monochrome', 'preset-pastel', 'preset-gradient', 'preset-material', 'preset-flat', 'preset-glass-dark');
-  app.classList.add('preset-' + preset);
-
-  // Load preset CSS if not og
-  if (preset !== 'og') {
-    if (!currentPresetLink) {
-      currentPresetLink = document.createElement('link');
-      currentPresetLink.rel = 'stylesheet';
-      document.head.appendChild(currentPresetLink);
-    }
-    currentPresetLink.href = preset + '.css';
-  } else if (currentPresetLink) {
-    currentPresetLink.href = '';
-  }
-}
-
-// Listen for preset from main process
-window.clawd.onUiPreset((preset) => applyUiPreset(preset));
-
-// Listen for settings updates (preset changed in settings panel)
-window.clawd.onSettingsUpdated((settings) => {
-  if (settings.uiPreset) applyUiPreset(settings.uiPreset);
-});
 
 function saveAllSettings() {
   window.clawd.saveSettings({ ttsMuted, wakeWordEnabled: wakeEnabled, distractionApps });
@@ -405,208 +349,8 @@ function flashDistraction() {
   }, 700);
 }
 
-// ── Ambient: Time-aware greeting ──
-function getTimeAwareGreeting() {
-  const hour = new Date().getHours();
-  const day = new Date().getDay();
-  if (day === 0 && hour >= 20) return "Sunday night. big week ahead. Clawd ready.";
-  if (day === 1 && hour >= 6 && hour <= 9) return "Monday. new week. Clawd believe in human.";
-  if (day === 5 && hour >= 14) return "FRIDAY. WEEKEND COME. goodods.";
-  if (hour >= 23 || hour <= 3) return "late night. Clawd still here.";
-  return null;
-}
-
-// ── Ambient: Clipboard watcher ──
-let clipboardWatcherInterval = null;
-function startClipboardWatcher() {
-  if (clipboardWatcherInterval) return;
-  clipboardWatcherInterval = setInterval(async () => {
-    if (chatOpen || focusMode || meetingMode) return;
-    try {
-      const { text, hash, changed } = await window.clawd.getClipboardHash();
-      if (!changed || !text || text.length < 5 || text.length > 500) return;
-      lastClipboardHash = hash;
-      const preview = text.slice(0, 60).replace(/\n/g, ' ');
-      showBubble(`Clawd see: "${preview}..." explain, question?`);
-      setTimeout(() => speak(`human copy: ${preview}. want explain, question?`, 'curious'), 500);
-    } catch {}
-  }, 30000);
-}
-startClipboardWatcher();
-
-// ── Ambient: AFK state management (5min sit, 15min sleep) ──
-function updateAfkState() {
-  const diff = Date.now() - lastActiveTime;
-  const mins = Math.floor(diff / 60000);
-
-  if (afkState === 'sleeping' && diff < 5 * 60000) {
-    // Woke up
-    afkState = 'active';
-    clearTimeout(afkSleepTimer);
-    const sleptMins = Math.floor((Date.now() - (afkSleepTimer?._start || Date.now())) / 60000);
-    setSvg('greeting');
-    showBubble(`back. Clawd wait ${sleptMins} minute. is fine.`);
-    speak(`back. Clawd wait ${sleptMins} minute. is fine.`, 'greeting');
-  } else if (afkState === 'active' && mins >= 5 && mins < 15) {
-    // Start sitting
-    afkState = 'sitting';
-    setSvg('idle');
-    clearTimeout(afkSitTimer);
-    afkSitTimer = setTimeout(() => {
-      if (afkState === 'sitting') {
-        afkState = 'sleeping';
-        setSvg('sleeping');
-        petImg.src = petImg.src.replace('artboard-24', 'sleeping');
-      }
-    }, 10 * 60000); // 10 more min = 15 total
-  } else if (afkState === 'sitting' && mins >= 15) {
-    afkState = 'sleeping';
-    setSvg('sleeping');
-  }
-}
-function resetAfkTimer() {
-  lastActiveTime = Date.now();
-  if (afkState !== 'active') {
-    afkState = 'active';
-    if (petImg.src.includes('sleeping') || petImg.src.includes('idle')) {
-      setSvg('greeting');
-    }
-  }
-}
-
-// ── Ambient: Meeting detection (Zoom/Teams/Meet) ──
-function checkMeeting(title) {
-  const meetingApps = ['zoom', 'teams', 'meet', 'webex'];
-  const isMeeting = meetingApps.some(m => title.toLowerCase().includes(m));
-  if (isMeeting && !meetingMode) {
-    meetingMode = true;
-    const wasMuted = ttsMuted;
-    ttsMuted = true;
-    updateTtsBtn();
-    showBubble('meeting detect. Clawd be quiet. talk soon.');
-    setTimeout(() => { meetingMode = false; ttsMuted = wasMuted; updateTtsBtn(); }, 60000);
-  }
-}
-
-// ── Ambient: Caffeine timer (past midnight) ──
-function checkCaffeine() {
-  const hour = new Date().getHours();
-  if (hour >= 1 && hour <= 4 && !caffeineNudgeDone && !chatOpen && !focusMode) {
-    caffeineNudgeDone = true;
-    setTimeout(() => {
-      showBubble('2am. human still awake. caffeine high. sleep soon, question?');
-    }, 30000);
-  }
-  if (hour >= 6) caffeineNudgeDone = false; // Reset after 6am
-}
-
-// ── Ambient: Browser title reactions ──
-function checkTitleReaction(title) {
-  const lower = title.toLowerCase();
-  for (const [keyword, response] of Object.entries(TITLE_REACTIONS)) {
-    if (lower.includes(keyword) && Math.random() < 0.15) {
-      showBubble(response);
-      return;
-    }
-  }
-}
-
-// ── Visual: Time-reactive appearance (morning/night) ──
-function applyTimeOfDayClass() {
-  const hour = new Date().getHours();
-  let newClass = '';
-  if (hour >= 6 && hour <= 9) newClass = 'morning-mode';
-  else if (hour >= 23 || hour <= 3) newClass = 'night-mode';
-
-  if (newClass !== timeOfDayClass) {
-    timeOfDayClass = newClass;
-    const container = document.getElementById('pet-container');
-    container.classList.remove('morning-mode', 'night-mode');
-    if (newClass) container.classList.add(newClass);
-  }
-}
-
-// ── Visual: Thought bubble (idle "...") ──
-function showThoughtBubble() {
-  if (chatOpen || focusMode || bubbleVisible || meetingMode) return;
-  showBubble('...');
-  setTimeout(hideBubble, 4000);
-}
-function startThoughtBubbleTimer() {
-  if (thoughtBubbleTimer) clearInterval(thoughtBubbleTimer);
-  thoughtBubbleTimer = setInterval(() => {
-    if (Math.random() < 0.3) showThoughtBubble();
-  }, 300000); // Every 5 min, 30% chance
-}
-startThoughtBubbleTimer();
-
-// ── Visual: Particle trail when walking ──
-function createParticle(x, y) {
-  if (!particleContainer) {
-    particleContainer = document.createElement('div');
-    particleContainer.id = 'particle-container';
-    particleContainer.style.cssText = 'position:absolute;pointer-events:none;z-index:-1;';
-    document.getElementById('pet-container').appendChild(particleContainer);
-  }
-  const p = document.createElement('div');
-  p.style.cssText = `
-    position:absolute;width:4px;height:4px;background:#FFB07A;border-radius:50%;
-    opacity:0.6;left:${x}px;top:${y}px;transition:all 1.5s ease-out;
-  `;
-  particleContainer.appendChild(p);
-  requestAnimationFrame(() => {
-    p.style.transform = `translate(${Math.random()*40-20}px, ${Math.random()*40-20}px)`;
-    p.style.opacity = '0';
-  });
-  setTimeout(() => p.remove(), 1500);
-}
-
-// ── Visual: Weather-reactive appearance ──
-function applyWeatherClass(weatherOutput) {
-  if (!weatherOutput || weatherOutput.includes('fail') || weatherOutput.includes('timeout')) return;
-  const lower = weatherOutput.toLowerCase();
-  let newClass = '';
-  if (lower.includes('rain') || lower.includes('drizzle') || lower.includes('shower')) newClass = 'rainy';
-  else if (lower.includes('sunny') || lower.includes('clear')) newClass = 'sunny';
-
-  if (newClass !== weatherClass) {
-    weatherClass = newClass;
-    const container = document.getElementById('pet-container');
-    container.classList.remove('rainy', 'sunny');
-    if (newClass) container.classList.add(newClass);
-  }
-}
-
-// ── Battery warning ──
-window.clawd.onCheckBattery(async () => {
-  try {
-    const { onBattery, low } = await window.clawd.getBattery();
-    if (onBattery && low && !bubbleVisible) {
-      showBubble('low battery. save work soon. Clawd worry.');
-    }
-  } catch {}
-});
-
-// ── Periodic particle spawner (simple: occasional ambient particles) ──
-setInterval(() => {
-  if (afkState !== 'active' || focusMode || chatOpen || meetingMode) return;
-  if (Math.random() < 0.08) {
-    const rect = document.getElementById('pet').getBoundingClientRect();
-    createParticle(rect.width / 2 + Math.random() * 20 - 10, rect.height / 2 + Math.random() * 20 - 10);
-  }
-}, 2000);
-
-// ── AFK state polling (backup for when context doesn't change) ──
-setInterval(() => {
-  updateAfkState();
-  checkCaffeine();
-  applyTimeOfDayClass();
-}, 60000); // Check every minute
-
 window.clawd.onContextChange((ctx) => {
   currentContext = ctx;
-  resetAfkTimer(); // Reset AFK timer on any context change
-  applyTimeOfDayClass(); // Update time-reactive appearance
 
   // Distraction detection during focus
   if (focusMode) {
@@ -621,12 +365,6 @@ window.clawd.onContextChange((ctx) => {
     }
     return; // skip mood + proactive during focus
   }
-
-  // Meeting detection
-  checkMeeting(ctx.title || '');
-
-  // Browser title reactions
-  if (!chatOpen && !bubbleVisible) checkTitleReaction(ctx.title || '');
 
   if (!chatOpen && petImg.src && !petImg.src.includes('sleeping')) {
     const mood = APP_MOODS[ctx.app];
@@ -1037,6 +775,42 @@ async function sendMessage() {
     return;
   }
 
+  // ── Pet variant swaps ──
+  const variants = {
+    '/original': 'artboard-24cla.svg',
+    '/hailmary': 'artboard-hailmary.svg',
+    '/spiderman': 'artboard-spiderman.svg',
+    '/zombie': 'artboard-zombie.svg',
+    '/pirate': 'artboard-pirate.svg',
+    '/wizard': 'artboard-wizard.svg',
+  };
+  if (variants[text]) {
+    input.value = '';
+    petImg.src = `assets/${variants[text]}`;
+    petImg.classList.remove('bounce-in');
+    void petImg.offsetWidth;
+    petImg.classList.add('bounce-in');
+    const name = text.slice(1);
+    appendMessage('clawd', `Clawd look like ${name} now!`);
+    return;
+  }
+
+  // Size commands
+  if (text === '/big') {
+    input.value = '';
+    document.documentElement.style.zoom = '1.5';
+    window.clawd.setWindowSize(240, 240);
+    appendMessage('clawd', 'Clawd BIG now! massive. amaze.');
+    return;
+  }
+  if (text === '/normal' || text === '/small') {
+    input.value = '';
+    document.documentElement.style.zoom = 'reset';
+    window.clawd.setWindowSize(80, 80);
+    appendMessage('clawd', 'Clawd back to normal size. tiny cute.');
+    return;
+  }
+
   if (text === '/wake') {
     input.value = '';
     appendMessage('clawd', 'wake word not available. use mic button, question?');
@@ -1152,9 +926,6 @@ async function sendMessage() {
       setSvg(toolResult && !toolResult.startsWith('tool fail') ? 'happy' : 'error');
 
       if (toolResult) {
-        // Weather reactive: apply visual class based on weather output
-        if (tool === 'get_weather') applyWeatherClass(toolResult);
-        
         if (!memoryCats.actions) memoryCats.actions = [];
         memoryCats.actions.push(`${tool}(${JSON.stringify(args)}): ${toolResult}`);
         if (memoryCats.actions.length > 10) memoryCats.actions = memoryCats.actions.slice(-10);

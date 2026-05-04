@@ -1,0 +1,55 @@
+/* ── GRADIENT PRESET ── */
+/* Vibrant gradient, modern pop — fully independent */
+
+.preset-gradient #bubble {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #ffffff !important;
+  font-family: "Segoe UI", sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: none !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4) !important;
+  clip-path: none !important;
+}
+
+.preset-gradient #bubble::after {
+  display: none !important;
+}
+
+.preset-gradient #chat-panel {
+  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%) !important;
+  border: none !important;
+  border-radius: 20px !important;
+}
+
+.preset-gradient #chat-header {
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  font-family: "Segoe UI", sans-serif !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+.preset-gradient #messages {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
+}
+
+.preset-gradient #user-input {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 2px solid rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  font-family: "Segoe UI", sans-serif !important;
+  border-radius: 20px !important;
+}
+
+.preset-gradient #user-input::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.preset-gradient button {
+  background: #ffffff !important;
+  color: #667eea !important;
+  border: none !important;
+  border-radius: 20px !important;
+}

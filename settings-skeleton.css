@@ -1,0 +1,31 @@
+/* ── SKELETON SETTINGS PRESET ── */
+
+.preset-skeleton body {
+  background: #ffffff !important;
+  color: #2d2d2d !important;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
+}
+
+.preset-skeleton h1, .preset-skeleton h2 {
+  color: #2d2d2d !important;
+}
+
+.preset-skeleton .setting-row label {
+  color: #2d2d2d !important;
+}
+
+.preset-skeleton input[type="number"], .preset-skeleton select, .preset-skeleton #distraction-input {
+  background: #fafafa !important;
+  border: 1px solid #d4d4d4 !important;
+  color: #2d2d2d !important;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
+  border-radius: 8px !important;
+}
+
+.preset-skeleton button {
+  background: #e0e0e0 !important;
+  color: #2d2d2d !important;
+  border: 1px solid #d4d4d4 !important;
+  font-family: "Helvetica Neue", Arial, sans-serif !important;
+  border-radius: 8px !important;
+}

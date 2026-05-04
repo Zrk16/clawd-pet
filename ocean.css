@@ -1,0 +1,53 @@
+/* ── OCEAN PRESET ── */
+/* Deep blue sea — fully independent */
+
+.preset-ocean #bubble {
+  background: #0a1628 !important;
+  color: #7ec8e3 !important;
+  font-family: "Arial", sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: 2px solid #1e3a5f !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 20px rgba(0, 80, 150, 0.3) !important;
+  clip-path: none !important;
+}
+
+.preset-ocean #bubble::after {
+  display: none !important;
+}
+
+.preset-ocean #chat-panel {
+  background: linear-gradient(180deg, #0a1628 0%, #1e3a5f 100%) !important;
+  border: 2px solid #2e5a8f !important;
+  border-radius: 16px !important;
+}
+
+.preset-ocean #chat-header {
+  background: #2e5a8f !important;
+  color: #7ec8e3 !important;
+  font-family: "Arial", sans-serif !important;
+}
+
+.preset-ocean #messages {
+  background: rgba(30, 58, 95, 0.5) !important;
+  color: #7ec8e3 !important;
+}
+
+.preset-ocean #user-input {
+  background: #0a1628 !important;
+  border: 2px solid #2e5a8f !important;
+  color: #7ec8e3 !important;
+  font-family: "Arial", sans-serif !important;
+  border-radius: 8px !important;
+}
+
+.preset-ocean #user-input::placeholder {
+  color: #4a7c9b !important;
+}
+
+.preset-ocean button {
+  background: #2e5a8f !important;
+  color: #7ec8e3 !important;
+  border: none !important;
+}

@@ -1,0 +1,54 @@
+/* ── TERMINAL PRESET ── */
+/* Old-school terminal, green on black — fully independent */
+
+.preset-terminal #bubble {
+  background: #0d0d0d !important;
+  color: #00ff00 !important;
+  font-family: "Consolas", "Courier New", monospace !important;
+  font-size: 12px !important;
+  padding: 14px 16px !important;
+  border: 1px solid #00ff00 !important;
+  border-radius: 0 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.2) !important;
+  clip-path: none !important;
+}
+
+.preset-terminal #bubble::after {
+  display: none !important;
+}
+
+.preset-terminal #chat-panel {
+  background: #0d0d0d !important;
+  border: 1px solid #00ff00 !important;
+  border-radius: 0 !important;
+}
+
+.preset-terminal #chat-header {
+  background: #003300 !important;
+  color: #00ff00 !important;
+  font-family: "Consolas", monospace !important;
+  border-bottom: 1px solid #00ff00 !important;
+}
+
+.preset-terminal #messages {
+  background: #0d0d0d !important;
+  color: #00ff00 !important;
+}
+
+.preset-terminal #user-input {
+  background: #000000 !important;
+  border: 1px solid #00ff00 !important;
+  color: #00ff00 !important;
+  font-family: "Consolas", monospace !important;
+}
+
+.preset-terminal #user-input::placeholder {
+  color: #008800 !important;
+}
+
+.preset-terminal button {
+  background: #003300 !important;
+  color: #00ff00 !important;
+  border: 1px solid #00ff00 !important;
+  font-family: "Consolas", monospace !important;
+}
