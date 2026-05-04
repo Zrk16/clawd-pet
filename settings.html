@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Clawd Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #07050B;
+      color: #FFB07A;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      height: 40px;
+      background: rgba(255, 122, 61, 0.06);
+      border-bottom: 2px solid #FF7A3D;
+    }
+
+    #header h1 {
+      font-size: 11px;
+      font-weight: 700;
+      color: #FF7A3D;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    #header span {
+      font-size: 9px;
+      color: rgba(255, 122, 61, 0.4);
+      letter-spacing: 1.5px;
+    }
+
+    #content {
+      padding: 16px 18px;
+      height: calc(100vh - 40px - 56px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 122, 61, 0.25) transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .section-title {
+      font-size: 9px;
+      color: rgba(255, 122, 61, 0.5);
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(255, 122, 61, 0.1);
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .row label {
+      color: #FFAA72;
+      font-size: 11px;
+      font-family: 'Syne', sans-serif;
+      flex: 1;
+    }
+
+    .row .hint {
+      font-size: 9px;
+      color: rgba(255, 122, 61, 0.35);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Toggle switch */
+    .toggle {
+      position: relative;
+      width: 36px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 122, 61, 0.12);
+      border: 1px solid rgba(255, 122, 61, 0.3);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      width: 12px;
+      height: 12px;
+      background: rgba(255, 122, 61, 0.5);
+      border-radius: 50%;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .toggle input:checked + .toggle-track {
+      background: rgba(255, 122, 61, 0.22);
+      border-color: #FF7A3D;
+    }
+    .toggle input:checked + .toggle-track::after {
+      transform: translateX(16px);
+      background: #FF7A3D;
+    }
+
+    /* Number input */
+    input[type="number"] {
+      background: rgba(255, 122, 61, 0.06);
+      border: 1px solid rgba(255, 122, 61, 0.3);
+      color: #FFAA72;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      padding: 4px 8px;
+      width: 64px;
+      text-align: center;
+      border-radius: 2px;
+      outline: none;
+    }
+    input[type="number"]:focus {
+      border-color: #FF7A3D;
+      background: rgba(255, 122, 61, 0.1);
+    }
+
+    /* Select */
+    select {
+      background: rgba(255, 122, 61, 0.06);
+      border: 1px solid rgba(255, 122, 61, 0.3);
+      color: #FFAA72;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      padding: 4px 8px;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    select:focus { border-color: #FF7A3D; }
+    option { background: #07050B; }
+
+    /* Distraction apps list */
+    #distraction-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .distraction-tag {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 122, 61, 0.06);
+      border: 1px solid rgba(255, 122, 61, 0.2);
+      padding: 4px 10px;
+      border-radius: 2px;
+      font-size: 10px;
+      color: #FFAA72;
+    }
+
+    .distraction-tag button {
+      background: none;
+      border: none;
+      color: rgba(255, 100, 50, 0.5);
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1;
+      padding: 0 2px;
+      transition: color 0.15s;
+    }
+    .distraction-tag button:hover { color: #FF4444; }
+
+    #distraction-add-row {
+      display: flex;
+      gap: 6px;
+    }
+
+    #distraction-input {
+      flex: 1;
+      background: rgba(255, 122, 61, 0.04);
+      border: 1px solid rgba(255, 122, 61, 0.2);
+      color: #F0E6D8;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      padding: 5px 8px;
+      border-radius: 2px;
+      outline: none;
+      caret-color: #FF7A3D;
+    }
+    #distraction-input::placeholder { color: rgba(255, 122, 61, 0.3); }
+    #distraction-input:focus { border-color: rgba(255, 122, 61, 0.5); }
+
+    #distraction-add-btn {
+      background: rgba(255, 122, 61, 0.1);
+      border: 1px solid rgba(255, 122, 61, 0.3);
+      color: #FF7A3D;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      padding: 5px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #distraction-add-btn:hover { background: rgba(255, 122, 61, 0.18); }
+
+    /* Footer save bar */
+    #footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 18px;
+      gap: 10px;
+      background: rgba(7, 5, 11, 0.97);
+      border-top: 1px solid rgba(255, 122, 61, 0.15);
+    }
+
+    #save-btn {
+      background: rgba(255, 122, 61, 0.15);
+      border: 1px solid rgba(255, 122, 61, 0.5);
+      color: #FF7A3D;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 8px 20px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #save-btn:hover { background: rgba(255, 122, 61, 0.28); }
+
+    #save-status {
+      font-size: 10px;
+      color: rgba(255, 122, 61, 0.4);
+      letter-spacing: 1px;
+      min-width: 80px;
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div id="header">
+    <h1>◈ CLAWD CONFIG</h1>
+    <span>SYS::SETTINGS</span>
+  </div>
+
+  <div id="content">
+
+    <div class="section">
+      <div class="section-title">Voice</div>
+      <div class="row">
+        <label>
+          TTS Voice
+          <span class="hint">Clawd speaks responses aloud</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="tts-enabled" />
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Behavior</div>
+      <div class="row">
+        <label>
+          Proactive Bubbles
+          <span class="hint">Unprompted comments while you work</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="bubbles-enabled" />
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+      <div class="row">
+        <label>
+          Idle Walk
+          <span class="hint">Clawd wanders when no chat is open</span>
+        </label>
+        <label class="toggle">
+          <input type="checkbox" id="walk-enabled" />
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+      <div class="row">
+        <label>
+          Bubble Frequency
+          <span class="hint">How often proactive bubbles fire</span>
+        </label>
+        <select id="bubble-freq">
+          <option value="low">LOW</option>
+          <option value="normal">NORMAL</option>
+          <option value="high">HIGH</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Focus Mode</div>
+      <div class="row">
+        <label>
+          Default Duration (min)
+          <span class="hint">Used by /focus with no argument</span>
+        </label>
+        <input type="number" id="focus-duration" min="1" max="120" value="25" />
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Distraction Apps</div>
+      <p style="font-size:10px;color:rgba(255,122,61,0.4);margin-bottom:4px;">Clawd yells at you if you open these during focus.</p>
+      <div id="distraction-list"></div>
+      <div id="distraction-add-row">
+        <input type="text" id="distraction-input" placeholder="add app name..." />
+        <button id="distraction-add-btn">ADD</button>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="footer">
+    <span id="save-status"></span>
+    <button id="save-btn">SAVE</button>
+  </div>
+
+  <script src="settings-renderer.js"></script>
+</body>
+</html>

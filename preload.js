@@ -1,7 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('clawd', {
-  chat: (messages, context, memory, mode) => ipcRenderer.invoke('chat', { messages, context, memory, mode }),
+  chat: (messages, context, memory, mode, vaultContext) => ipcRenderer.invoke('chat', { messages, context, memory, mode, vaultContext }),
   toggleChat: (open) => ipcRenderer.send('toggle-chat', open),
   toggleBubble: (show) => ipcRenderer.send('toggle-bubble', show),
   restart: () => ipcRenderer.send('restart'),
@@ -22,7 +22,7 @@ contextBridge.exposeInMainWorld('clawd', {
   captureScreen: () => ipcRenderer.invoke('capture-screen'),
   visionChat: (question, imageDataUrl) => ipcRenderer.invoke('vision-chat', { question, imageDataUrl }),
   proactive: (context, memory) => ipcRenderer.invoke('proactive', { context, memory }),
-  synthesizeSpeech: (text) => ipcRenderer.invoke('synthesize-speech', text),
+  synthesizeSpeech: (text, mood) => ipcRenderer.invoke('synthesize-speech', { text, mood }),
   sttTranscribe: (ab) => ipcRenderer.invoke('stt-transcribe', Buffer.from(ab)),
   onSttStatus: (cb) => ipcRenderer.on('stt-status', (_, s) => cb(s)),
   // Mark 10: tool system
@@ -35,4 +35,15 @@ contextBridge.exposeInMainWorld('clawd', {
   checkFirstOpen: () => ipcRenderer.invoke('check-first-open'),
   // Mark 10: same-app notify
   onSameAppNotify: (cb) => ipcRenderer.on('same-app-notify', (_, ctx) => cb(ctx)),
+  // Mark 11: focus poll, context menu, settings, reminders
+  setFocusPoll: (fast) => ipcRenderer.send('set-focus-poll', fast),
+  showContextMenu: (state) => ipcRenderer.send('show-context-menu', state),
+  onCtxMenuAction: (cb) => ipcRenderer.on('ctx-menu-action', (_, action) => cb(action)),
+  openSettings: () => ipcRenderer.send('open-settings'),
+  onSettingsUpdated: (cb) => ipcRenderer.on('settings-updated', (_, s) => cb(s)),
+  onReminderFire: (cb) => ipcRenderer.on('reminder-fire', (_, text) => cb(text)),
+  // Mark 11: Obsidian vault
+  readVault: () => ipcRenderer.invoke('read-vault'),
+  readVaultBrain: () => ipcRenderer.invoke('read-vault-brain'),
+  writeVaultBrain: (text) => ipcRenderer.send('write-vault-brain', text),
 });

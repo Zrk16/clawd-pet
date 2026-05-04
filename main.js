@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, screen, desktopCapturer, shell, clipboard } = require('electron');
+const { app, BrowserWindow, ipcMain, screen, desktopCapturer, shell, clipboard, Menu, MenuItem } = require('electron');
 app.commandLine.appendSwitch('enable-speech-dispatcher');
 const https = require('https');
 const path = require('path');
@@ -7,6 +7,29 @@ const { exec } = require('child_process');
 const { MsEdgeTTS, OUTPUT_FORMAT } = require('msedge-tts');
 
 const config = JSON.parse(fs.readFileSync(path.join(__dirname, 'config.json'), 'utf8'));
+
+// ── Emotion TTS prosody map ──
+const MOOD_PROSODY = {
+  happy:    { rate: '+15%', pitch: '+3Hz' },
+  excited:  { rate: '+22%', pitch: '+8Hz' },
+  greeting: { rate: '+10%', pitch: '+3Hz' },
+  sleeping: { rate: '-25%', pitch: '-3Hz' },
+  error:    { rate: '+5%',  pitch: '-4Hz' },
+  confused: { rate: '-8%',  pitch: '+0Hz' },
+  thinking: { rate: '-5%',  pitch: '+0Hz' },
+  coding:   { rate: '+5%',  pitch: '+0Hz' },
+  idle:     { rate: '+0%',  pitch: '+0Hz' },
+};
+
+function buildSSML(text, mood) {
+  const p = MOOD_PROSODY[mood] || { rate: '+0%', pitch: '+0Hz' };
+  const safe = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US"><voice name="en-US-GuyNeural"><prosody rate="${p.rate}" pitch="${p.pitch}">${safe}</prosody></voice></speak>`;
+}
 
 // Rocky speech rules — shared across all prompts
 const ROCKY_RULES = `You are Clawd. You speak like Rocky from Project Hail Mary — an alien who learned human language through a translation computer. The computer works best with simple, consistent patterns, so you strip language to its core.
@@ -38,12 +61,15 @@ const BUBBLE_HEIGHT = 80;
 const MARGIN = 16;
 
 let win;
+let settingsWin = null;
 let activeWindowFn = null;
 let lastContext = null;
 let lastRawInfo = null;
 let watchInterval = null;
 let chatIsOpen = false;
 let sameAppTimer = null;
+let pollInterval = null;
+let reminders = [];
 
 // ── Persistent storage helpers ──
 function dataDir() {
@@ -155,8 +181,9 @@ async function captureActiveWindow() {
   }
 }
 
-function startContextPolling() {
-  setInterval(captureActiveWindow, 30000);
+function startContextPolling(ms = 30000) {
+  if (pollInterval) clearInterval(pollInterval);
+  pollInterval = setInterval(captureActiveWindow, ms);
 }
 
 // ── Global hotkey (uiohook-napi tap-vs-hold, fallback to globalShortcut) ──
@@ -291,6 +318,20 @@ if (!gotLock) {
     initWindowWatcher();
     startContextPolling();
     setupHotkey();
+
+    // Load reminders persisted from previous session
+    reminders = readJSON('reminders.json', []);
+
+    // Check reminders every 60s
+    setInterval(() => {
+      const now = Date.now();
+      const due = reminders.filter(r => r.dueAt <= now);
+      reminders = reminders.filter(r => r.dueAt > now);
+      if (due.length > 0) writeJSON('reminders.json', reminders);
+      for (const r of due) {
+        if (win && !win.isDestroyed()) win.webContents.send('reminder-fire', r.text);
+      }
+    }, 60000);
   });
 }
 
@@ -389,7 +430,15 @@ ipcMain.on('save-memory', (_, data) => {
   writeJSON('memory.json', mem);
 });
 
-ipcMain.handle('load-settings', () => readJSON('settings.json', { ttsMuted: false, bubblesEnabled: true, wakeWordEnabled: false }));
+ipcMain.handle('load-settings', () => readJSON('settings.json', {
+  ttsMuted: false,
+  bubblesEnabled: true,
+  wakeWordEnabled: false,
+  walkEnabled: true,
+  focusDuration: 25,
+  bubbleFrequency: 'normal',
+  distractionApps: ['YouTube', 'Twitter', 'Reddit', 'Netflix', 'TikTok', 'Instagram', 'Facebook', 'Twitch'],
+}));
 ipcMain.on('save-settings', (_, s) => writeJSON('settings.json', s));
 
 // Track chat open state for hotkey auto-close and same-app timer
@@ -502,6 +551,11 @@ Available tools and their risk levels:
 - shell: run shell command. args: {"cmd":"..."}. risk: dangerous
 - sleep_pc: sleep the PC. args: {}. risk: moderate
 - clipboard: copy to clipboard. args: {"text":"..."}. risk: safe
+- get_weather: get current weather. args: {}. risk: safe
+- read_clipboard: read current clipboard contents. args: {}. risk: safe
+- take_note: save a note to desktop. args: {"text":"..."}. risk: safe
+- search_web: search google. args: {"query":"..."}. risk: safe
+- set_reminder: set a timed reminder. args: {"text":"...","minutes":5}. risk: safe
 
 If the message does NOT request a system action, return ONLY: null
 
@@ -714,6 +768,50 @@ $wsh.SendKeys('${escaped.replace(/'/g, "''")}')
       return `Clipboard copy. done.`;
     }
 
+    case 'get_weather': {
+      const weather = await new Promise((resolve) => {
+        const req = https.get('https://wttr.in/?format=3', { headers: { 'User-Agent': 'curl/7.0' } }, (res) => {
+          let data = '';
+          res.on('data', c => data += c);
+          res.on('end', () => resolve(data.trim()));
+        });
+        req.on('error', () => resolve('weather fetch fail'));
+        req.setTimeout(8000, () => { req.destroy(); resolve('weather fetch timeout'); });
+      });
+      return `Weather: ${weather}`;
+    }
+
+    case 'read_clipboard': {
+      const text = clipboard.readText();
+      if (!text) return 'Clipboard empty. nothing there.';
+      return `Clipboard say: "${text.slice(0, 120)}"`;
+    }
+
+    case 'take_note': {
+      const noteText = (args.text || '').trim();
+      if (!noteText) throw new Error('no text to note');
+      const notePath = path.join(app.getPath('desktop'), 'clawd-notes.txt');
+      const timestamp = new Date().toLocaleString('en-US', { dateStyle: 'short', timeStyle: 'short' });
+      fs.appendFileSync(notePath, `[${timestamp}] ${noteText}\n`, 'utf8');
+      return `Note save. desktop file clawd-notes.txt. good.`;
+    }
+
+    case 'search_web': {
+      const q = encodeURIComponent((args.query || '').trim());
+      if (!q) throw new Error('no search query');
+      await shell.openExternal(`https://www.google.com/search?q=${q}`);
+      return `Clawd open search. human look now.`;
+    }
+
+    case 'set_reminder': {
+      const minutes = Math.max(1, parseInt(args.minutes) || 5);
+      const reminderText = (args.text || 'Reminder.').trim();
+      const dueAt = Date.now() + minutes * 60 * 1000;
+      reminders.push({ text: reminderText, dueAt });
+      writeJSON('reminders.json', reminders);
+      return `Reminder set. ${minutes} minute${minutes === 1 ? '' : 's'}. Clawd tell you.`;
+    }
+
     default:
       throw new Error(`Unknown tool: ${tool}`);
   }
@@ -838,10 +936,13 @@ async function getEdgeTTS() {
   return edgeTts;
 }
 
-ipcMain.handle('synthesize-speech', async (_, text) => {
+ipcMain.handle('synthesize-speech', async (_, input) => {
+  const text = typeof input === 'string' ? input : (input.text || '');
+  const mood = typeof input === 'string' ? 'idle' : (input.mood || 'idle');
   try {
     const tts = await getEdgeTTS();
-    const { audioStream } = await tts.toStream(text);
+    const ssml = buildSSML(text, mood);
+    const { audioStream } = await tts.toStream(ssml);
     const chunks = [];
     await new Promise((resolve, reject) => {
       audioStream.on('data', chunk => chunks.push(chunk));
@@ -852,7 +953,18 @@ ipcMain.handle('synthesize-speech', async (_, text) => {
   } catch (err) {
     console.error('[tts] fail:', err.message);
     edgeTts = null;
-    return null;
+    // Fallback: try plain text if SSML fails
+    try {
+      const tts2 = await getEdgeTTS();
+      const { audioStream } = await tts2.toStream(text);
+      const chunks = [];
+      await new Promise((resolve, reject) => {
+        audioStream.on('data', chunk => chunks.push(chunk));
+        audioStream.on('end', resolve);
+        audioStream.on('error', reject);
+      });
+      return Buffer.concat(chunks).toString('base64');
+    } catch { return null; }
   }
 });
 
@@ -904,6 +1016,154 @@ ipcMain.on('quit', () => {
   app.exit(0);
 });
 
+// Focus mode polling — tighten to 10s during focus, relax to 30s after
+ipcMain.on('set-focus-poll', (_, fast) => {
+  startContextPolling(fast ? 10000 : 30000);
+});
+
+// Native right-click context menu
+ipcMain.on('show-context-menu', (_, { ttsMuted }) => {
+  const menu = new Menu();
+  menu.append(new MenuItem({
+    label: ttsMuted ? '♪  Unmute Voice' : '♪̸  Mute Voice',
+    click: () => win.webContents.send('ctx-menu-action', 'toggle-tts'),
+  }));
+  menu.append(new MenuItem({ type: 'separator' }));
+  menu.append(new MenuItem({
+    label: '⊙  Sleep Now',
+    click: () => win.webContents.send('ctx-menu-action', 'sleep'),
+  }));
+  menu.append(new MenuItem({
+    label: '⊡  Focus Mode (25 min)',
+    click: () => win.webContents.send('ctx-menu-action', 'focus'),
+  }));
+  menu.append(new MenuItem({ type: 'separator' }));
+  menu.append(new MenuItem({
+    label: '⚙  Settings',
+    click: () => win.webContents.send('ctx-menu-action', 'settings'),
+  }));
+  menu.append(new MenuItem({ type: 'separator' }));
+  menu.append(new MenuItem({
+    label: '↺  Restart',
+    click: () => { app.relaunch(); app.exit(0); },
+  }));
+  menu.append(new MenuItem({
+    label: '⊗  Exit',
+    click: () => app.exit(0),
+  }));
+  menu.popup({ window: win });
+});
+
+// Settings window
+ipcMain.on('open-settings', () => {
+  if (settingsWin && !settingsWin.isDestroyed()) {
+    settingsWin.focus();
+    return;
+  }
+  settingsWin = new BrowserWindow({
+    width: 480,
+    height: 560,
+    title: 'Clawd Settings',
+    frame: true,
+    transparent: false,
+    alwaysOnTop: true,
+    skipTaskbar: false,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, 'settings-preload.js'),
+    },
+  });
+  settingsWin.loadFile('settings.html');
+  settingsWin.on('closed', () => { settingsWin = null; });
+});
+
+ipcMain.handle('get-full-settings', () => {
+  return readJSON('settings.json', {
+    ttsMuted: false,
+    bubblesEnabled: true,
+    walkEnabled: true,
+    focusDuration: 25,
+    bubbleFrequency: 'normal',
+    distractionApps: ['YouTube', 'Twitter', 'Reddit', 'Netflix', 'TikTok', 'Instagram', 'Facebook', 'Twitch'],
+  });
+});
+
+ipcMain.on('save-full-settings', (_, s) => {
+  const current = readJSON('settings.json', {});
+  const merged = { ...current, ...s };
+  writeJSON('settings.json', merged);
+  if (win && !win.isDestroyed()) win.webContents.send('settings-updated', merged);
+});
+
+// ── Obsidian vault integration ──
+const VAULT_PATH = config.vaultPath || 'C:\\Users\\ziyaa\\Downloads\\Vault';
+const CLAWD_BRAIN_PATH = path.join(VAULT_PATH, 'Clawd-Brain');
+
+function safeReadFile(filePath, maxChars) {
+  try {
+    if (!fs.existsSync(filePath)) return null;
+    const content = fs.readFileSync(filePath, 'utf8');
+    return maxChars ? content.slice(0, maxChars) : content;
+  } catch { return null; }
+}
+
+ipcMain.handle('read-vault', () => {
+  try {
+    const parts = [];
+
+    // MEMORY.md index — first 55 lines
+    const memPath = path.join(VAULT_PATH, 'Claude', 'MEMORY.md');
+    const memContent = safeReadFile(memPath);
+    if (memContent) {
+      const lines = memContent.split('\n').slice(0, 55).join('\n');
+      parts.push(`MEMORY INDEX:\n${lines}`);
+    }
+
+    // Today's session note
+    const today = new Date().toISOString().slice(0, 10);
+    const sessionPath = path.join(VAULT_PATH, 'Claude', 'sessions', `${today}.md`);
+    const sessionContent = safeReadFile(sessionPath, 1200);
+    if (sessionContent) parts.push(`TODAY'S SESSION:\n${sessionContent}`);
+
+    // Clawd-pet project note (current main project)
+    const projectPath = path.join(VAULT_PATH, 'Claude', 'Projects', 'clawd-pet.md');
+    const projectContent = safeReadFile(projectPath, 1500);
+    if (projectContent) parts.push(`ACTIVE PROJECT (clawd-pet):\n${projectContent}`);
+
+    return parts.length ? parts.join('\n\n---\n\n') : null;
+  } catch (err) {
+    console.error('[vault] read fail:', err.message);
+    return null;
+  }
+});
+
+ipcMain.handle('read-vault-brain', () => {
+  try {
+    const today = new Date().toISOString().slice(0, 10);
+    const brainPath = path.join(CLAWD_BRAIN_PATH, `${today}.md`);
+    return safeReadFile(brainPath) || '(no entries today)';
+  } catch { return '(read fail)'; }
+});
+
+ipcMain.on('write-vault-brain', (_, text) => {
+  try {
+    if (!fs.existsSync(CLAWD_BRAIN_PATH)) {
+      fs.mkdirSync(CLAWD_BRAIN_PATH, { recursive: true });
+    }
+    const today = new Date().toISOString().slice(0, 10);
+    const brainPath = path.join(CLAWD_BRAIN_PATH, `${today}.md`);
+    const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+    if (!fs.existsSync(brainPath)) {
+      fs.writeFileSync(brainPath, `# Clawd Brain — ${today}\n\n`, 'utf8');
+    }
+    fs.appendFileSync(brainPath, `[${time}] ${text}\n`, 'utf8');
+  } catch (err) {
+    console.error('[vault-brain] write fail:', err.message);
+  }
+});
+
 ipcMain.on('toggle-chat', (event, open) => {
   cancelWalk();
   chatIsOpen = !!open;
@@ -933,6 +1193,7 @@ ipcMain.handle('chat', async (event, payload) => {
   const context = Array.isArray(payload) ? null : payload.context;
   const memoryData = Array.isArray(payload) ? [] : (payload.memory || []);
   const mode = Array.isArray(payload) ? 'rocky' : (payload.mode || 'rocky');
+  const vaultContext = Array.isArray(payload) ? null : (payload.vaultContext || null);
 
   const contextLine = context
     ? `\n\nCURRENT SCREEN CONTEXT: app="${context.app}", window="${context.title}". Use only if relevant.`
@@ -949,8 +1210,12 @@ ipcMain.handle('chat', async (event, payload) => {
   const timeOfDay = hour < 6 ? 'deep night' : hour < 12 ? 'morning' : hour < 17 ? 'afternoon' : hour < 21 ? 'evening' : 'late night';
   const timeLine = `\n\nTIME: ${now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}, ${now.toLocaleDateString('en-US', { weekday: 'long' })}, ${timeOfDay}. React to time if natural.`;
 
+  const vaultLine = vaultContext
+    ? `\n\nOBSIDIAN VAULT (your knowledge about human from their notes):\n${vaultContext}\nUse naturally. Reference past projects/sessions when relevant. Never say "according to Obsidian" — just know it.`
+    : '';
+
   const systemPrompt = mode === 'smart'
-    ? `You are Clawd, a helpful AI assistant. Respond clearly and naturally. Be concise but complete.${contextLine}${memorySection}${timeLine}`
+    ? `You are Clawd, a helpful AI assistant. Respond clearly and naturally. Be concise but complete.${contextLine}${memorySection}${vaultLine}${timeLine}`
     : `${ROCKY_RULES}
 
 Examples:
@@ -964,7 +1229,7 @@ BAD: "That's really cool!"
 GOOD: "oh. amaze amaze. tell more, question?"
 
 BAD: "I can help you with that."
-GOOD: "Clawd help. [help]."${contextLine}${memorySection}${timeLine}`;
+GOOD: "Clawd help. [help]."${contextLine}${memorySection}${vaultLine}${timeLine}`;
 
   const recent = messages.slice(-20);
 

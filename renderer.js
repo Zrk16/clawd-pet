@@ -18,6 +18,33 @@ let currentContext = null;
 let messagesSinceLastSummarize = 0;
 const SUMMARIZE_EVERY = 10;
 let wakeEnabled = false;
+let currentMood = 'idle';
+
+// ── Obsidian vault context ──
+let vaultContext = null;
+
+async function refreshVault() {
+  try {
+    vaultContext = await window.clawd.readVault();
+    console.log('[vault] loaded:', vaultContext ? vaultContext.length + ' chars' : 'empty');
+  } catch (err) {
+    console.error('[vault] init fail:', err);
+  }
+}
+refreshVault();
+setInterval(refreshVault, 30 * 60 * 1000); // refresh every 30 min
+
+// ── Focus / Pomodoro state ──
+let focusMode = false;
+let focusEndTime = null;
+let focusTimerInterval = null;
+let focusSessions = 0;
+let focusStartTime = null;
+const focusTimerEl = document.getElementById('focus-timer');
+
+// ── Distraction apps (loaded from settings) ──
+let distractionApps = ['YouTube', 'Twitter', 'Reddit', 'Netflix', 'TikTok', 'Instagram', 'Facebook', 'Twitch'];
+let lastDistractionAt = 0;
 
 
 async function initMemory() {
@@ -59,11 +86,11 @@ function stopCurrentSpeech() {
   activeSources = [];
 }
 
-async function speak(text) {
+async function speak(text, mood) {
   if (ttsMuted || !text) return;
   stopCurrentSpeech();
   try {
-    const b64 = await window.clawd.synthesizeSpeech(text);
+    const b64 = await window.clawd.synthesizeSpeech(text, mood || currentMood);
     if (!b64) return;
     const bytes = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
     const ctx = getAudioCtx();
@@ -83,10 +110,11 @@ async function initTtsState() {
   const settings = await window.clawd.loadSettings();
   ttsMuted = !!settings.ttsMuted;
   updateTtsBtn();
+  if (Array.isArray(settings.distractionApps)) distractionApps = settings.distractionApps;
 }
 
 function saveAllSettings() {
-  window.clawd.saveSettings({ ttsMuted, wakeWordEnabled: wakeEnabled });
+  window.clawd.saveSettings({ ttsMuted, wakeWordEnabled: wakeEnabled, distractionApps });
 }
 
 function updateTtsBtn() {
@@ -233,8 +261,86 @@ const APP_MOODS = {
 
 let lastContextRemarkAt = 0;
 
+// ── Focus mode functions ──
+function startFocus(minutes) {
+  minutes = minutes || 25;
+  focusMode = true;
+  focusStartTime = Date.now();
+  focusEndTime = Date.now() + minutes * 60 * 1000;
+  setSvg('coding');
+  document.getElementById('pet-container').classList.add('focus-active');
+  stopWalking();
+  clearTimeout(proactiveTimer);
+  window.clawd.setFocusPoll(true);
+  focusTimerEl.classList.remove('hidden');
+  showBubble(`focus start. ${minutes} minute. Clawd watch. no distract.`);
+  clearInterval(focusTimerInterval);
+  focusTimerInterval = setInterval(() => {
+    const remaining = focusEndTime - Date.now();
+    if (remaining <= 0) {
+      endFocus();
+    } else {
+      const m = Math.floor(remaining / 60000);
+      const s = Math.floor((remaining % 60000) / 1000);
+      focusTimerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+    }
+  }, 1000);
+}
+
+function endFocus() {
+  if (!focusMode) return;
+  focusMode = false;
+  clearInterval(focusTimerInterval);
+  focusTimerInterval = null;
+  focusTimerEl.classList.add('hidden');
+  document.getElementById('pet-container').classList.remove('focus-active');
+  focusSessions++;
+  const minutesDone = Math.round((Date.now() - focusStartTime) / 60000);
+  window.clawd.setFocusPoll(false);
+  setSvg('happy');
+  showBubble(`focus complete. ${minutesDone} minute. good good. rest now.`);
+  setTimeout(() => startProactiveLoop(), 5000);
+  setTimeout(() => startWalking(), 5000);
+}
+
+function cancelFocus() {
+  if (!focusMode) return;
+  focusMode = false;
+  clearInterval(focusTimerInterval);
+  focusTimerInterval = null;
+  focusTimerEl.classList.add('hidden');
+  document.getElementById('pet-container').classList.remove('focus-active');
+  window.clawd.setFocusPoll(false);
+  showBubble('focus cancel. ok. Clawd understand.');
+  startProactiveLoop();
+  startWalking();
+}
+
+function flashDistraction() {
+  document.getElementById('pet-container').classList.add('distraction-flash');
+  setTimeout(() => {
+    document.getElementById('pet-container').classList.remove('distraction-flash');
+    if (focusMode) setSvg('coding');
+  }, 700);
+}
+
 window.clawd.onContextChange((ctx) => {
   currentContext = ctx;
+
+  // Distraction detection during focus
+  if (focusMode) {
+    const haystack = (ctx.title + ' ' + ctx.app).toLowerCase();
+    const isDistraction = distractionApps.some(d => haystack.includes(d.toLowerCase()));
+    const now = Date.now();
+    if (isDistraction && now - lastDistractionAt > 30000) {
+      lastDistractionAt = now;
+      flashDistraction();
+      const name = ctx.app || 'that';
+      showBubble(`Goodos. ${name} not focus. back. now.`);
+    }
+    return; // skip mood + proactive during focus
+  }
+
   if (!chatOpen && petImg.src && !petImg.src.includes('sleeping')) {
     const mood = APP_MOODS[ctx.app];
     if (mood) {
@@ -246,6 +352,42 @@ window.clawd.onContextChange((ctx) => {
   if (!chatOpen && !bubbleVisible && now - lastContextRemarkAt > 90000 && Math.random() < 0.25) {
     lastContextRemarkAt = now;
     fireProactive();
+  }
+});
+
+// ── Reminder handler ──
+window.clawd.onReminderFire((text) => {
+  showBubble(`reminder: ${text}`);
+  speak(text, 'excited');
+});
+
+// ── Settings updated handler ──
+window.clawd.onSettingsUpdated((s) => {
+  if (typeof s.ttsMuted === 'boolean') { ttsMuted = s.ttsMuted; updateTtsBtn(); }
+  if (Array.isArray(s.distractionApps)) distractionApps = s.distractionApps;
+});
+
+// ── Context menu action handler ──
+window.clawd.onCtxMenuAction((action) => {
+  switch (action) {
+    case 'toggle-tts':
+      ttsMuted = !ttsMuted;
+      if (ttsMuted) stopCurrentSpeech();
+      updateTtsBtn();
+      saveAllSettings();
+      break;
+    case 'sleep':
+      setSvg('sleeping');
+      stopIdleCycle();
+      showBubble('Clawd sleep now. tap to wake.');
+      break;
+    case 'focus':
+      if (focusMode) cancelFocus();
+      else startFocus(25);
+      break;
+    case 'settings':
+      window.clawd.openSettings();
+      break;
   }
 });
 
@@ -300,6 +442,7 @@ function pickSvg(mood) {
 }
 
 function setSvg(mood) {
+  currentMood = mood;
   const src = pickSvg(mood);
   if (petImg.src.endsWith(src)) return;
   petImg.classList.remove('bounce-in', 'swapping');
@@ -547,6 +690,17 @@ pet.addEventListener('click', (e) => {
   else openChat();
 });
 
+// ── Right-click → native context menu ──
+pet.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+  window.clawd.showContextMenu({ ttsMuted });
+});
+
+// ── Settings button ──
+document.getElementById('settings-btn').addEventListener('click', () => {
+  window.clawd.openSettings();
+});
+
 // ── Send message ──
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
@@ -599,6 +753,53 @@ async function sendMessage() {
   if (text === '/wake') {
     input.value = '';
     appendMessage('clawd', 'wake word not available. use mic button, question?');
+    return;
+  }
+
+  if (text.startsWith('/focus')) {
+    input.value = '';
+    if (focusMode) {
+      cancelFocus();
+      appendMessage('clawd', 'focus cancel. ok. rest now.');
+    } else {
+      const parts = text.split(' ');
+      const min = parseInt(parts[1]) || 25;
+      startFocus(min);
+      appendMessage('clawd', `focus start. ${min} minute. Clawd guard. no distract.`);
+    }
+    return;
+  }
+
+  if (text === '/focusstats') {
+    input.value = '';
+    appendMessage('clawd', `focus session: ${focusSessions}. good effort. Clawd proud.`);
+    return;
+  }
+
+  if (text === '/settings') {
+    input.value = '';
+    window.clawd.openSettings();
+    return;
+  }
+
+  if (text === '/vault') {
+    input.value = '';
+    appendMessage('clawd', 'vault refresh. one moment...');
+    refreshVault().then(() => {
+      if (vaultContext) {
+        appendMessage('clawd', `vault read. ${vaultContext.length} char load. Clawd know context now.`);
+      } else {
+        appendMessage('clawd', 'vault empty. no file find. path correct, question?');
+      }
+    });
+    return;
+  }
+
+  if (text === '/brain') {
+    input.value = '';
+    window.clawd.readVaultBrain().then(content => {
+      appendMessage('clawd', `brain today:\n${content}`);
+    });
     return;
   }
 
@@ -673,7 +874,7 @@ async function sendMessage() {
     } else {
       // Chat path: no tool, normal reply
       history.push({ role: 'user', content: text });
-      const reply = await window.clawd.chat(history, currentContext, memoryCats, speechMode);
+      const reply = await window.clawd.chat(history, currentContext, memoryCats, speechMode, vaultContext);
 
       history.push({ role: 'assistant', content: reply });
       window.clawd.saveHistory(history);
@@ -684,6 +885,16 @@ async function sendMessage() {
         window.clawd.summarizeMemory(history.slice(-30), memoryCats).then(cats => {
           memoryCats = cats;
           window.clawd.saveMemory(cats);
+          // Write observations to Clawd-Brain vault
+          const recentUserMsgs = history.slice(-10)
+            .filter(m => m.role === 'user')
+            .map(m => m.content.slice(0, 80))
+            .join(' | ');
+          if (recentUserMsgs) {
+            window.clawd.writeVaultBrain(`user: ${recentUserMsgs}`);
+          }
+          const newProjects = (cats.projects || []).slice(-2).join('; ');
+          if (newProjects) window.clawd.writeVaultBrain(`projects: ${newProjects}`);
         });
       }
 

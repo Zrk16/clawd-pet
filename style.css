@@ -441,3 +441,63 @@ body {
   opacity: 0.25;
   cursor: default;
 }
+
+/* ── Focus timer ── */
+#focus-timer {
+  position: absolute;
+  bottom: calc(100% + 2px);
+  right: 0;
+  background: rgba(7, 5, 11, 0.92);
+  color: #FF4444;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 3px 8px;
+  border: 1px solid rgba(255, 68, 68, 0.4);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 20;
+}
+#focus-timer.hidden { display: none; }
+
+/* ── Distraction flash on pet ── */
+@keyframes distraction-flash {
+  0%, 100% { filter: none; }
+  25%, 75%  { filter: drop-shadow(0 0 14px rgba(255, 50, 50, 1)) brightness(1.1); }
+}
+.distraction-flash #pet-img {
+  animation: distraction-pet 0.6s ease-out !important;
+}
+@keyframes distraction-pet {
+  0%, 100% { filter: none; }
+  30%, 70%  { filter: drop-shadow(0 0 14px rgba(255, 50, 50, 1)) brightness(1.15); }
+}
+
+/* ── Settings button ── */
+#settings-btn {
+  background: none;
+  border: 1px solid rgba(255, 122, 61, 0.2);
+  color: rgba(255, 122, 61, 0.45);
+  font-size: 11px;
+  width: 20px;
+  height: 20px;
+  border-radius: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+#settings-btn:hover {
+  color: #FF7A3D;
+  border-color: rgba(255, 122, 61, 0.6);
+  background: rgba(255, 122, 61, 0.08);
+}
+
+/* ── Focus guard mode ── */
+#pet-container.focus-active #pet-img {
+  filter: drop-shadow(0 0 6px rgba(255, 68, 68, 0.5));
+}
