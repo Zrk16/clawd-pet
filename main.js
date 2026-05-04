@@ -339,6 +339,9 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
+// Raw clipboard read for code assist
+ipcMain.handle('get-clipboard', () => clipboard.readText());
+
 ipcMain.handle('debug-context', () => ({
   raw: lastRawInfo ? {
     title: lastRawInfo.title,
@@ -938,11 +941,9 @@ async function getEdgeTTS() {
 
 ipcMain.handle('synthesize-speech', async (_, input) => {
   const text = typeof input === 'string' ? input : (input.text || '');
-  const mood = typeof input === 'string' ? 'idle' : (input.mood || 'idle');
   try {
     const tts = await getEdgeTTS();
-    const ssml = buildSSML(text, mood);
-    const { audioStream } = await tts.toStream(ssml);
+    const { audioStream } = await tts.toStream(text);
     const chunks = [];
     await new Promise((resolve, reject) => {
       audioStream.on('data', chunk => chunks.push(chunk));
@@ -953,18 +954,7 @@ ipcMain.handle('synthesize-speech', async (_, input) => {
   } catch (err) {
     console.error('[tts] fail:', err.message);
     edgeTts = null;
-    // Fallback: try plain text if SSML fails
-    try {
-      const tts2 = await getEdgeTTS();
-      const { audioStream } = await tts2.toStream(text);
-      const chunks = [];
-      await new Promise((resolve, reject) => {
-        audioStream.on('data', chunk => chunks.push(chunk));
-        audioStream.on('end', resolve);
-        audioStream.on('error', reject);
-      });
-      return Buffer.concat(chunks).toString('base64');
-    } catch { return null; }
+    return null;
   }
 });
 

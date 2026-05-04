@@ -809,6 +809,7 @@ async function sendMessage() {
     appendMessage('user', `[/see] ${question}`);
     setSvg('thinking');
     sendBtn.disabled = true;
+    showTyping();
     try {
       const img = await window.clawd.captureScreen();
       if (!img) {
@@ -826,6 +827,7 @@ async function sendMessage() {
       appendMessage('error', 'Vision fail.');
       console.error(err);
     } finally {
+      hideTyping();
       sendBtn.disabled = false;
       input.focus();
     }
@@ -836,6 +838,7 @@ async function sendMessage() {
   appendMessage('user', text);
   setSvg('thinking');
   sendBtn.disabled = true;
+  showTyping();
   resetSleepTimer();
 
   try {
@@ -858,6 +861,7 @@ async function sendMessage() {
         toolResult = `tool fail: ${toolErr}`;
       }
 
+      hideTyping();
       setSvg(toolResult && !toolResult.startsWith('tool fail') ? 'happy' : 'error');
 
       if (toolResult) {
@@ -907,9 +911,48 @@ async function sendMessage() {
     appendMessage('error', `Screech! ${msg}`);
     console.error('Chat error:', err);
   } finally {
+    hideTyping();
     sendBtn.disabled = false;
     input.focus();
   }
+}
+
+const typingIndicator = document.getElementById('typing-indicator');
+
+function showTyping() { typingIndicator.classList.remove('hidden'); messagesEl.scrollTop = messagesEl.scrollHeight; }
+function hideTyping() { typingIndicator.classList.add('hidden'); }
+
+function nowStamp() {
+  return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+}
+
+function renderCodeBlocks(container, text) {
+  const parts = text.split(/(```[\s\S]*?```)/g);
+  parts.forEach(part => {
+    if (part.startsWith('```') && part.endsWith('```')) {
+      const code = part.replace(/^```\w*\n?/, '').replace(/```$/, '');
+      const block = document.createElement('div');
+      block.className = 'code-block';
+      const pre = document.createElement('pre');
+      pre.textContent = code;
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'code-copy-btn';
+      copyBtn.textContent = 'COPY';
+      copyBtn.onclick = () => {
+        navigator.clipboard.writeText(code).then(() => {
+          copyBtn.textContent = 'OK ✓';
+          setTimeout(() => { copyBtn.textContent = 'COPY'; }, 1500);
+        });
+      };
+      block.appendChild(pre);
+      block.appendChild(copyBtn);
+      container.appendChild(block);
+    } else if (part) {
+      const span = document.createElement('span');
+      span.textContent = part;
+      container.appendChild(span);
+    }
+  });
 }
 
 function appendMessage(role, text) {
@@ -923,29 +966,54 @@ function appendMessage(role, text) {
     div.appendChild(name);
 
     const content = document.createElement('div');
-    content.classList.add('msg-text', 'typing');
-    div.appendChild(content);
-    messagesEl.appendChild(div);
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+    content.classList.add('msg-text');
 
-    speak(text);
-
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        content.textContent += text[i++];
-        messagesEl.scrollTop = messagesEl.scrollHeight;
-        setTimeout(type, 22);
-      } else {
-        content.classList.remove('typing');
+    const hasCode = text.includes('```');
+    if (hasCode) {
+      content.classList.add('typing');
+      div.appendChild(content);
+      const timeEl = document.createElement('div');
+      timeEl.classList.add('msg-time');
+      timeEl.textContent = nowStamp();
+      div.appendChild(timeEl);
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      speak(text.replace(/```[\s\S]*?```/g, '').trim());
+      renderCodeBlocks(content, text);
+      content.classList.remove('typing');
+    } else {
+      content.classList.add('typing');
+      div.appendChild(content);
+      const timeEl = document.createElement('div');
+      timeEl.classList.add('msg-time');
+      timeEl.textContent = nowStamp();
+      div.appendChild(timeEl);
+      messagesEl.appendChild(div);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      speak(text);
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          content.textContent += text[i++];
+          messagesEl.scrollTop = messagesEl.scrollHeight;
+          setTimeout(type, 20);
+        } else {
+          content.classList.remove('typing');
+        }
       }
+      type();
     }
-    type();
   } else {
     const content = document.createElement('div');
     content.classList.add('msg-text');
     content.textContent = text;
     div.appendChild(content);
+    if (role === 'user') {
+      const timeEl = document.createElement('div');
+      timeEl.classList.add('msg-time');
+      timeEl.textContent = nowStamp();
+      div.appendChild(timeEl);
+    }
     messagesEl.appendChild(div);
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
