@@ -1,0 +1,154 @@
+/* ── GAME BOY PRESET ── */
+/* Classic 4-color green LCD palette */
+
+:root {
+  --gb-bg: #0f380f;
+  --gb-text: #9bbc0f;
+  --gb-accent: #8bac0f;
+  --gb-text-dim: rgba(155, 188, 15, 0.5);
+  --gb-border: rgba(139, 172, 15, 0.4);
+  --gb-input-bg: rgba(139, 172, 15, 0.1);
+  --gb-toggle-bg: rgba(139, 172, 15, 0.15);
+  --gb-radius: 0px;
+  --gb-font: 'Courier New', monospace;
+}
+
+.preset-gameboy body {
+  background: var(--gb-bg);
+  color: var(--gb-text);
+  font-family: var(--gb-font);
+  image-rendering: pixelated;
+}
+
+.preset-gameboy #header {
+  background: #0f380f;
+  border-bottom: 3px solid var(--gb-accent);
+}
+
+.preset-gameboy #header h1 {
+  color: var(--gb-accent);
+  font-weight: 900;
+  letter-spacing: 2px;
+}
+
+.preset-gameboy #header span {
+  color: var(--gb-text-dim);
+}
+
+.preset-gameboy .section-title {
+  color: var(--gb-accent);
+  border-bottom: 2px solid var(--gb-accent);
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.preset-gameboy .row label {
+  color: var(--gb-text);
+  font-weight: bold;
+}
+
+.preset-gameboy .row label .hint {
+  color: var(--gb-text-dim);
+}
+
+.preset-gameboy .toggle-track {
+  background: #0f380f;
+  border: 2px solid var(--gb-text);
+  border-radius: 0;
+}
+
+.preset-gameboy .toggle-track::after {
+  background: var(--gb-text);
+  width: 14px;
+  height: 14px;
+  border: 2px solid #0f380f;
+}
+
+.preset-gameboy .toggle input:checked + .toggle-track {
+  background: var(--gb-accent);
+}
+
+.preset-gameboy .toggle input:checked + .toggle-track::after {
+  transform: translateX(14px);
+  background: #0f380f;
+}
+
+.preset-gameboy input[type="number"] {
+  background: var(--gb-input-bg);
+  border: 2px solid var(--gb-text);
+  color: var(--gb-text);
+  border-radius: 0;
+  font-weight: bold;
+}
+
+.preset-gameboy select {
+  background: var(--gb-input-bg);
+  border: 2px solid var(--gb-text);
+  color: var(--gb-text);
+  border-radius: 0;
+  font-weight: bold;
+}
+
+.preset-gameboy option {
+  background: var(--gb-bg);
+}
+
+.preset-gameboy .distraction-tag {
+  background: var(--gb-input-bg);
+  border: 2px solid var(--gb-text);
+  color: var(--gb-text);
+  border-radius: 0;
+}
+
+.preset-gameboy .distraction-tag button {
+  color: var(--gb-text);
+  font-weight: bold;
+}
+
+.preset-gameboy #distraction-input {
+  background: var(--gb-input-bg);
+  border: 2px solid var(--gb-text);
+  color: var(--gb-text);
+  border-radius: 0;
+  font-weight: bold;
+}
+
+.preset-gameboy #distraction-input::placeholder {
+  color: var(--gb-text-dim);
+}
+
+.preset-gameboy #distraction-add-btn {
+  background: var(--gb-accent);
+  border: 2px solid var(--gb-text);
+  color: #0f380f;
+  font-weight: bold;
+  border-radius: 0;
+}
+
+.preset-gameboy #distraction-add-btn:hover {
+  background: var(--gb-text);
+}
+
+.preset-gameboy #footer {
+  background: #0f380f;
+  border-top: 3px solid var(--gb-accent);
+}
+
+.preset-gameboy #save-btn {
+  background: var(--gb-accent);
+  border: 2px solid var(--gb-text);
+  color: #0f380f;
+  font-weight: 900;
+  border-radius: 0;
+  letter-spacing: 1px;
+}
+
+.preset-gameboy #save-btn:hover {
+  background: var(--gb-text);
+  color: #0f380f;
+}
+
+.preset-gameboy #save-status {
+  color: var(--gb-text);
+  font-weight: bold;
+}

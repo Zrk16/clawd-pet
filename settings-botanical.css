@@ -1,0 +1,94 @@
+/* ── BOTANICAL SETTINGS PRESET ── */
+/* Green nature aesthetic */
+:root {
+  --bot-bg: #0d1f0d;
+  --bot-text: #7fcc7f;
+  --bot-accent: #4a9f4a;
+  --bot-light: #b8e6b8;
+  --bot-border: #2d5a2d;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bot-bg: #f0f5f0;
+    --bot-text: #2d5a2d;
+    --bot-accent: #4a9f4a;
+    --bot-light: #1a3a1a;
+    --bot-border: #b8e6b8;
+  }
+}
+
+.preset-botanical body {
+  background: var(--bot-bg);
+  color: var(--bot-text);
+}
+
+.preset-botanical #header {
+  background: linear-gradient(180deg, var(--bot-border), transparent);
+  border-bottom: 1px solid var(--bot-accent);
+}
+
+.preset-botanical #header h1 {
+  color: var(--bot-light);
+}
+
+.preset-botanical #header span {
+  color: var(--bot-accent);
+}
+
+.preset-botanical .section-title {
+  color: var(--bot-accent);
+}
+
+.preset-botanical .row label {
+  color: var(--bot-light);
+}
+
+.preset-botanical .toggle-track {
+  background: var(--bot-bg);
+  border: 1px solid var(--bot-border);
+}
+
+.preset-botanical .toggle-track::after {
+  background: var(--bot-accent);
+}
+
+.preset-botanical input[type="number"],
+.preset-botanical select {
+  background: var(--bot-bg);
+  border: 1px solid var(--bot-border);
+  color: var(--bot-text);
+}
+
+.preset-botanical .distraction-tag {
+  background: rgba(74, 159, 74, 0.1);
+  border: 1px solid var(--bot-border);
+  color: var(--bot-text);
+}
+
+.preset-botanical #distraction-input {
+  background: var(--bot-bg);
+  border: 1px solid var(--bot-border);
+  color: var(--bot-text);
+}
+
+.preset-botanical #distraction-add-btn {
+  background: var(--bot-accent);
+  border: 1px solid var(--bot-border);
+  color: var(--bot-bg);
+}
+
+.preset-botanical #footer {
+  background: var(--bot-bg);
+  border-top: 1px solid var(--bot-border);
+}
+
+.preset-botanical #save-btn {
+  background: var(--bot-accent);
+  border: 1px solid var(--bot-border);
+  color: var(--bot-bg);
+}
+
+.preset-botanical #save-status {
+  color: var(--bot-accent);
+}

@@ -1,0 +1,184 @@
+/* ── MARSHMALLOW SETTINGS PRESET ── */
+
+.preset-marshmallow body {
+  background: linear-gradient(180deg, #fff5f5 0%, #fff0f0 100%) !important;
+  color: #5a4a3a !important;
+  font-family: "Quicksand", "Nunito", sans-serif !important;
+  font-size: 12px !important;
+}
+
+.preset-marshmallow #header {
+  background: linear-gradient(90deg, #ffd1dc, #ffb6c1) !important;
+  border-bottom: none !important;
+  padding: 0 18px !important;
+  height: 44px !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+.preset-marshmallow #header h1 {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  letter-spacing: 3px !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.preset-marshmallow #header span {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-size: 9px !important;
+}
+
+.preset-marshmallow .section-title {
+  color: #8b4557 !important;
+  border-bottom: none !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 12px !important;
+  font-weight: 600 !important;
+}
+
+.preset-marshmallow .row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 0 !important;
+  border-bottom: 1px solid rgba(255, 182, 193, 0.3) !important;
+}
+
+.preset-marshmallow .row label {
+  color: #5a4a3a !important;
+  font-size: 12px !important;
+  flex: 1 !important;
+  font-weight: 500 !important;
+}
+
+.preset-marshmallow .row label .hint {
+  color: #886655 !important;
+  font-size: 10px !important;
+  display: block !important;
+  margin-top: 3px !important;
+}
+
+.preset-marshmallow .toggle-track {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+}
+
+.preset-marshmallow .toggle-track::after {
+  background: linear-gradient(135deg, #ffb6c1, #ffc0cb) !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+.preset-marshmallow .toggle input:checked + .toggle-track {
+  background: linear-gradient(135deg, #ffb6c1, #ffc0cb) !important;
+}
+
+.preset-marshmallow .toggle input:checked + .toggle-track::after {
+  background: #ffffff !important;
+  transform: translateX(18px) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+
+.preset-marshmallow input[type="number"] {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #8b7355 !important;
+  font-size: 12px !important;
+  padding: 8px 12px !important;
+  width: 60px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.preset-marshmallow select {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #8b7355 !important;
+  font-size: 11px !important;
+  padding: 8px 12px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.preset-marshmallow option {
+  background: #ffffff !important;
+}
+
+.preset-marshmallow .distraction-tag {
+  background: linear-gradient(135deg, #fff5f5, #ffe4e4) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #8b7355 !important;
+  font-size: 11px !important;
+  box-shadow: 0 2px 6px rgba(255, 182, 193, 0.3) !important;
+}
+
+.preset-marshmallow .distraction-tag button {
+  color: #ffb6c1 !important;
+}
+
+.preset-marshmallow .distraction-tag button:hover {
+  color: #ff6b6b !important;
+}
+
+.preset-marshmallow #distraction-input {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #8b7355 !important;
+  font-size: 11px !important;
+  padding: 10px 12px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.preset-marshmallow #distraction-input::placeholder {
+  color: #ccbbaa !important;
+}
+
+.preset-marshmallow #distraction-add-btn {
+  background: linear-gradient(135deg, #ffb6c1, #ffc0cb) !important;
+  border: none !important;
+  border-radius: 12px !important;
+  color: #ffffff !important;
+  font-size: 10px !important;
+  padding: 10px 14px !important;
+  font-weight: 600 !important;
+}
+
+.preset-marshmallow #distraction-add-btn:hover {
+  background: linear-gradient(135deg, #ff9eb0, #ffb6c1) !important;
+}
+
+.preset-marshmallow #footer {
+  background: linear-gradient(0deg, #fff0f0, #fff5f5) !important;
+  border-top: none !important;
+  padding: 0 18px !important;
+  height: 60px !important;
+  border-radius: 0 0 20px 20px !important;
+}
+
+.preset-marshmallow #save-btn {
+  background: linear-gradient(135deg, #ffb6c1, #ffc0cb) !important;
+  border: none !important;
+  border-radius: 20px !important;
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  padding: 12px 24px !important;
+  box-shadow: 0 4px 15px rgba(255, 182, 193, 0.4) !important;
+}
+
+.preset-marshmallow #save-btn:hover {
+  background: linear-gradient(135deg, #ff9eb0, #ffb6c1) !important;
+}
+
+.preset-marshmallow #save-status {
+  color: #ccbbaa !important;
+  font-size: 10px !important;
+}

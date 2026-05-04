@@ -1,0 +1,163 @@
+/* ── MARSHMALLOW PRESET ── */
+/* Pale pink/white, very rounded, soft */
+
+.preset-marshmallow #bubble {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe4e4 100%) !important;
+  color: #5a4a3a !important;
+  font-family: "Quicksand", "Nunito", sans-serif !important;
+  font-size: 12px !important;
+  padding: 14px 18px !important;
+  border: none !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 4px 15px rgba(255, 182, 193, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  clip-path: none !important;
+}
+
+.preset-marshmallow #bubble::after {
+  display: none !important;
+}
+
+.preset-marshmallow #chat-panel {
+  background: linear-gradient(180deg, #fff5f5 0%, #fff0f0 100%) !important;
+  border: none !important;
+  border-radius: 24px !important;
+  box-shadow: 
+    0 8px 30px rgba(255, 182, 193, 0.3),
+    0 2px 10px rgba(255, 182, 193, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+  clip-path: none !important;
+  overflow: hidden !important;
+}
+
+.preset-marshmallow #chat-panel::before {
+  display: none !important;
+}
+
+.preset-marshmallow #chat-panel.hidden {
+  display: none !important;
+}
+
+.preset-marshmallow #chat-header {
+  background: linear-gradient(90deg, #ffd1dc, #ffb6c1) !important;
+  border-bottom: none !important;
+  padding: 0 16px !important;
+  height: 40px !important;
+  border-radius: 24px 24px 0 0 !important;
+}
+
+.preset-marshmallow #chat-header h2 {
+  color: #ffffff !important;
+  font-family: "Quicksand", "Nunito", sans-serif !important;
+  font-weight: 600 !important;
+  letter-spacing: 2px !important;
+  font-size: 12px !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+}
+
+.preset-marshmallow #mode-toggle {
+  color: #ffffff !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  background: rgba(255, 255, 255, 0.3) !important;
+  padding: 4px 8px !important;
+  border-radius: 10px !important;
+}
+
+.preset-marshmallow #mode-toggle.smart {
+  color: #ff69b4 !important;
+}
+
+.preset-marshmallow #chat-messages {
+  background: transparent !important;
+  padding: 14px !important;
+}
+
+.preset-marshmallow #chat-messages .user-msg {
+  color: #4a3a2a !important;
+  font-family: "Quicksand", "Nunito", sans-serif !important;
+  font-size: 12px !important;
+  margin-bottom: 8px !important;
+}
+
+.preset-marshmallow #chat-messages .clawd-msg {
+  color: #8b4557 !important;
+  font-family: "Quicksand", "Nunito", sans-serif !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 10px !important;
+}
+
+.preset-marshmallow #chat-input {
+  background: #ffffff !important;
+  border: none !important;
+  border-radius: 20px !important;
+  color: #4a3a2a !important;
+  font-family: "Quicksand", "Nunito", sans-serif !important;
+  font-size: 12px !important;
+  padding: 12px 16px !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+}
+
+.preset-marshmallow #chat-input::placeholder {
+  color: #aa9988 !important;
+}
+
+.preset-marshmallow #chat-input:focus {
+  outline: none !important;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05), 0 0 0 2px #ffb6c1 !important;
+}
+
+.preset-marshmallow #input-row {
+  background: transparent !important;
+  padding: 12px !important;
+}
+
+.preset-marshmallow #send-btn {
+  background: linear-gradient(135deg, #ffb6c1, #ffc0cb) !important;
+  border: none !important;
+  border-radius: 20px !important;
+  color: #ffffff !important;
+  font-family: "Quicksand", "Nunito", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  padding: 10px 18px !important;
+  box-shadow: 0 4px 10px rgba(255, 182, 193, 0.4) !important;
+}
+
+.preset-marshmallow #send-btn:hover {
+  background: linear-gradient(135deg, #ff9eb0, #ffb6c1) !important;
+  box-shadow: 0 6px 15px rgba(255, 182, 193, 0.5) !important;
+}
+
+.preset-marshmallow .mic-btn {
+  color: #ffb6c1 !important;
+  font-size: 18px !important;
+}
+
+.preset-marshmallow .mic-btn.recording {
+  color: #ff6b6b !important;
+}
+
+.preset-marshmallow .copy-btn {
+  color: #ccbbaa !important;
+  font-size: 14px !important;
+}
+
+.preset-marshmallow .copy-btn:hover {
+  color: #ffb6c1 !important;
+}
+
+.preset-marshmallow .scroll::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.preset-marshmallow .scroll::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.preset-marshmallow .scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 182, 193, 0.5) !important;
+  border-radius: 3px !important;
+}

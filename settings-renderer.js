@@ -11,6 +11,9 @@ async function loadSettings() {
   const freq = document.getElementById('bubble-freq');
   freq.value = currentSettings.bubbleFrequency || 'normal';
 
+  const preset = document.getElementById('ui-preset');
+  preset.value = currentSettings.uiPreset || 'og';
+
   renderDistractionList(currentSettings.distractionApps || []);
 }
 
@@ -53,6 +56,7 @@ document.getElementById('save-btn').addEventListener('click', () => {
     walkEnabled: document.getElementById('walk-enabled').checked,
     focusDuration: parseInt(document.getElementById('focus-duration').value) || 25,
     bubbleFrequency: document.getElementById('bubble-freq').value,
+    uiPreset: document.getElementById('ui-preset').value,
     distractionApps: currentSettings.distractionApps || [],
   };
   window.clawdSettings.saveFullSettings(s);
@@ -60,5 +64,22 @@ document.getElementById('save-btn').addEventListener('click', () => {
   status.textContent = 'SAVED.';
   setTimeout(() => { status.textContent = ''; }, 2000);
 });
+
+// ── UI Preset system for settings window ──
+let currentPresetLink = null;
+
+function applyUiPreset(preset) {
+  document.body.classList.remove('preset-og', 'preset-crt', 'preset-gameboy', 'preset-vhs', 'preset-dos', 'preset-synthwave', 'preset-midnight', 'preset-grimoire', 'preset-ink', 'preset-paper', 'preset-nordic', 'preset-neon-punk', 'preset-comic-book', 'preset-memphis', 'preset-silkscreen', 'preset-marshmallow', 'preset-liquid-glass', 'preset-minimal', 'preset-neon', 'preset-retro', 'preset-botanical', 'preset-ocean', 'preset-sunset', 'preset-monochrome', 'preset-pastel', 'preset-gradient', 'preset-material', 'preset-flat', 'preset-glass-dark', 'preset-neubrutalism', 'preset-terminal', 'preset-skeleton', 'preset-vaporwave', 'preset-space', 'preset-wood', 'preset-holographic');
+  document.body.classList.add('preset-' + preset);
+
+  if (!currentPresetLink) {
+    currentPresetLink = document.createElement('link');
+    currentPresetLink.rel = 'stylesheet';
+    document.head.appendChild(currentPresetLink);
+  }
+  currentPresetLink.href = 'settings-' + preset + '.css';
+}
+
+window.clawdSettings.onUiPreset((preset) => applyUiPreset(preset));
 
 loadSettings();

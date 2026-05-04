@@ -1,0 +1,160 @@
+/* ── NEON PUNK SETTINGS PRESET ── */
+
+.preset-neon-punk body {
+  background: #0a0a0a !important;
+  color: #00ffff !important;
+  font-family: "Impact", "Arial Black", sans-serif !important;
+  font-size: 12px !important;
+}
+
+.preset-neon-punk #header {
+  background: linear-gradient(90deg, #0a0a0a, #1a0a15) !important;
+  border-bottom: 2px solid #ff0080 !important;
+  padding: 0 18px !important;
+  height: 42px !important;
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%) !important;
+}
+
+.preset-neon-punk #header h1 {
+  color: #ff0080 !important;
+  font-weight: normal !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+  text-shadow: 0 0 10px #ff0080 !important;
+}
+
+.preset-neon-punk #header span {
+  color: rgba(0, 255, 255, 0.5) !important;
+  font-size: 9px !important;
+}
+
+.preset-neon-punk #content {
+  background: transparent !important;
+  padding: 16px 18px !important;
+}
+
+.preset-neon-punk .section-title {
+  color: #ff0080 !important;
+  border-bottom: 2px solid #ff0080 !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 12px !important;
+  text-shadow: 0 0 5px #ff0080 !important;
+}
+
+.preset-neon-punk .row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid rgba(255, 0, 128, 0.3) !important;
+}
+
+.preset-neon-punk .row label {
+  color: #00ffff !important;
+  font-size: 12px !important;
+  flex: 1 !important;
+}
+
+.preset-neon-punk .row label .hint {
+  color: rgba(0, 255, 255, 0.5) !important;
+  font-size: 10px !important;
+  display: block !important;
+  margin-top: 3px !important;
+}
+
+.preset-neon-punk .toggle-track {
+  background: rgba(255, 0, 128, 0.1) !important;
+  border: 1px solid #ff0080 !important;
+}
+
+.preset-neon-punk .toggle-track::after {
+  background: #ff0080 !important;
+  box-shadow: 0 0 5px #ff0080 !important;
+}
+
+.preset-neon-punk .toggle input:checked + .toggle-track {
+  background: #ff0080 !important;
+  border-color: #00ffff !important;
+}
+
+.preset-neon-punk .toggle input:checked + .toggle-track::after {
+  background: #00ffff !important;
+  transform: translateX(18px) !important;
+}
+
+.preset-neon-punk input[type="number"] {
+  background: rgba(255, 0, 128, 0.1) !important;
+  border: 1px solid #ff0080 !important;
+  color: #00ffff !important;
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+  width: 60px !important;
+}
+
+.preset-neon-punk select {
+  background: rgba(255, 0, 128, 0.1) !important;
+  border: 1px solid #ff0080 !important;
+  color: #00ffff !important;
+  font-size: 11px !important;
+  padding: 6px 10px !important;
+}
+
+.preset-neon-punk option {
+  background: #0a0a0a !important;
+}
+
+.preset-neon-punk .distraction-tag {
+  background: rgba(255, 0, 128, 0.1) !important;
+  border: 1px solid #ff0080 !important;
+  color: #00ffff !important;
+  font-size: 11px !important;
+}
+
+.preset-neon-punk .distraction-tag button {
+  color: #ff0080 !important;
+}
+
+.preset-neon-punk #distraction-input {
+  background: rgba(255, 0, 128, 0.1) !important;
+  border: 1px solid #ff0080 !important;
+  color: #00ffff !important;
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+}
+
+.preset-neon-punk #distraction-add-btn {
+  background: #ff0080 !important;
+  border: none !important;
+  color: #00ffff !important;
+  font-size: 10px !important;
+  padding: 8px 12px !important;
+}
+
+.preset-neon-punk #footer {
+  background: #0a0a0a !important;
+  border-top: 2px solid #ff0080 !important;
+  padding: 0 18px !important;
+  height: 56px !important;
+}
+
+.preset-neon-punk #save-btn {
+  background: #ff0080 !important;
+  border: none !important;
+  color: #00ffff !important;
+  font-size: 11px !important;
+  padding: 10px 20px !important;
+}
+
+.preset-neon-punk #save-btn:hover {
+  background: #00ffff !important;
+  color: #0a0a0a !important;
+}
+
+.preset-neon-punk #save-status {
+  color: rgba(0, 255, 255, 0.5) !important;
+  font-size: 10px !important;
+}

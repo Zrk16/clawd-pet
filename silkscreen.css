@@ -1,0 +1,178 @@
+/* ── SILKSCREEN PRESET ── */
+/* Layered color blocks, offset print effect */
+
+.preset-silkscreen #bubble {
+  background: #f4a460 !important;
+  color: #2f4f4f !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 11px !important;
+  padding: 12px 16px !important;
+  border: 2px solid #2f4f4f !important;
+  border-radius: 0 !important;
+  box-shadow: 
+    3px 3px 0 #2f4f4f,
+    6px 6px 0 rgba(47, 79, 79, 0.3) !important;
+  clip-path: polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px) !important;
+}
+
+.preset-silkscreen #bubble::after {
+  display: none !important;
+}
+
+.preset-silkscreen #chat-panel {
+  background: #e6e6fa !important;
+  border: 3px solid #2f4f4f !important;
+  border-radius: 0 !important;
+  box-shadow: 
+    4px 4px 0 #2f4f4f,
+    8px 8px 0 rgba(47, 79, 79, 0.2),
+    12px 12px 0 rgba(47, 79, 79, 0.1) !important;
+  clip-path: none !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.preset-silkscreen #chat-panel::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 4px !important;
+  left: 4px !important;
+  right: -4px !important;
+  bottom: -4px !important;
+  background: #87ceeb !important;
+  z-index: -1 !important;
+  display: block !important;
+}
+
+.preset-silkscreen #chat-panel::after {
+  content: '' !important;
+  position: absolute !important;
+  top: 8px !important;
+  left: 8px !important;
+  right: -8px !important;
+  bottom: -8px !important;
+  background: #98fb98 !important;
+  z-index: -2 !important;
+  display: block !important;
+}
+
+.preset-silkscreen #chat-panel.hidden {
+  display: none !important;
+}
+
+.preset-silkscreen #chat-header {
+  background: #2f4f4f !important;
+  border-bottom: 2px solid #2f4f4f !important;
+  padding: 0 12px !important;
+  height: 34px !important;
+}
+
+.preset-silkscreen #chat-header h2 {
+  color: #f4a460 !important;
+  font-family: "Courier New", monospace !important;
+  font-weight: bold !important;
+  letter-spacing: 3px !important;
+  font-size: 10px !important;
+}
+
+.preset-silkscreen #mode-toggle {
+  color: #e6e6fa !important;
+  font-size: 9px !important;
+}
+
+.preset-silkscreen #mode-toggle.smart {
+  color: #f4a460 !important;
+}
+
+.preset-silkscreen #chat-messages {
+  background: #e6e6fa !important;
+  padding: 10px !important;
+}
+
+.preset-silkscreen #chat-messages .user-msg {
+  color: #000000 !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 11px !important;
+  margin-bottom: 6px !important;
+  font-weight: bold !important;
+}
+
+.preset-silkscreen #chat-messages .clawd-msg {
+  color: #4a0080 !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 11px !important;
+  line-height: 1.5 !important;
+  margin-bottom: 8px !important;
+  font-weight: bold !important;
+}
+
+.preset-silkscreen #chat-input {
+  background: #ffffff !important;
+  border: 2px solid #2f4f4f !important;
+  border-radius: 0 !important;
+  color: #2f4f4f !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+}
+
+.preset-silkscreen #chat-input::placeholder {
+  color: #999999 !important;
+}
+
+.preset-silkscreen #chat-input:focus {
+  border-color: #8b4513 !important;
+  outline: none !important;
+}
+
+.preset-silkscreen #input-row {
+  background: #dda0dd !important;
+  border-top: 2px solid #2f4f4f !important;
+  padding: 8px !important;
+}
+
+.preset-silkscreen #send-btn {
+  background: #2f4f4f !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: #f4a460 !important;
+  font-family: "Courier New", monospace !important;
+  font-weight: bold !important;
+  font-size: 10px !important;
+  padding: 8px 12px !important;
+}
+
+.preset-silkscreen #send-btn:hover {
+  background: #8b4513 !important;
+  color: #ffffff !important;
+}
+
+.preset-silkscreen .mic-btn {
+  color: #2f4f4f !important;
+  font-size: 14px !important;
+}
+
+.preset-silkscreen .mic-btn.recording {
+  color: #ff6347 !important;
+}
+
+.preset-silkscreen .copy-btn {
+  color: #2f4f4f !important;
+  font-size: 12px !important;
+}
+
+.preset-silkscreen .copy-btn:hover {
+  color: #8b4513 !important;
+}
+
+.preset-silkscreen .scroll::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.preset-silkscreen .scroll::-webkit-scrollbar-track {
+  background: #e6e6fa !important;
+}
+
+.preset-silkscreen .scroll::-webkit-scrollbar-thumb {
+  background: #2f4f4f !important;
+}

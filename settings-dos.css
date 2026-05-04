@@ -1,0 +1,141 @@
+/* ── DOS PRESET ── */
+/* Classic blue #0000AA with white text */
+
+:root {
+  --dos-bg: #0000aa;
+  --dos-text: #ffffff;
+  --dos-accent: #ffff55;
+  --dos-text-dim: rgba(255, 255, 255, 0.6);
+  --dos-border: rgba(255, 255, 255, 0.4);
+  --dos-input-bg: #000077;
+  --dos-toggle-bg: #000077;
+  --dos-radius: 0px;
+  --dos-font: 'Courier New', Courier, monospace;
+}
+
+.preset-dos body {
+  background: var(--dos-bg);
+  color: var(--dos-text);
+  font-family: var(--dos-font);
+}
+
+.preset-dos body * {
+  border-radius: 0 !important;
+}
+
+.preset-dos #header {
+  background: #000088;
+  border-bottom: 2px solid var(--dos-text);
+}
+
+.preset-dos #header h1 {
+  color: var(--dos-text);
+  font-weight: bold;
+}
+
+.preset-dos #header span {
+  color: var(--dos-text-dim);
+}
+
+.preset-dos .section-title {
+  color: var(--dos-accent);
+  border-bottom: 1px solid var(--dos-text);
+  font-weight: bold;
+}
+
+.preset-dos .row label {
+  color: var(--dos-text);
+  font-weight: bold;
+}
+
+.preset-dos .row label .hint {
+  color: var(--dos-text-dim);
+}
+
+.preset-dos .toggle-track {
+  background: var(--dos-toggle-bg);
+  border: 1px solid var(--dos-text);
+}
+
+.preset-dos .toggle-track::after {
+  background: var(--dos-text);
+  border: 1px solid #0000aa;
+}
+
+.preset-dos .toggle input:checked + .toggle-track {
+  background: var(--dos-accent);
+}
+
+.preset-dos .toggle input:checked + .toggle-track::after {
+  background: #0000aa;
+  border-color: #0000aa;
+}
+
+.preset-dos input[type="number"] {
+  background: var(--dos-input-bg);
+  border: 1px solid var(--dos-text);
+  color: var(--dos-text);
+  caret-color: var(--dos-accent);
+}
+
+.preset-dos select {
+  background: var(--dos-input-bg);
+  border: 1px solid var(--dos-text);
+  color: var(--dos-text);
+}
+
+.preset-dos option {
+  background: var(--dos-bg);
+}
+
+.preset-dos .distraction-tag {
+  background: var(--dos-input-bg);
+  border: 1px solid var(--dos-text);
+  color: var(--dos-text);
+}
+
+.preset-dos .distraction-tag button {
+  color: var(--dos-accent);
+}
+
+.preset-dos #distraction-input {
+  background: var(--dos-input-bg);
+  border: 1px solid var(--dos-text);
+  color: var(--dos-text);
+  caret-color: var(--dos-accent);
+}
+
+.preset-dos #distraction-input::placeholder {
+  color: var(--dos-text-dim);
+}
+
+.preset-dos #distraction-add-btn {
+  background: var(--dos-text);
+  border: 1px solid var(--dos-text);
+  color: #0000aa;
+  font-weight: bold;
+}
+
+.preset-dos #distraction-add-btn:hover {
+  background: var(--dos-accent);
+}
+
+.preset-dos #footer {
+  background: #000088;
+  border-top: 2px solid var(--dos-text);
+}
+
+.preset-dos #save-btn {
+  background: var(--dos-text);
+  border: 2px solid #0000aa;
+  color: #0000aa;
+  font-weight: bold;
+}
+
+.preset-dos #save-btn:hover {
+  background: var(--dos-accent);
+}
+
+.preset-dos #save-status {
+  color: var(--dos-text-dim);
+}

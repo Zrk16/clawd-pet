@@ -1,0 +1,265 @@
+/* ── MIDNIGHT SETTINGS PRESET ── */
+/* Deep navy, silver — fully independent */
+
+.preset-midnight body {
+  background: linear-gradient(180deg, #0a0e17 0%, #080b12 100%) !important;
+  color: #c5d1e0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-size: 12px !important;
+}
+
+.preset-midnight #header {
+  background: linear-gradient(180deg, #0f1420 0%, #0a0e17 100%) !important;
+  border-bottom: 1px solid rgba(168, 192, 216, 0.2) !important;
+  padding: 0 18px !important;
+  height: 42px !important;
+}
+
+.preset-midnight #header h1 {
+  color: #a8c0d8 !important;
+  font-weight: 300 !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+}
+
+.preset-midnight #header span {
+  color: rgba(197, 209, 224, 0.5) !important;
+  font-size: 9px !important;
+  letter-spacing: 2px !important;
+}
+
+.preset-midnight #content {
+  background: #0a0e17 !important;
+  padding: 16px 18px !important;
+}
+
+.preset-midnight .section {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 20px !important;
+}
+
+.preset-midnight .section-title {
+  color: rgba(197, 209, 224, 0.5) !important;
+  border-bottom: 1px solid rgba(168, 192, 216, 0.2) !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 12px !important;
+}
+
+.preset-midnight .row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid rgba(168, 192, 216, 0.1) !important;
+}
+
+.preset-midnight .row label {
+  color: #c5d1e0 !important;
+  font-size: 12px !important;
+  flex: 1 !important;
+}
+
+.preset-midnight .row label .hint {
+  color: rgba(197, 209, 224, 0.5) !important;
+  font-size: 10px !important;
+  display: block !important;
+  margin-top: 3px !important;
+}
+
+.preset-midnight .toggle {
+  position: relative !important;
+  width: 40px !important;
+  height: 20px !important;
+  flex-shrink: 0 !important;
+}
+
+.preset-midnight .toggle input {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.preset-midnight .toggle-track {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(168, 192, 216, 0.1) !important;
+  border: 1px solid rgba(168, 192, 216, 0.2) !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.preset-midnight .toggle-track::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 3px !important;
+  top: 3px !important;
+  width: 12px !important;
+  height: 12px !important;
+  background: #a8c0d8 !important;
+  border-radius: 50% !important;
+  transition: all 0.2s !important;
+}
+
+.preset-midnight .toggle input:checked + .toggle-track {
+  background: rgba(168, 192, 216, 0.2) !important;
+  border-color: #a8c0d8 !important;
+}
+
+.preset-midnight .toggle input:checked + .toggle-track::after {
+  background: #a8c0d8 !important;
+  transform: translateX(18px) !important;
+  box-shadow: 0 2px 8px rgba(168, 192, 216, 0.4) !important;
+}
+
+.preset-midnight input[type="number"] {
+  background: rgba(168, 192, 216, 0.06) !important;
+  border: 1px solid rgba(168, 192, 216, 0.2) !important;
+  border-radius: 6px !important;
+  color: #c5d1e0 !important;
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+  width: 60px !important;
+  text-align: center !important;
+}
+
+.preset-midnight input[type="number"]:focus {
+  border-color: #a8c0d8 !important;
+  outline: none !important;
+}
+
+.preset-midnight select {
+  background: rgba(168, 192, 216, 0.06) !important;
+  border: 1px solid rgba(168, 192, 216, 0.2) !important;
+  border-radius: 6px !important;
+  color: #c5d1e0 !important;
+  font-size: 11px !important;
+  padding: 6px 10px !important;
+  cursor: pointer !important;
+}
+
+.preset-midnight select:focus {
+  border-color: #a8c0d8 !important;
+  outline: none !important;
+}
+
+.preset-midnight option {
+  background: #0a0e17 !important;
+  color: #c5d1e0 !important;
+}
+
+.preset-midnight #distraction-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-bottom: 10px !important;
+}
+
+.preset-midnight .distraction-tag {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(168, 192, 216, 0.06) !important;
+  border: 1px solid rgba(168, 192, 216, 0.2) !important;
+  border-radius: 6px !important;
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+  color: #c5d1e0 !important;
+}
+
+.preset-midnight .distraction-tag button {
+  background: none !important;
+  border: none !important;
+  color: rgba(197, 209, 224, 0.5) !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  padding: 0 4px !important;
+}
+
+.preset-midnight .distraction-tag button:hover {
+  color: #ff6b6b !important;
+}
+
+.preset-midnight #distraction-add-row {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.preset-midnight #distraction-input {
+  flex: 1 !important;
+  background: rgba(168, 192, 216, 0.06) !important;
+  border: 1px solid rgba(168, 192, 216, 0.2) !important;
+  border-radius: 6px !important;
+  color: #c5d1e0 !important;
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+}
+
+.preset-midnight #distraction-input::placeholder {
+  color: rgba(197, 209, 224, 0.4) !important;
+}
+
+.preset-midnight #distraction-input:focus {
+  border-color: #a8c0d8 !important;
+  outline: none !important;
+}
+
+.preset-midnight #distraction-add-btn {
+  background: transparent !important;
+  border: 1px solid rgba(168, 192, 216, 0.2) !important;
+  border-radius: 6px !important;
+  color: #a8c0d8 !important;
+  font-size: 10px !important;
+  padding: 8px 12px !important;
+  cursor: pointer !important;
+}
+
+.preset-midnight #distraction-add-btn:hover {
+  background: rgba(168, 192, 216, 0.1) !important;
+}
+
+.preset-midnight #footer {
+  background: linear-gradient(0deg, #080b12 0%, #0a0e17 100%) !important;
+  border-top: 1px solid rgba(168, 192, 216, 0.2) !important;
+  padding: 0 18px !important;
+  height: 56px !important;
+}
+
+.preset-midnight #save-btn {
+  background: transparent !important;
+  border: 1px solid #a8c0d8 !important;
+  border-radius: 6px !important;
+  color: #a8c0d8 !important;
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+  padding: 10px 20px !important;
+  cursor: pointer !important;
+}
+
+.preset-midnight #save-btn:hover {
+  background: #a8c0d8 !important;
+  color: #080b12 !important;
+}
+
+.preset-midnight #save-status {
+  color: rgba(197, 209, 224, 0.5) !important;
+  font-size: 10px !important;
+}
+
+.preset-midnight .scroll::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.preset-midnight .scroll::-webkit-scrollbar-track {
+  background: #0a0e17 !important;
+}
+
+.preset-midnight .scroll::-webkit-scrollbar-thumb {
+  background: rgba(168, 192, 216, 0.2) !important;
+  border-radius: 3px !important;
+}

@@ -1,0 +1,277 @@
+/* ── PAPER SETTINGS PRESET ── */
+/* Cream, subtle texture, soft shadows — fully independent */
+
+.preset-paper body {
+  background: #f5f3ef !important;
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E") !important;
+  color: #1a1a1a !important;
+  font-family: "Georgia", serif !important;
+  font-size: 12px !important;
+}
+
+.preset-paper #header {
+  background: linear-gradient(180deg, #ebe8e1 0%, #f5f3ef 100%) !important;
+  border-bottom: 1px solid rgba(139, 115, 85, 0.15) !important;
+  padding: 0 18px !important;
+  height: 42px !important;
+}
+
+.preset-paper #header h1 {
+  color: #8b7355 !important;
+  font-weight: normal !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+}
+
+.preset-paper #header span {
+  color: rgba(61, 61, 61, 0.5) !important;
+  font-size: 9px !important;
+  font-style: italic !important;
+}
+
+.preset-paper #content {
+  background: transparent !important;
+  padding: 16px 18px !important;
+}
+
+.preset-paper .section {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 20px !important;
+}
+
+.preset-paper .section-title {
+  color: #8b7355 !important;
+  border-bottom: 1px solid rgba(139, 115, 85, 0.15) !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 12px !important;
+  font-weight: normal !important;
+}
+
+.preset-paper .row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid rgba(139, 115, 85, 0.08) !important;
+}
+
+.preset-paper .row label {
+  color: #1a1a1a !important;
+  font-size: 12px !important;
+  flex: 1 !important;
+}
+
+.preset-paper .row label .hint {
+  color: rgba(26, 26, 26, 0.6) !important;
+  font-size: 10px !important;
+  font-style: italic !important;
+  display: block !important;
+  margin-top: 3px !important;
+}
+
+.preset-paper .toggle {
+  position: relative !important;
+  width: 40px !important;
+  height: 20px !important;
+  flex-shrink: 0 !important;
+}
+
+.preset-paper .toggle input {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.preset-paper .toggle-track {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(139, 115, 85, 0.1) !important;
+  border: 1px solid rgba(139, 115, 85, 0.2) !important;
+  border-radius: 10px !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.preset-paper .toggle-track::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 3px !important;
+  top: 3px !important;
+  width: 12px !important;
+  height: 12px !important;
+  background: rgba(61, 61, 61, 0.5) !important;
+  border-radius: 50% !important;
+  transition: all 0.2s !important;
+}
+
+.preset-paper .toggle input:checked + .toggle-track {
+  background: rgba(139, 115, 85, 0.2) !important;
+  border-color: #8b7355 !important;
+}
+
+.preset-paper .toggle input:checked + .toggle-track::after {
+  background: #8b7355 !important;
+  transform: translateX(18px) !important;
+}
+
+.preset-paper input[type="number"] {
+  background: #ffffff !important;
+  border: 2px solid #8b7355 !important;
+  border-radius: 4px !important;
+  color: #000000 !important;
+  font-family: "Georgia", serif !important;
+  font-size: 12px !important;
+  padding: 6px 10px !important;
+  width: 60px !important;
+  text-align: center !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
+.preset-paper input[type="number"]:focus {
+  border-color: #8b7355 !important;
+  outline: none !important;
+}
+
+.preset-paper select {
+  background: #ffffff !important;
+  border: 2px solid #8b7355 !important;
+  border-radius: 4px !important;
+  color: #000000 !important;
+  font-family: "Georgia", serif !important;
+  font-size: 11px !important;
+  padding: 6px 10px !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
+.preset-paper select:focus {
+  border-color: #8b7355 !important;
+  outline: none !important;
+}
+
+.preset-paper option {
+  background: #f5f3ef !important;
+  color: #3d3d3d !important;
+}
+
+.preset-paper #distraction-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-bottom: 10px !important;
+}
+
+.preset-paper .distraction-tag {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(139, 115, 85, 0.06) !important;
+  border: 1px solid rgba(139, 115, 85, 0.15) !important;
+  border-radius: 4px !important;
+  padding: 6px 10px !important;
+  font-size: 11px !important;
+  color: #3d3d3d !important;
+}
+
+.preset-paper .distraction-tag button {
+  background: none !important;
+  border: none !important;
+  color: rgba(61, 61, 61, 0.5) !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  padding: 0 4px !important;
+}
+
+.preset-paper .distraction-tag button:hover {
+  color: #c44 !important;
+}
+
+.preset-paper #distraction-add-row {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.preset-paper #distraction-input {
+  flex: 1 !important;
+  background: #ffffff !important;
+  border: 2px solid #8b7355 !important;
+  border-radius: 4px !important;
+  color: #000000 !important;
+  font-family: "Georgia", serif !important;
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1) !important;
+}
+
+.preset-paper #distraction-input::placeholder {
+  color: rgba(61, 61, 61, 0.4) !important;
+  font-style: italic !important;
+}
+
+.preset-paper #distraction-input:focus {
+  border-color: #8b7355 !important;
+  outline: none !important;
+}
+
+.preset-paper #distraction-add-btn {
+  background: transparent !important;
+  border: 1px solid rgba(139, 115, 85, 0.2) !important;
+  border-radius: 4px !important;
+  color: #8b7355 !important;
+  font-family: "Georgia", serif !important;
+  font-size: 10px !important;
+  padding: 8px 12px !important;
+  cursor: pointer !important;
+}
+
+.preset-paper #distraction-add-btn:hover {
+  background: rgba(139, 115, 85, 0.08) !important;
+}
+
+.preset-paper #footer {
+  background: linear-gradient(0deg, #ebe8e1 0%, #f5f3ef 100%) !important;
+  border-top: 1px solid rgba(139, 115, 85, 0.15) !important;
+  padding: 0 18px !important;
+  height: 56px !important;
+}
+
+.preset-paper #save-btn {
+  background: transparent !important;
+  border: 1px solid #8b7355 !important;
+  border-radius: 4px !important;
+  color: #8b7355 !important;
+  font-family: "Georgia", serif !important;
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+  padding: 10px 20px !important;
+  cursor: pointer !important;
+}
+
+.preset-paper #save-btn:hover {
+  background: #8b7355 !important;
+  color: #ffffff !important;
+}
+
+.preset-paper #save-status {
+  color: rgba(61, 61, 61, 0.5) !important;
+  font-size: 10px !important;
+  font-style: italic !important;
+}
+
+.preset-paper .scroll::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.preset-paper .scroll::-webkit-scrollbar-track {
+  background: #f5f3ef !important;
+}
+
+.preset-paper .scroll::-webkit-scrollbar-thumb {
+  background: rgba(139, 115, 85, 0.2) !important;
+  border-radius: 3px !important;
+}

@@ -1,0 +1,154 @@
+/* ── GAME BOY PRESET ── */
+/* 4-color green LCD — fully independent */
+
+.preset-gameboy #bubble {
+  background: #0f380f !important;
+  color: #9bbc0f !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 12px !important;
+  font-weight: bold !important;
+  padding: 10px 14px !important;
+  border: 2px solid #9bbc0f !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 #306230 !important;
+  clip-path: none !important;
+}
+
+.preset-gameboy #bubble::after {
+  display: none !important;
+}
+
+.preset-gameboy #chat-panel {
+  background: #0f380f !important;
+  border: 3px solid #9bbc0f !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 #306230 !important;
+  clip-path: none !important;
+  overflow: hidden !important;
+}
+
+.preset-gameboy #chat-panel::before {
+  display: none !important;
+}
+
+.preset-gameboy #chat-panel.hidden {
+  display: none !important;
+}
+
+.preset-gameboy #chat-header {
+  background: #0f380f !important;
+  border-bottom: 3px solid #8bac0f !important;
+  padding: 0 12px !important;
+  height: 36px !important;
+}
+
+.preset-gameboy #chat-header h2 {
+  color: #8bac0f !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 900 !important;
+  letter-spacing: 2px !important;
+  font-size: 11px !important;
+}
+
+.preset-gameboy #mode-toggle {
+  color: #306230 !important;
+  font-size: 9px !important;
+  font-weight: bold !important;
+}
+
+.preset-gameboy #mode-toggle.smart {
+  color: #9bbc0f !important;
+}
+
+.preset-gameboy #chat-messages {
+  background: #0f380f !important;
+  padding: 12px !important;
+}
+
+.preset-gameboy #chat-messages .user-msg {
+  color: #9bbc0f !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+  margin-bottom: 8px !important;
+}
+
+.preset-gameboy #chat-messages .clawd-msg {
+  color: #8bac0f !important;
+  font-family: 'Courier New', monospace !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 10px !important;
+}
+
+.preset-gameboy #chat-input {
+  background: rgba(139, 172, 15, 0.1) !important;
+  border: 2px solid #9bbc0f !important;
+  border-radius: 0 !important;
+  color: #9bbc0f !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: bold !important;
+  font-size: 12px !important;
+  padding: 10px 12px !important;
+}
+
+.preset-gameboy #chat-input::placeholder {
+  color: #306230 !important;
+}
+
+.preset-gameboy #chat-input:focus {
+  border-color: #8bac0f !important;
+  outline: none !important;
+}
+
+.preset-gameboy #input-row {
+  background: #0f380f !important;
+  border-top: 2px solid #306230 !important;
+  padding: 10px !important;
+}
+
+.preset-gameboy #send-btn {
+  background: #8bac0f !important;
+  border: 2px solid #9bbc0f !important;
+  border-radius: 0 !important;
+  color: #0f380f !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 900 !important;
+  font-size: 11px !important;
+  padding: 8px 14px !important;
+}
+
+.preset-gameboy #send-btn:hover {
+  background: #9bbc0f !important;
+}
+
+.preset-gameboy .mic-btn {
+  color: #306230 !important;
+  font-size: 16px !important;
+}
+
+.preset-gameboy .mic-btn.recording {
+  color: #ff3333 !important;
+}
+
+.preset-gameboy .copy-btn {
+  color: #306230 !important;
+  font-size: 14px !important;
+}
+
+.preset-gameboy .copy-btn:hover {
+  color: #8bac0f !important;
+}
+
+.preset-gameboy .scroll::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.preset-gameboy .scroll::-webkit-scrollbar-track {
+  background: #0f380f !important;
+}
+
+.preset-gameboy .scroll::-webkit-scrollbar-thumb {
+  background: #9bbc0f !important;
+  border: 1px solid #306230 !important;
+}

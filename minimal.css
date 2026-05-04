@@ -1,0 +1,238 @@
+/* ── MINIMAL PRESET ── */
+/* Clean, stripped-back, solid colors, no borders or shadows */
+
+:root {
+  --min-bg: #1a1a1a;
+  --min-text: #e5e5e5;
+  --min-text-dim: #888;
+  --min-accent: #333;
+  --min-radius: 4px;
+}
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  :root {
+    --min-bg: #f5f5f5;
+    --min-text: #1a1a1a;
+    --min-text-dim: #666;
+    --min-accent: #ddd;
+  }
+}
+
+/* ── Bubble ── */
+.preset-minimal #bubble {
+  background: var(--min-bg);
+  color: var(--min-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 8px 12px;
+  border-radius: var(--min-radius);
+  border: none;
+  box-shadow: none;
+  clip-path: none;
+}
+.preset-minimal #bubble::after {
+  display: none;
+}
+
+/* ── Chat Panel ── */
+.preset-minimal #chat-panel {
+  width: 280px;
+  background: var(--min-bg);
+  border-radius: var(--min-radius);
+  border: none;
+  box-shadow: none;
+  clip-path: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: visible;
+}
+
+.preset-minimal #chat-panel::before {
+  display: none;
+}
+
+/* ── Header ── */
+.preset-minimal #chat-header {
+  background: transparent;
+  border-bottom: 1px solid var(--min-accent);
+  padding: 0 8px;
+  height: 28px;
+}
+
+.preset-minimal .header-name {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--min-text);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.preset-minimal .header-status {
+  color: var(--min-text-dim);
+  font-size: 10px;
+}
+
+.preset-minimal #restart-btn,
+.preset-minimal #tts-btn,
+.preset-minimal #copy-btn,
+.preset-minimal #settings-btn,
+.preset-minimal #mode-btn,
+.preset-minimal #mic-btn {
+  background: transparent;
+  border: none;
+  color: var(--min-text-dim);
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+}
+
+.preset-minimal #restart-btn:hover,
+.preset-minimal #tts-btn:hover,
+.preset-minimal #copy-btn:hover,
+.preset-minimal #settings-btn:hover,
+.preset-minimal #mode-btn:hover,
+.preset-minimal #mic-btn:hover {
+  color: var(--min-text);
+  background: transparent;
+}
+
+.preset-minimal .pulse-dot {
+  background: var(--min-text-dim);
+}
+
+/* ── Messages ── */
+.preset-minimal #messages {
+  padding: 8px;
+  gap: 6px;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.preset-minimal .msg {
+  max-width: 100%;
+}
+
+.preset-minimal .msg.clawd {
+  border-left: none;
+  box-shadow: none;
+  background: transparent;
+  padding: 4px 0;
+}
+
+.preset-minimal .msg.clawd .name {
+  color: var(--min-text-dim);
+  font-size: 9px;
+  letter-spacing: 0;
+  margin-bottom: 2px;
+}
+
+.preset-minimal .msg.clawd .msg-text {
+  color: var(--min-text);
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.preset-minimal .msg.user {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 4px 0;
+  box-shadow: none;
+}
+
+.preset-minimal .msg.user .msg-text {
+  color: var(--min-text);
+  font-size: 12px;
+  line-height: 1.4;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.preset-minimal .msg-time {
+  color: var(--min-text-dim);
+  font-size: 8px;
+  margin-top: 2px;
+}
+
+.preset-minimal .msg.user .msg-time {
+  text-align: left;
+}
+
+/* ── Typing Indicator ── */
+.preset-minimal #typing-indicator {
+  border-left: none;
+  background: transparent;
+  padding: 4px 8px;
+}
+
+.preset-minimal .t-name {
+  color: var(--min-text-dim);
+  font-size: 9px;
+}
+
+.preset-minimal .t-dot {
+  background: var(--min-text-dim);
+  width: 3px;
+  height: 3px;
+}
+
+/* ── Input Row ── */
+.preset-minimal #input-row {
+  background: transparent;
+  border-top: 1px solid var(--min-accent);
+}
+
+.preset-minimal #user-input {
+  background: transparent;
+  border: none;
+  padding: 8px;
+  color: var(--min-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+}
+
+.preset-minimal #user-input::placeholder {
+  color: var(--min-text-dim);
+}
+
+.preset-minimal #user-input:focus {
+  background: transparent;
+  outline: none;
+}
+
+.preset-minimal #send-btn {
+  color: var(--min-text-dim);
+  font-size: 12px;
+  padding: 0 8px;
+}
+
+.preset-minimal #send-btn:hover {
+  color: var(--min-text);
+  background: transparent;
+}
+
+/* ── Code Blocks ── */
+.preset-minimal .code-block {
+  background: transparent;
+  border: 1px solid var(--min-accent);
+  border-radius: var(--min-radius);
+}
+
+.preset-minimal .code-block pre {
+  color: var(--min-text);
+  font-size: 11px;
+  font-family: "SF Mono", Menlo, Monaco, monospace;
+  padding: 6px 8px;
+}
+
+/* ── Focus Timer ── */
+.preset-minimal #focus-timer {
+  background: var(--min-bg);
+  color: var(--min-text);
+  font-size: 10px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: var(--min-radius);
+  box-shadow: none;
+}

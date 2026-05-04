@@ -1,0 +1,120 @@
+/* ── OG SETTINGS PRESET ── */
+/* Amber terminal theme - matching current chat UI */
+
+:root {
+  --og-bg: #07050B;
+  --og-text: #FFB07A;
+  --og-accent: #FF7A3D;
+  --og-text-dim: rgba(255, 122, 61, 0.4);
+  --og-border: rgba(255, 122, 61, 0.3);
+  --og-input-bg: rgba(255, 122, 61, 0.06);
+  --og-toggle-bg: rgba(255, 122, 61, 0.12);
+  --og-radius: 2px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --og-bg: #1a1612;
+    --og-text: #FFB07A;
+    --og-accent: #FF7A3D;
+  }
+}
+
+.preset-og body {
+  background: var(--og-bg);
+  color: var(--og-text);
+}
+
+.preset-og #header {
+  background: rgba(255, 122, 61, 0.06);
+  border-bottom: 2px solid var(--og-accent);
+}
+
+.preset-og #header h1 {
+  color: var(--og-accent);
+}
+
+.preset-og #header span {
+  color: var(--og-text-dim);
+}
+
+.preset-og .section-title {
+  color: var(--og-text-dim);
+  border-bottom: 1px solid rgba(255, 122, 61, 0.1);
+}
+
+.preset-og .row label {
+  color: #FFAA72;
+}
+
+.preset-og .row .hint {
+  color: rgba(255, 122, 61, 0.35);
+}
+
+.preset-og .toggle-track {
+  background: var(--og-toggle-bg);
+  border: 1px solid var(--og-border);
+  border-radius: 10px;
+}
+
+.preset-og .toggle-track::after {
+  background: rgba(255, 122, 61, 0.5);
+}
+
+.preset-og .toggle input:checked + .toggle-track {
+  background: rgba(255, 122, 61, 0.22);
+  border-color: var(--og-accent);
+}
+
+.preset-og .toggle input:checked + .toggle-track::after {
+  background: var(--og-accent);
+}
+
+.preset-og input[type="number"] {
+  background: var(--og-input-bg);
+  border: 1px solid var(--og-border);
+  color: #FFAA72;
+}
+
+.preset-og select {
+  background: var(--og-input-bg);
+  border: 1px solid var(--og-border);
+  color: #FFAA72;
+}
+
+.preset-og option {
+  background: var(--og-bg);
+}
+
+.preset-og .distraction-tag {
+  background: var(--og-input-bg);
+  border: 1px solid rgba(255, 122, 61, 0.2);
+  color: #FFAA72;
+}
+
+.preset-og #distraction-input {
+  background: rgba(255, 122, 61, 0.04);
+  border: 1px solid rgba(255, 122, 61, 0.2);
+  color: #F0E6D8;
+}
+
+.preset-og #distraction-add-btn {
+  background: rgba(255, 122, 61, 0.1);
+  border: 1px solid var(--og-border);
+  color: var(--og-accent);
+}
+
+.preset-og #footer {
+  background: rgba(7, 5, 11, 0.97);
+  border-top: 1px solid rgba(255, 122, 61, 0.15);
+}
+
+.preset-og #save-btn {
+  background: rgba(255, 122, 61, 0.15);
+  border: 1px solid rgba(255, 122, 61, 0.5);
+  color: var(--og-accent);
+}
+
+.preset-og #save-status {
+  color: var(--og-text-dim);
+}

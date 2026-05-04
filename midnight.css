@@ -1,0 +1,152 @@
+/* ── MIDNIGHT PRESET ── */
+/* Deep navy, silver accents — fully independent */
+
+.preset-midnight #bubble {
+  background: linear-gradient(145deg, #0f1420 0%, #0a0e17 100%) !important;
+  color: #c5d1e0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-size: 12px !important;
+  padding: 12px 16px !important;
+  border: 1px solid rgba(168, 192, 216, 0.3) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+  clip-path: none !important;
+}
+
+.preset-midnight #bubble::after {
+  display: none !important;
+}
+
+.preset-midnight #chat-panel {
+  background: linear-gradient(180deg, #0a0e17 0%, #080b12 100%) !important;
+  border: 1px solid rgba(168, 192, 216, 0.2) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.7) !important;
+  clip-path: none !important;
+  overflow: hidden !important;
+}
+
+.preset-midnight #chat-panel::before {
+  display: none !important;
+}
+
+.preset-midnight #chat-panel.hidden {
+  display: none !important;
+}
+
+.preset-midnight #chat-header {
+  background: linear-gradient(180deg, #0f1420 0%, #0a0e17 100%) !important;
+  border-bottom: 1px solid rgba(168, 192, 216, 0.2) !important;
+  padding: 0 14px !important;
+  height: 38px !important;
+}
+
+.preset-midnight #chat-header h2 {
+  color: #a8c0d8 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+  font-weight: 300 !important;
+  letter-spacing: 3px !important;
+  font-size: 11px !important;
+}
+
+.preset-midnight #mode-toggle {
+  color: #c5d1e0 !important;
+  opacity: 0.5 !important;
+  font-size: 9px !important;
+}
+
+.preset-midnight #mode-toggle.smart {
+  color: #a8c0d8 !important;
+  opacity: 1 !important;
+}
+
+.preset-midnight #chat-messages {
+  background: #0a0e17 !important;
+  padding: 12px !important;
+}
+
+.preset-midnight #chat-messages .user-msg {
+  color: #c5d1e0 !important;
+  font-size: 12px !important;
+  margin-bottom: 8px !important;
+}
+
+.preset-midnight #chat-messages .clawd-msg {
+  color: #a8c0d8 !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 10px !important;
+}
+
+.preset-midnight #chat-input {
+  background: rgba(168, 192, 216, 0.06) !important;
+  border: 1px solid rgba(168, 192, 216, 0.2) !important;
+  border-radius: 6px !important;
+  color: #c5d1e0 !important;
+  font-size: 12px !important;
+  padding: 10px 12px !important;
+}
+
+.preset-midnight #chat-input::placeholder {
+  color: rgba(197, 209, 224, 0.4) !important;
+}
+
+.preset-midnight #chat-input:focus {
+  border-color: #a8c0d8 !important;
+  outline: none !important;
+}
+
+.preset-midnight #input-row {
+  background: #080b12 !important;
+  border-top: 1px solid rgba(168, 192, 216, 0.15) !important;
+  padding: 10px !important;
+}
+
+.preset-midnight #send-btn {
+  background: transparent !important;
+  border: 1px solid #a8c0d8 !important;
+  border-radius: 6px !important;
+  color: #a8c0d8 !important;
+  font-size: 11px !important;
+  padding: 8px 14px !important;
+}
+
+.preset-midnight #send-btn:hover {
+  background: #a8c0d8 !important;
+  color: #080b12 !important;
+}
+
+.preset-midnight .mic-btn {
+  color: #c5d1e0 !important;
+  opacity: 0.5 !important;
+  font-size: 16px !important;
+}
+
+.preset-midnight .mic-btn.recording {
+  color: #ff6b6b !important;
+  opacity: 1 !important;
+}
+
+.preset-midnight .copy-btn {
+  color: #c5d1e0 !important;
+  opacity: 0.4 !important;
+  font-size: 14px !important;
+}
+
+.preset-midnight .copy-btn:hover {
+  color: #a8c0d8 !important;
+  opacity: 1 !important;
+}
+
+.preset-midnight .scroll::-webkit-scrollbar {
+  width: 6px !important;
+}
+
+.preset-midnight .scroll::-webkit-scrollbar-track {
+  background: #0a0e17 !important;
+}
+
+.preset-midnight .scroll::-webkit-scrollbar-thumb {
+  background: rgba(168, 192, 216, 0.2) !important;
+  border-radius: 3px !important;
+}

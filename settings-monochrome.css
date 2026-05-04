@@ -1,0 +1,77 @@
+/* ── MONOCHROME SETTINGS PRESET ── */
+/* Pure black/white high contrast */
+:root {
+  --mono-bg: #000000;
+  --mono-text: #ffffff;
+  --mono-border: #ffffff;
+  --mono-dim: #666666;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --mono-bg: #ffffff;
+    --mono-text: #000000;
+    --mono-border: #000000;
+    --mono-dim: #999999;
+  }
+}
+
+.preset-monochrome body {
+  background: var(--mono-bg);
+  color: var(--mono-text);
+}
+
+.preset-monochrome #header {
+  background: var(--mono-bg);
+  border-bottom: 2px solid var(--mono-border);
+}
+
+.preset-monochrome #header h1 {
+  color: var(--mono-text);
+}
+
+.preset-monochrome .section-title {
+  color: var(--mono-dim);
+  border-bottom: 1px solid var(--mono-border);
+}
+
+.preset-monochrome .row label {
+  color: var(--mono-text);
+}
+
+.preset-monochrome .toggle-track {
+  background: transparent;
+  border: 2px solid var(--mono-text);
+}
+
+.preset-monochrome .toggle-track::after {
+  background: var(--mono-text);
+}
+
+.preset-monochrome .toggle input:checked + .toggle-track::after {
+  transform: translateX(16px);
+}
+
+.preset-monochrome input[type="number"],
+.preset-monochrome select {
+  background: transparent;
+  border: 2px solid var(--mono-text);
+  color: var(--mono-text);
+}
+
+.preset-monochrome .distraction-tag {
+  background: transparent;
+  border: 1px solid var(--mono-text);
+  color: var(--mono-text);
+}
+
+.preset-monochrome #footer {
+  background: var(--mono-bg);
+  border-top: 2px solid var(--mono-text);
+}
+
+.preset-monochrome #save-btn {
+  background: var(--mono-text);
+  border: 2px solid var(--mono-text);
+  color: var(--mono-bg);
+}

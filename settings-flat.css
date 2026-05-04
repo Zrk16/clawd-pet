@@ -1,0 +1,72 @@
+/* ── FLAT SETTINGS PRESET ── */
+/* Clean, no shadows, solid colors */
+:root {
+  --flat-bg: #2c3e50;
+  --flat-text: #ecf0f1;
+  --flat-accent: #3498db;
+  --flat-border: #34495e;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --flat-bg: #ecf0f1;
+    --flat-text: #2c3e50;
+    --flat-accent: #3498db;
+    --flat-border: #bdc3c7;
+  }
+}
+
+.preset-flat body {
+  background: var(--flat-bg);
+  color: var(--flat-text);
+}
+
+.preset-flat #header {
+  background: var(--flat-border);
+  border-bottom: none;
+}
+
+.preset-flat #header h1 {
+  color: var(--flat-text);
+}
+
+.preset-flat .section-title {
+  color: var(--flat-accent);
+}
+
+.preset-flat .row label {
+  color: var(--flat-text);
+}
+
+.preset-flat .toggle-track {
+  background: var(--flat-border);
+  border: none;
+}
+
+.preset-flat .toggle-track::after {
+  background: var(--flat-text);
+}
+
+.preset-flat input[type="number"],
+.preset-flat select {
+  background: var(--flat-border);
+  border: none;
+  color: var(--flat-text);
+}
+
+.preset-flat .distraction-tag {
+  background: var(--flat-border);
+  border: none;
+  color: var(--flat-text);
+}
+
+.preset-flat #footer {
+  background: var(--flat-border);
+  border-top: none;
+}
+
+.preset-flat #save-btn {
+  background: var(--flat-accent);
+  border: none;
+  color: var(--flat-text);
+}

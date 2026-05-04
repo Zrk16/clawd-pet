@@ -1,0 +1,171 @@
+/* ── CRT TERMINAL PRESET ── */
+/* Phosphor green on black with scanlines and flicker */
+
+:root {
+  --crt-bg: #0a0a0a;
+  --crt-text: #33ff33;
+  --crt-accent: #33ff33;
+  --crt-text-dim: rgba(51, 255, 51, 0.4);
+  --crt-border: rgba(51, 255, 51, 0.3);
+  --crt-input-bg: rgba(51, 255, 51, 0.06);
+  --crt-toggle-bg: rgba(51, 255, 51, 0.12);
+  --crt-radius: 0px;
+  --crt-font: 'Courier New', Courier, monospace;
+}
+
+.preset-crt body {
+  background: var(--crt-bg);
+  color: var(--crt-text);
+  font-family: var(--crt-font);
+}
+
+.preset-crt #header {
+  background: rgba(51, 255, 51, 0.03);
+  border-bottom: 1px solid var(--crt-accent);
+  text-shadow: 0 0 10px var(--crt-text);
+}
+
+.preset-crt #header h1 {
+  color: var(--crt-accent);
+  text-shadow: 0 0 8px var(--crt-text);
+  animation: crt-flicker 4s infinite;
+}
+
+.preset-crt #header span {
+  color: var(--crt-text-dim);
+}
+
+.preset-crt .section-title {
+  color: var(--crt-text-dim);
+  border-bottom: 1px dashed rgba(51, 255, 51, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.preset-crt .row label {
+  color: var(--crt-text);
+}
+
+.preset-crt .row label .hint {
+  color: var(--crt-text-dim);
+}
+
+.preset-crt .toggle-track {
+  background: var(--crt-toggle-bg);
+  border: 1px solid var(--crt-border);
+  border-radius: 0;
+}
+
+.preset-crt .toggle-track::after {
+  background: var(--crt-text-dim);
+  border-radius: 0;
+}
+
+.preset-crt .toggle input:checked + .toggle-track {
+  background: rgba(51, 255, 51, 0.15);
+  border-color: var(--crt-accent);
+}
+
+.preset-crt .toggle input:checked + .toggle-track::after {
+  background: var(--crt-accent);
+  box-shadow: 0 0 6px var(--crt-text);
+}
+
+.preset-crt input[type="number"] {
+  background: var(--crt-input-bg);
+  border: 1px solid var(--crt-border);
+  color: var(--crt-text);
+  border-radius: 0;
+}
+
+.preset-crt select {
+  background: var(--crt-input-bg);
+  border: 1px solid var(--crt-border);
+  color: var(--crt-text);
+  border-radius: 0;
+  font-family: var(--crt-font);
+}
+
+.preset-crt option {
+  background: var(--crt-bg);
+}
+
+.preset-crt .distraction-tag {
+  background: var(--crt-input-bg);
+  border: 1px solid rgba(51, 255, 51, 0.2);
+  color: var(--crt-text);
+  border-radius: 0;
+}
+
+.preset-crt .distraction-tag button {
+  color: var(--crt-text-dim);
+}
+
+.preset-crt .distraction-tag button:hover {
+  color: #ff3333;
+}
+
+.preset-crt #distraction-input {
+  background: rgba(51, 255, 51, 0.04);
+  border: 1px solid rgba(51, 255, 51, 0.2);
+  color: var(--crt-text);
+  border-radius: 0;
+  font-family: var(--crt-font);
+}
+
+.preset-crt #distraction-input::placeholder {
+  color: var(--crt-text-dim);
+}
+
+.preset-crt #distraction-add-btn {
+  background: var(--crt-input-bg);
+  border: 1px solid var(--crt-border);
+  color: var(--crt-accent);
+  font-family: var(--crt-font);
+  border-radius: 0;
+}
+
+.preset-crt #footer {
+  background: rgba(10, 10, 10, 0.97);
+  border-top: 1px dashed rgba(51, 255, 51, 0.2);
+}
+
+.preset-crt #save-btn {
+  background: var(--crt-input-bg);
+  border: 1px solid var(--crt-border);
+  color: var(--crt-accent);
+  font-family: var(--crt-font);
+  border-radius: 0;
+}
+
+.preset-crt #save-btn:hover {
+  background: rgba(51, 255, 51, 0.15);
+}
+
+.preset-crt #save-status {
+  color: var(--crt-text-dim);
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
+  96% { opacity: 0.9; }
+  97% { opacity: 1; }
+}
+
+.preset-crt body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}

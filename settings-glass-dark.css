@@ -1,0 +1,65 @@
+/* ── GLASS DARK SETTINGS PRESET ── */
+/* Dark translucent glass */
+:root {
+  --gld-bg: rgba(20, 20, 30, 0.85);
+  --gld-text: #e0e0e0;
+  --gld-border: rgba(255,255,255,0.1);
+  --gld-accent: rgba(255,255,255,0.2);
+}
+
+.preset-glass-dark body {
+  background: var(--gld-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--gld-text);
+}
+
+.preset-glass-dark #header {
+  background: transparent;
+  border-bottom: 1px solid var(--gld-border);
+}
+
+.preset-glass-dark #header h1 {
+  color: #fff;
+}
+
+.preset-glass-dark .section-title {
+  color: rgba(255,255,255,0.5);
+}
+
+.preset-glass-dark .row label {
+  color: var(--gld-text);
+}
+
+.preset-glass-dark .toggle-track {
+  background: var(--gld-accent);
+  border: 1px solid var(--gld-border);
+}
+
+.preset-glass-dark .toggle-track::after {
+  background: var(--gld-text);
+}
+
+.preset-glass-dark input[type="number"],
+.preset-glass-dark select {
+  background: var(--gld-accent);
+  border: 1px solid var(--gld-border);
+  color: var(--gld-text);
+}
+
+.preset-glass-dark .distraction-tag {
+  background: var(--gld-accent);
+  border: 1px solid var(--gld-border);
+  color: var(--gld-text);
+}
+
+.preset-glass-dark #footer {
+  background: var(--gld-bg);
+  border-top: 1px solid var(--gld-border);
+}
+
+.preset-glass-dark #save-btn {
+  background: var(--gld-accent);
+  border: 1px solid var(--gld-border);
+  color: var(--gld-text);
+}

@@ -1,0 +1,152 @@
+/* ── COMIC BOOK SETTINGS PRESET ── */
+
+.preset-comic-book body {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: "Bangers", "Arial Black", sans-serif !important;
+  font-size: 14px !important;
+}
+
+.preset-comic-book #header {
+  background: linear-gradient(180deg, #ff0000 0%, #cc0000 100%) !important;
+  border-bottom: 4px solid #000000 !important;
+  padding: 0 18px !important;
+  height: 44px !important;
+}
+
+.preset-comic-book #header h1 {
+  color: #ffffff !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  font-size: 14px !important;
+  text-shadow: 2px 2px 0 #000000 !important;
+}
+
+.preset-comic-book #header span {
+  color: #ffdd00 !important;
+  font-size: 10px !important;
+}
+
+.preset-comic-book .section-title {
+  color: #ff0000 !important;
+  border-bottom: 3px solid #000000 !important;
+  font-size: 12px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 12px !important;
+}
+
+.preset-comic-book .row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 10px 0 !important;
+  border-bottom: 2px solid #000000 !important;
+}
+
+.preset-comic-book .row label {
+  color: #000000 !important;
+  font-size: 14px !important;
+  flex: 1 !important;
+}
+
+.preset-comic-book .row label .hint {
+  color: #666666 !important;
+  font-size: 11px !important;
+  display: block !important;
+  margin-top: 3px !important;
+}
+
+.preset-comic-book .toggle-track {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+}
+
+.preset-comic-book .toggle-track::after {
+  background: #ff0000 !important;
+  border: 2px solid #000000 !important;
+}
+
+.preset-comic-book .toggle input:checked + .toggle-track {
+  background: #ffdd00 !important;
+  border-color: #000000 !important;
+}
+
+.preset-comic-book .toggle input:checked + .toggle-track::after {
+  background: #000000 !important;
+  transform: translateX(16px) !important;
+}
+
+.preset-comic-book input[type="number"] {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-size: 14px !important;
+  padding: 6px 10px !important;
+  width: 60px !important;
+}
+
+.preset-comic-book select {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-size: 13px !important;
+  padding: 6px 10px !important;
+}
+
+.preset-comic-book option {
+  background: #ffffff !important;
+}
+
+.preset-comic-book .distraction-tag {
+  background: #ffdd00 !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-size: 12px !important;
+}
+
+.preset-comic-book .distraction-tag button {
+  color: #ff0000 !important;
+  font-weight: bold !important;
+}
+
+.preset-comic-book #distraction-input {
+  background: #ffffff !important;
+  border: 2px solid #000000 !important;
+  color: #000000 !important;
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+}
+
+.preset-comic-book #distraction-add-btn {
+  background: #000000 !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  padding: 8px 12px !important;
+}
+
+.preset-comic-book #footer {
+  background: #ffdd00 !important;
+  border-top: 3px solid #000000 !important;
+  padding: 0 18px !important;
+  height: 56px !important;
+}
+
+.preset-comic-book #save-btn {
+  background: #000000 !important;
+  border: none !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  padding: 10px 20px !important;
+}
+
+.preset-comic-book #save-btn:hover {
+  background: #ff0000 !important;
+}
+
+.preset-comic-book #save-status {
+  color: #000000 !important;
+  font-size: 11px !important;
+}

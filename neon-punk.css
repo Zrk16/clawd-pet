@@ -1,0 +1,165 @@
+/* ── NEON PUNK PRESET ── */
+/* Black with hot pink/electric blue glow — angular/intense */
+
+.preset-neon-punk #bubble {
+  background: #0a0a0a !important;
+  color: #00ffff !important;
+  font-family: "Impact", "Arial Black", sans-serif !important;
+  font-size: 12px !important;
+  padding: 12px 16px !important;
+  border: 2px solid #ff0080 !important;
+  border-radius: 0 !important;
+  box-shadow: 
+    0 0 10px #ff0080,
+    0 0 20px rgba(255, 0, 128, 0.5),
+    inset 0 0 15px rgba(0, 255, 255, 0.1) !important;
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%) !important;
+}
+
+.preset-neon-punk #bubble::after {
+  display: none !important;
+}
+
+.preset-neon-punk #chat-panel {
+  background: #0a0a0a !important;
+  border: 3px solid #ff0080 !important;
+  border-radius: 0 !important;
+  box-shadow: 
+    0 0 20px #ff0080,
+    0 0 40px rgba(255, 0, 128, 0.3),
+    inset 0 0 30px rgba(0, 255, 255, 0.05) !important;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 20px 100%, 10px calc(100% - 10px), 0 calc(100% - 20px)) !important;
+  overflow: hidden !important;
+}
+
+.preset-neon-punk #chat-panel::before {
+  display: none !important;
+}
+
+.preset-neon-punk #chat-panel.hidden {
+  display: none !important;
+}
+
+.preset-neon-punk #chat-header {
+  background: linear-gradient(90deg, #0a0a0a, #1a0a15) !important;
+  border-bottom: 2px solid #ff0080 !important;
+  padding: 0 12px !important;
+  height: 36px !important;
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%) !important;
+}
+
+.preset-neon-punk #chat-header h2 {
+  color: #ff0080 !important;
+  font-family: "Impact", "Arial Black", sans-serif !important;
+  font-weight: normal !important;
+  letter-spacing: 3px !important;
+  font-size: 11px !important;
+  text-shadow: 0 0 10px #ff0080 !important;
+}
+
+.preset-neon-punk #mode-toggle {
+  color: #00ffff !important;
+  font-size: 9px !important;
+  text-shadow: 0 0 5px #00ffff !important;
+}
+
+.preset-neon-punk #mode-toggle.smart {
+  color: #ff0080 !important;
+  text-shadow: 0 0 10px #ff0080 !important;
+}
+
+.preset-neon-punk #chat-messages {
+  background: #0a0a0a !important;
+  padding: 12px !important;
+}
+
+.preset-neon-punk #chat-messages .user-msg {
+  color: #00ffff !important;
+  font-family: "Impact", "Arial Black", sans-serif !important;
+  text-shadow: 0 0 5px #00ffff !important;
+  font-size: 12px !important;
+  margin-bottom: 8px !important;
+}
+
+.preset-neon-punk #chat-messages .clawd-msg {
+  color: #ff0080 !important;
+  font-family: "Impact", "Arial Black", sans-serif !important;
+  text-shadow: 0 0 8px #ff0080 !important;
+  font-size: 12px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 10px !important;
+}
+
+.preset-neon-punk #chat-input {
+  background: rgba(255, 0, 128, 0.1) !important;
+  border: 2px solid #ff0080 !important;
+  border-radius: 0 !important;
+  color: #00ffff !important;
+  font-family: "Impact", "Arial Black", sans-serif !important;
+  font-size: 12px !important;
+  padding: 10px 12px !important;
+}
+
+.preset-neon-punk #chat-input::placeholder {
+  color: rgba(0, 255, 255, 0.4) !important;
+}
+
+.preset-neon-punk #chat-input:focus {
+  border-color: #00ffff !important;
+  box-shadow: 0 0 15px #00ffff !important;
+  outline: none !important;
+}
+
+.preset-neon-punk #input-row {
+  background: #0a0a0a !important;
+  border-top: 2px solid #ff0080 !important;
+  padding: 10px !important;
+}
+
+.preset-neon-punk #send-btn {
+  background: #ff0080 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: #00ffff !important;
+  font-family: "Impact", "Arial Black", sans-serif !important;
+  font-size: 11px !important;
+  padding: 8px 14px !important;
+  box-shadow: 0 0 10px #ff0080 !important;
+}
+
+.preset-neon-punk #send-btn:hover {
+  background: #00ffff !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 0 20px #00ffff !important;
+}
+
+.preset-neon-punk .mic-btn {
+  color: #00ffff !important;
+  font-size: 16px !important;
+  text-shadow: 0 0 5px #00ffff !important;
+}
+
+.preset-neon-punk .mic-btn.recording {
+  color: #ff0080 !important;
+}
+
+.preset-neon-punk .copy-btn {
+  color: #00ffff !important;
+  font-size: 14px !important;
+}
+
+.preset-neon-punk .copy-btn:hover {
+  color: #ff0080 !important;
+}
+
+.preset-neon-punk .scroll::-webkit-scrollbar {
+  width: 8px !important;
+}
+
+.preset-neon-punk .scroll::-webkit-scrollbar-track {
+  background: #0a0a0a !important;
+}
+
+.preset-neon-punk .scroll::-webkit-scrollbar-thumb {
+  background: #ff0080 !important;
+}

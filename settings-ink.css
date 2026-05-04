@@ -1,0 +1,265 @@
+/* ── INK SETTINGS PRESET ── */
+/* Pure black, white — fully independent */
+
+.preset-ink body {
+  background: #000000 !important;
+  color: #f0f0f0 !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 300 !important;
+}
+
+.preset-ink #header {
+  background: #000000 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 0 20px !important;
+  height: 44px !important;
+}
+
+.preset-ink #header h1 {
+  color: #ffffff !important;
+  font-weight: 100 !important;
+  letter-spacing: 8px !important;
+  text-transform: uppercase !important;
+  font-size: 11px !important;
+}
+
+.preset-ink #header span {
+  color: rgba(240, 240, 240, 0.4) !important;
+  font-size: 9px !important;
+  letter-spacing: 2px !important;
+}
+
+.preset-ink #content {
+  background: #000000 !important;
+  padding: 18px 20px !important;
+}
+
+.preset-ink .section {
+  background: transparent !important;
+  padding: 0 !important;
+  margin-bottom: 22px !important;
+}
+
+.preset-ink .section-title {
+  color: rgba(240, 240, 240, 0.4) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  font-size: 9px !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 14px !important;
+  font-weight: 300 !important;
+}
+
+.preset-ink .row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 12px 0 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.preset-ink .row label {
+  color: #f0f0f0 !important;
+  font-weight: 300 !important;
+  font-size: 12px !important;
+  flex: 1 !important;
+}
+
+.preset-ink .row label .hint {
+  color: rgba(240, 240, 240, 0.4) !important;
+  font-size: 10px !important;
+  display: block !important;
+  margin-top: 3px !important;
+}
+
+.preset-ink .toggle {
+  position: relative !important;
+  width: 40px !important;
+  height: 20px !important;
+  flex-shrink: 0 !important;
+}
+
+.preset-ink .toggle input {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.preset-ink .toggle-track {
+  position: absolute !important;
+  inset: 0 !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+}
+
+.preset-ink .toggle-track::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 3px !important;
+  top: 3px !important;
+  width: 12px !important;
+  height: 12px !important;
+  background: rgba(240, 240, 240, 0.4) !important;
+  transition: all 0.2s !important;
+}
+
+.preset-ink .toggle input:checked + .toggle-track {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: #ffffff !important;
+}
+
+.preset-ink .toggle input:checked + .toggle-track::after {
+  background: #ffffff !important;
+  transform: translateX(18px) !important;
+}
+
+.preset-ink input[type="number"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f0f0f0 !important;
+  font-weight: 300 !important;
+  font-size: 12px !important;
+  padding: 8px 10px !important;
+  width: 60px !important;
+  text-align: center !important;
+}
+
+.preset-ink input[type="number"]:focus {
+  border-color: #ffffff !important;
+  outline: none !important;
+}
+
+.preset-ink select {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f0f0f0 !important;
+  font-weight: 300 !important;
+  font-size: 11px !important;
+  padding: 8px 10px !important;
+  cursor: pointer !important;
+}
+
+.preset-ink select:focus {
+  border-color: #ffffff !important;
+  outline: none !important;
+}
+
+.preset-ink option {
+  background: #000000 !important;
+  color: #f0f0f0 !important;
+}
+
+.preset-ink #distraction-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  margin-bottom: 10px !important;
+}
+
+.preset-ink .distraction-tag {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 8px 12px !important;
+  font-size: 11px !important;
+  color: #f0f0f0 !important;
+  font-weight: 300 !important;
+}
+
+.preset-ink .distraction-tag button {
+  background: none !important;
+  border: none !important;
+  color: rgba(240, 240, 240, 0.4) !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  padding: 0 4px !important;
+}
+
+.preset-ink .distraction-tag button:hover {
+  color: #ffffff !important;
+}
+
+.preset-ink #distraction-add-row {
+  display: flex !important;
+  gap: 8px !important;
+}
+
+.preset-ink #distraction-input {
+  flex: 1 !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f0f0f0 !important;
+  font-weight: 300 !important;
+  font-size: 11px !important;
+  padding: 10px 12px !important;
+}
+
+.preset-ink #distraction-input::placeholder {
+  color: rgba(240, 240, 240, 0.3) !important;
+}
+
+.preset-ink #distraction-input:focus {
+  border-color: #ffffff !important;
+  outline: none !important;
+}
+
+.preset-ink #distraction-add-btn {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  color: #f0f0f0 !important;
+  font-weight: 300 !important;
+  font-size: 10px !important;
+  padding: 10px 14px !important;
+  cursor: pointer !important;
+}
+
+.preset-ink #distraction-add-btn:hover {
+  border-color: #ffffff !important;
+  color: #ffffff !important;
+}
+
+.preset-ink #footer {
+  background: #000000 !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+  padding: 0 20px !important;
+  height: 56px !important;
+}
+
+.preset-ink #save-btn {
+  background: transparent !important;
+  border: 1px solid #ffffff !important;
+  color: #ffffff !important;
+  font-weight: 300 !important;
+  letter-spacing: 2px !important;
+  font-size: 11px !important;
+  padding: 12px 24px !important;
+  cursor: pointer !important;
+}
+
+.preset-ink #save-btn:hover {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.preset-ink #save-status {
+  color: rgba(240, 240, 240, 0.4) !important;
+  font-size: 10px !important;
+}
+
+.preset-ink .scroll::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.preset-ink .scroll::-webkit-scrollbar-track {
+  background: #000000 !important;
+}
+
+.preset-ink .scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15) !important;
+}

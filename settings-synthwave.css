@@ -1,0 +1,163 @@
+/* ── SYNTHWAVE PRESET ── */
+/* Purple/pink gradient with neon cyan accents and grid */
+
+:root {
+  --sw-bg: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
+  --sw-text: #00f5ff;
+  --sw-accent: #ff00ff;
+  --sw-text-dim: rgba(0, 245, 255, 0.5);
+  --sw-border: rgba(255, 0, 255, 0.4);
+  --sw-input-bg: rgba(255, 0, 255, 0.1);
+  --sw-toggle-bg: rgba(0, 245, 255, 0.1);
+  --sw-radius: 4px;
+  --sw-font: 'Courier New', monospace;
+}
+
+.preset-synthwave body {
+  background: var(--sw-bg);
+  color: var(--sw-text);
+  font-family: var(--sw-font);
+  position: relative;
+}
+
+.preset-synthwave body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 0, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 0, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.preset-synthwave #header {
+  background: linear-gradient(90deg, rgba(255, 0, 255, 0.2), rgba(0, 245, 255, 0.2));
+  border-bottom: 2px solid var(--sw-accent);
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
+}
+
+.preset-synthwave #header h1 {
+  color: var(--sw-accent);
+  text-shadow: 0 0 10px var(--sw-accent), 0 0 20px var(--sw-accent);
+  font-weight: bold;
+  letter-spacing: 4px;
+}
+
+.preset-synthwave #header span {
+  color: var(--sw-text-dim);
+}
+
+.preset-synthwave .section-title {
+  color: var(--sw-accent);
+  border-bottom: 1px solid rgba(255, 0, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 0 5px var(--sw-accent);
+}
+
+.preset-synthwave .row label {
+  color: var(--sw-text);
+  text-shadow: 0 0 5px var(--sw-text);
+}
+
+.preset-synthwave .row label .hint {
+  color: var(--sw-text-dim);
+}
+
+.preset-synthwave .toggle-track {
+  background: var(--sw-toggle-bg);
+  border: 1px solid var(--sw-text);
+  border-radius: 10px;
+}
+
+.preset-synthwave .toggle-track::after {
+  background: var(--sw-text);
+  box-shadow: 0 0 8px var(--sw-text);
+}
+
+.preset-synthwave .toggle input:checked + .toggle-track {
+  background: rgba(255, 0, 255, 0.3);
+  border-color: var(--sw-accent);
+}
+
+.preset-synthwave .toggle input:checked + .toggle-track::after {
+  background: var(--sw-accent);
+  box-shadow: 0 0 10px var(--sw-accent), 0 0 20px var(--sw-accent);
+}
+
+.preset-synthwave input[type="number"] {
+  background: var(--sw-input-bg);
+  border: 1px solid var(--sw-accent);
+  color: var(--sw-text);
+  box-shadow: inset 0 0 5px rgba(255, 0, 255, 0.3);
+}
+
+.preset-synthwave select {
+  background: var(--sw-input-bg);
+  border: 1px solid var(--sw-accent);
+  color: var(--sw-text);
+}
+
+.preset-synthwave option {
+  background: #1a0a2e;
+}
+
+.preset-synthwave .distraction-tag {
+  background: var(--sw-input-bg);
+  border: 1px solid rgba(255, 0, 255, 0.4);
+  color: var(--sw-text);
+}
+
+.preset-synthwave .distraction-tag button {
+  color: var(--sw-accent);
+}
+
+.preset-synthwave .distraction-tag button:hover {
+  color: #ff4444;
+}
+
+.preset-synthwave #distraction-input {
+  background: var(--sw-input-bg);
+  border: 1px solid rgba(255, 0, 255, 0.4);
+  color: var(--sw-text);
+}
+
+.preset-synthwave #distraction-input::placeholder {
+  color: var(--sw-text-dim);
+}
+
+.preset-synthwave #distraction-add-btn {
+  background: linear-gradient(135deg, var(--sw-accent), #aa00aa);
+  border: none;
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 0 5px white;
+}
+
+.preset-synthwave #distraction-add-btn:hover {
+  box-shadow: 0 0 15px var(--sw-accent);
+}
+
+.preset-synthwave #footer {
+  background: linear-gradient(0deg, rgba(26, 10, 46, 0.95), rgba(45, 27, 78, 0.95));
+  border-top: 1px solid rgba(255, 0, 255, 0.4);
+}
+
+.preset-synthwave #save-btn {
+  background: linear-gradient(135deg, var(--sw-accent), #aa00aa);
+  border: 2px solid var(--sw-accent);
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 0 5px white;
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.preset-synthwave #save-btn:hover {
+  box-shadow: 0 0 20px var(--sw-accent), 0 0 30px var(--sw-accent);
+}
+
+.preset-synthwave #save-status {
+  color: var(--sw-text-dim);
+}

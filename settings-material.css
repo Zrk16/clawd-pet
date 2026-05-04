@@ -1,0 +1,84 @@
+/* ── MATERIAL SETTINGS PRESET ── */
+/* Google Material Design */
+:root {
+  --mat-bg: #1e1e1e;
+  --mat-text: #e0e0e0;
+  --mat-accent: #6200ee;
+  --mat-surface: #2d2d2d;
+  --mat-border: #3d3d3d;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --mat-bg: #fafafa;
+    --mat-text: #212121;
+    --mat-accent: #6200ee;
+    --mat-surface: #ffffff;
+    --mat-border: #e0e0e0;
+  }
+}
+
+.preset-material body {
+  background: var(--mat-bg);
+  color: var(--mat-text);
+  font-family: 'Roboto', -apple-system, sans-serif;
+}
+
+.preset-material #header {
+  background: var(--mat-surface);
+  border-bottom: 1px solid var(--mat-border);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.preset-material #header h1 {
+  color: var(--mat-text);
+  font-weight: 500;
+}
+
+.preset-material .section-title {
+  color: var(--mat-accent);
+  font-weight: 500;
+}
+
+.preset-material .row label {
+  color: var(--mat-text);
+}
+
+.preset-material .toggle-track {
+  background: var(--mat-surface);
+  border: 1px solid var(--mat-border);
+  border-radius: 8px;
+}
+
+.preset-material .toggle-track::after {
+  background: var(--mat-text);
+}
+
+.preset-material input[type="number"],
+.preset-material select {
+  background: var(--mat-surface);
+  border: 1px solid var(--mat-border);
+  color: var(--mat-text);
+  border-radius: 4px;
+}
+
+.preset-material .distraction-tag {
+  background: var(--mat-surface);
+  border: 1px solid var(--mat-border);
+  color: var(--mat-text);
+  border-radius: 4px;
+}
+
+.preset-material #footer {
+  background: var(--mat-surface);
+  border-top: 1px solid var(--mat-border);
+}
+
+.preset-material #save-btn {
+  background: var(--mat-accent);
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

@@ -1,0 +1,117 @@
+/* ── LIQUID GLASS SETTINGS PRESET ── */
+:root {
+  --lg-bg: rgba(255, 255, 255, 0.12);
+  --lg-bg-strong: rgba(255, 255, 255, 0.18);
+  --lg-border: rgba(255, 255, 255, 0.18);
+  --lg-text: rgba(255, 255, 255, 0.92);
+  --lg-text-dim: rgba(255, 255, 255, 0.55);
+  --lg-accent: rgba(255, 255, 255, 0.3);
+  --lg-shadow: rgba(0, 0, 0, 0.15);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --lg-bg: rgba(255, 255, 255, 0.65);
+    --lg-bg-strong: rgba(255, 255, 255, 0.8);
+    --lg-border: rgba(0, 0, 0, 0.08);
+    --lg-text: rgba(0, 0, 0, 0.85);
+    --lg-text-dim: rgba(0, 0, 0, 0.45);
+    --lg-accent: rgba(0, 0, 0, 0.15);
+  }
+}
+
+.preset-liquid-glass body {
+  background: var(--lg-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: var(--lg-text);
+}
+
+.preset-liquid-glass #header {
+  background: transparent;
+  border-bottom: 1px solid var(--lg-border);
+}
+
+.preset-liquid-glass #header h1 {
+  color: var(--lg-text);
+  font-weight: 600;
+}
+
+.preset-liquid-glass #header span {
+  color: var(--lg-text-dim);
+}
+
+.preset-liquid-glass .section-title {
+  color: var(--lg-text-dim);
+  border-bottom: 1px solid var(--lg-border);
+}
+
+.preset-liquid-glass .row label {
+  color: var(--lg-text);
+}
+
+.preset-liquid-glass .row .hint {
+  color: var(--lg-text-dim);
+}
+
+.preset-liquid-glass .toggle-track {
+  background: var(--lg-bg);
+  border: 1px solid var(--lg-border);
+}
+
+.preset-liquid-glass .toggle-track::after {
+  background: var(--lg-text-dim);
+}
+
+.preset-liquid-glass .toggle input:checked + .toggle-track {
+  background: var(--lg-bg-strong);
+  border-color: var(--lg-text);
+}
+
+.preset-liquid-glass .toggle input:checked + .toggle-track::after {
+  background: var(--lg-text);
+}
+
+.preset-liquid-glass input[type="number"],
+.preset-liquid-glass select {
+  background: var(--lg-bg);
+  border: 1px solid var(--lg-border);
+  color: var(--lg-text);
+}
+
+.preset-liquid-glass option {
+  background: var(--lg-bg-strong);
+}
+
+.preset-liquid-glass .distraction-tag {
+  background: var(--lg-bg);
+  border: 1px solid var(--lg-border);
+  color: var(--lg-text);
+}
+
+.preset-liquid-glass #distraction-input {
+  background: var(--lg-bg);
+  border: 1px solid var(--lg-border);
+  color: var(--lg-text);
+}
+
+.preset-liquid-glass #distraction-add-btn {
+  background: var(--lg-bg-strong);
+  border: 1px solid var(--lg-border);
+  color: var(--lg-text);
+}
+
+.preset-liquid-glass #footer {
+  background: var(--lg-bg);
+  border-top: 1px solid var(--lg-border);
+}
+
+.preset-liquid-glass #save-btn {
+  background: var(--lg-bg-strong);
+  border: 1px solid var(--lg-border);
+  color: var(--lg-text);
+}
+
+.preset-liquid-glass #save-status {
+  color: var(--lg-text-dim);
+}

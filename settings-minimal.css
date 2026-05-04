@@ -1,0 +1,104 @@
+/* ── MINIMAL SETTINGS PRESET ── */
+:root {
+  --min-bg: #1a1a1a;
+  --min-text: #e5e5e5;
+  --min-text-dim: #666;
+  --min-accent: #333;
+  --min-radius: 4px;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --min-bg: #f5f5f5;
+    --min-text: #1a1a1a;
+    --min-text-dim: #888;
+    --min-accent: #ddd;
+  }
+}
+
+.preset-minimal body {
+  background: var(--min-bg);
+  color: var(--min-text);
+}
+
+.preset-minimal #header {
+  background: transparent;
+  border-bottom: 1px solid var(--min-accent);
+}
+
+.preset-minimal #header h1 {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.preset-minimal #header span {
+  color: var(--min-text-dim);
+}
+
+.preset-minimal .section-title {
+  color: var(--min-text-dim);
+  border-bottom: 1px solid var(--min-accent);
+}
+
+.preset-minimal .row label {
+  color: var(--min-text);
+}
+
+.preset-minimal .row .hint {
+  color: var(--min-text-dim);
+  font-size: 8px;
+}
+
+.preset-minimal .toggle-track {
+  background: transparent;
+  border: none;
+}
+
+.preset-minimal .toggle-track::after {
+  background: var(--min-text-dim);
+}
+
+.preset-minimal .toggle input:checked + .toggle-track::after {
+  background: var(--min-text);
+}
+
+.preset-minimal input[type="number"],
+.preset-minimal select {
+  background: transparent;
+  border: none;
+  color: var(--min-text);
+}
+
+.preset-minimal .distraction-tag {
+  background: transparent;
+  border: none;
+  color: var(--min-text);
+  padding: 2px 0;
+}
+
+.preset-minimal #distraction-input {
+  background: transparent;
+  border: none;
+  color: var(--min-text);
+}
+
+.preset-minimal #distraction-add-btn {
+  background: transparent;
+  border: none;
+  color: var(--min-text-dim);
+}
+
+.preset-minimal #footer {
+  background: transparent;
+  border-top: 1px solid var(--min-accent);
+}
+
+.preset-minimal #save-btn {
+  background: transparent;
+  border: none;
+  color: var(--min-text);
+}
+
+.preset-minimal #save-status {
+  color: var(--min-text-dim);
+}

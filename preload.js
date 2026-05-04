@@ -46,4 +46,10 @@ contextBridge.exposeInMainWorld('clawd', {
   readVault: () => ipcRenderer.invoke('read-vault'),
   readVaultBrain: () => ipcRenderer.invoke('read-vault-brain'),
   writeVaultBrain: (text) => ipcRenderer.send('write-vault-brain', text),
+  // UI presets
+  onUiPreset: (cb) => ipcRenderer.on('ui-preset', (_, preset) => cb(preset)),
+  // Mark 12: Ambient Intelligence
+  getBattery: () => ipcRenderer.invoke('get-battery'),
+  getClipboardHash: () => ipcRenderer.invoke('get-clipboard-hash'),
+  onCheckBattery: (cb) => ipcRenderer.on('check-battery', () => cb()),
 });

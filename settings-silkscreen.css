@@ -1,0 +1,178 @@
+/* ── SILKSCREEN SETTINGS PRESET ── */
+
+.preset-silkscreen body {
+  background: #e6e6fa !important;
+  color: #000000 !important;
+  font-family: "Courier New", monospace !important;
+  font-size: 11px !important;
+}
+
+.preset-silkscreen #header {
+  background: #2f4f4f !important;
+  border-bottom: 2px solid #2f4f4f !important;
+  padding: 0 18px !important;
+  height: 38px !important;
+  position: relative !important;
+}
+
+.preset-silkscreen #header::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 3px !important;
+  left: 3px !important;
+  right: -3px !important;
+  bottom: -3px !important;
+  background: #87ceeb !important;
+  z-index: -1 !important;
+}
+
+.preset-silkscreen #header h1 {
+  color: #f4a460 !important;
+  font-weight: bold !important;
+  letter-spacing: 4px !important;
+  text-transform: uppercase !important;
+  font-size: 10px !important;
+}
+
+.preset-silkscreen #header span {
+  color: #dda0dd !important;
+  font-size: 9px !important;
+}
+
+.preset-silkscreen .section-title {
+  color: #2f4f4f !important;
+  border-bottom: 2px solid #2f4f4f !important;
+  font-size: 10px !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  padding-bottom: 8px !important;
+  margin-bottom: 10px !important;
+  background: #f4a460 !important;
+  padding: 4px 8px !important;
+  display: inline-block !important;
+}
+
+.preset-silkscreen .row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 8px 0 !important;
+  border-bottom: 1px solid #2f4f4f !important;
+}
+
+.preset-silkscreen .row label {
+  color: #2f4f4f !important;
+  font-size: 11px !important;
+  flex: 1 !important;
+}
+
+.preset-silkscreen .row label .hint {
+  color: #666666 !important;
+  font-size: 9px !important;
+  display: block !important;
+  margin-top: 2px !important;
+}
+
+.preset-silkscreen .toggle-track {
+  background: #ffffff !important;
+  border: 2px solid #2f4f4f !important;
+}
+
+.preset-silkscreen .toggle-track::after {
+  background: #8b4513 !important;
+  border: 1px solid #2f4f4f !important;
+}
+
+.preset-silkscreen .toggle input:checked + .toggle-track {
+  background: #f4a460 !important;
+}
+
+.preset-silkscreen .toggle input:checked + .toggle-track::after {
+  background: #2f4f4f !important;
+  transform: translateX(16px) !important;
+}
+
+.preset-silkscreen input[type="number"] {
+  background: #ffffff !important;
+  border: 2px solid #2f4f4f !important;
+  color: #2f4f4f !important;
+  font-size: 11px !important;
+  padding: 4px 8px !important;
+  width: 60px !important;
+}
+
+.preset-silkscreen select {
+  background: #ffffff !important;
+  border: 2px solid #2f4f4f !important;
+  color: #2f4f4f !important;
+  font-size: 10px !important;
+  padding: 4px 8px !important;
+}
+
+.preset-silkscreen option {
+  background: #ffffff !important;
+}
+
+.preset-silkscreen .distraction-tag {
+  background: #98fb98 !important;
+  border: 1px solid #2f4f4f !important;
+  color: #2f4f4f !important;
+  font-size: 10px !important;
+}
+
+.preset-silkscreen .distraction-tag button {
+  color: #8b4513 !important;
+}
+
+.preset-silkscreen #distraction-input {
+  background: #ffffff !important;
+  border: 2px solid #2f4f4f !important;
+  color: #2f4f4f !important;
+  font-size: 10px !important;
+  padding: 6px 8px !important;
+}
+
+.preset-silkscreen #distraction-add-btn {
+  background: #2f4f4f !important;
+  border: none !important;
+  color: #f4a460 !important;
+  font-size: 10px !important;
+  padding: 6px 10px !important;
+}
+
+.preset-silkscreen #footer {
+  background: #dda0dd !important;
+  border-top: 2px solid #2f4f4f !important;
+  padding: 0 18px !important;
+  height: 50px !important;
+  position: relative !important;
+}
+
+.preset-silkscreen #footer::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 3px !important;
+  left: 3px !important;
+  right: -3px !important;
+  bottom: -3px !important;
+  background: #87ceeb !important;
+  z-index: -1 !important;
+}
+
+.preset-silkscreen #save-btn {
+  background: #2f4f4f !important;
+  border: none !important;
+  color: #f4a460 !important;
+  font-size: 10px !important;
+  padding: 8px 16px !important;
+}
+
+.preset-silkscreen #save-btn:hover {
+  background: #8b4513 !important;
+  color: #ffffff !important;
+}
+
+.preset-silkscreen #save-status {
+  color: #2f4f4f !important;
+  font-size: 9px !important;
+}

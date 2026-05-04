@@ -1,0 +1,158 @@
+/* ── NORDIC PRESET ── */
+/* Cool grays, clean white, geometric — fully independent */
+
+.preset-nordic #bubble {
+  background: #ffffff !important;
+  color: #000000 !important;
+  font-family: "Avenir", "Helvetica Neue", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 14px 18px !important;
+  border: 1px solid rgba(99, 110, 114, 0.3) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+}
+
+.preset-nordic #bubble::after {
+  display: none !important;
+}
+
+.preset-nordic #chat-panel {
+  background: #f8f9fa !important;
+  border: 1px solid rgba(99, 110, 114, 0.2) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  overflow: hidden !important;
+}
+
+.preset-nordic #chat-panel::before {
+  display: none !important;
+}
+
+.preset-nordic #chat-panel.hidden {
+  display: none !important;
+}
+
+.preset-nordic #chat-header {
+  background: #ffffff !important;
+  border-bottom: 2px solid rgba(99, 110, 114, 0.2) !important;
+  padding: 0 14px !important;
+  height: 38px !important;
+}
+
+.preset-nordic #chat-header h2 {
+  color: #000000 !important;
+  font-family: "Avenir", "Helvetica Neue", sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 4px !important;
+  font-size: 11px !important;
+  text-transform: uppercase !important;
+}
+
+.preset-nordic #mode-toggle {
+  color: #000000 !important;
+  opacity: 0.6 !important;
+  font-size: 9px !important;
+  font-weight: 600 !important;
+}
+
+.preset-nordic #mode-toggle.smart {
+  color: #636e72 !important;
+  opacity: 1 !important;
+}
+
+.preset-nordic #chat-messages {
+  background: #f8f9fa !important;
+  padding: 12px !important;
+}
+
+.preset-nordic #chat-messages .user-msg {
+  color: #000000 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  margin-bottom: 8px !important;
+}
+
+.preset-nordic #chat-messages .clawd-msg {
+  color: #2d3436 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1.6 !important;
+  margin-bottom: 10px !important;
+}
+
+.preset-nordic #chat-input {
+  background: #ffffff !important;
+  border: 1px solid rgba(99, 110, 114, 0.3) !important;
+  border-radius: 0 !important;
+  color: #000000 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  padding: 10px 12px !important;
+}
+
+.preset-nordic #chat-input::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.preset-nordic #chat-input:focus {
+  border-color: #636e72 !important;
+  outline: none !important;
+}
+
+.preset-nordic #input-row {
+  background: #ffffff !important;
+  border-top: 1px solid rgba(99, 110, 114, 0.15) !important;
+  padding: 10px !important;
+}
+
+.preset-nordic #send-btn {
+  background: #2d3436 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 11px !important;
+  letter-spacing: 1px !important;
+  padding: 8px 14px !important;
+}
+
+.preset-nordic #send-btn:hover {
+  background: #636e72 !important;
+}
+
+.preset-nordic .mic-btn {
+  color: #2d3436 !important;
+  opacity: 0.5 !important;
+  font-size: 16px !important;
+}
+
+.preset-nordic .mic-btn.recording {
+  color: #e74c3c !important;
+  opacity: 1 !important;
+}
+
+.preset-nordic .copy-btn {
+  color: #2d3436 !important;
+  opacity: 0.4 !important;
+  font-size: 14px !important;
+}
+
+.preset-nordic .copy-btn:hover {
+  color: #636e72 !important;
+  opacity: 1 !important;
+}
+
+.preset-nordic .scroll::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.preset-nordic .scroll::-webkit-scrollbar-track {
+  background: #f8f9fa !important;
+}
+
+.preset-nordic .scroll::-webkit-scrollbar-thumb {
+  background: rgba(99, 110, 114, 0.2) !important;
+}

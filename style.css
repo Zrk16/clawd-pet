@@ -610,3 +610,84 @@ body {
 #pet-container.focus-active #pet-img {
   filter: drop-shadow(0 0 6px rgba(255, 68, 68, 0.5));
 }
+
+/* ── Time-reactive appearance ── */
+#pet-container.morning-mode #pet-img {
+  filter: brightness(1.15) drop-shadow(0 0 12px rgba(255, 176, 122, 0.6));
+  animation: morning-bounce 2s ease-in-out infinite;
+}
+@keyframes morning-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+#pet-container.night-mode #pet-img {
+  filter: brightness(0.7) saturate(0.8) drop-shadow(0 0 8px rgba(100, 150, 255, 0.3));
+  animation: night-slow 4s ease-in-out infinite;
+}
+@keyframes night-slow {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 0.7; }
+}
+
+/* ── Weather-reactive ── */
+#pet-container.rainy::before {
+  content: '';
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  width: 60px;
+  height: 40px;
+  background: repeating-linear-gradient(180deg, transparent, transparent 4px, rgba(150, 200, 255, 0.3) 4px, rgba(150, 200, 255, 0.3) 6px);
+  animation: rain-fall 0.5s linear infinite;
+  pointer-events: none;
+}
+@keyframes rain-fall {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 40px; }
+}
+#pet-container.sunny #pet-img {
+  filter: brightness(1.1) drop-shadow(0 0 15px rgba(255, 200, 100, 0.7));
+}
+#pet-container.sunny::after {
+  content: '☀';
+  position: absolute;
+  top: -20px;
+  right: -5px;
+  font-size: 16px;
+  animation: sun-spin 8s linear infinite;
+}
+@keyframes sun-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ── Particle trail container ── */
+#particle-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* ── AFK sitting state ── */
+#pet-container.afk-sitting #pet-img {
+  transform: scaleY(0.9);
+  filter: brightness(0.9);
+}
+
+/* ── Meeting indicator (tiny mute icon) ── */
+.meeting-indicator {
+  position: absolute;
+  bottom: -8px;
+  right: 10px;
+  width: 12px;
+  height: 12px;
+  background: rgba(100, 100, 100, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  color: #fff;
+}
